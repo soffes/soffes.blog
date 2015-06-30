@@ -1,0 +1,11 @@
+/* TEAM */
+Designer:     Sam Soffes
+Developer:    Sam Soffes
+Contact:      sam@soff.es
+Twitter:      @soffes
+
+/* SITE */
+Last update:  03/16/13
+Language:     English
+Doctype:      HTML5
+Tools:        Ruby, HTML, SCSS on Heroku
