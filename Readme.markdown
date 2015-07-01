@@ -23,7 +23,7 @@ Then open <http://localhost:5000> in your browser to see it running.
 
 ## TODO
 
-- [ ] Upload images from repo to S3 and edit `<img>` tags
+- [x] Upload images from repo to S3 and edit `<img>` tags
 - [ ] Update style
 - [ ] Next & previous post links
 - [ ] Modern meta markup

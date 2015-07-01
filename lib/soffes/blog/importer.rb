@@ -38,7 +38,7 @@ module Soffes
           matches = path.match(/\/(\d{4})-(\d{2})-(\d{2})-([\w\-]+)$/)
           key = matches[4]
 
-          puts "Importing #{key}..."
+          puts "Importing #{key}"
 
           # Load content
           contents = File.open("#{path}/#{key}.markdown").read
@@ -71,6 +71,18 @@ module Soffes
           h1 = doc.search('.//h1').remove
           meta[:title] = h1.text if h1.text.length > 0
           meta[:html] = doc.to_html
+
+          # Upload images
+          doc.css('img').each do |i|
+            src = i['src']
+            next if src.start_with?('http')
+
+            image_path = "#{path}/#{src}"
+            next unless File.exists?(image_path)
+
+            puts "  Uploading #{src}"
+            upload(image_path, "#{key}/#{src}")
+          end
 
           # Store in Redis
           redis.hset('slugs', key, JSON.dump(meta))
