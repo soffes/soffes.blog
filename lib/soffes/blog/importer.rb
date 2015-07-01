@@ -32,6 +32,7 @@ module Soffes
         end
 
         markdown = Redcarpet::Markdown.new(Soffes::Blog::MarkdownRenderer, MARKDOWN_OPTIONS)
+        count = 0
 
         # Posts
         Dir['tmp/repo/published/*'].each do |path|
@@ -85,9 +86,12 @@ module Soffes
           # Store in Redis
           redis.hset('slugs', key, JSON.dump(meta))
           redis.zadd('sorted-slugs', meta[:published_at], key)
+
+          count += 1
         end
 
         puts 'Done!'
+        count
       end
 
       private

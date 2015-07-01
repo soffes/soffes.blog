@@ -6,6 +6,18 @@ module Soffes
   module Blog
     class Application < Sinatra::Application
       PAGE_SIZE = 3
+      WEBHOOK_SECRET = ENV['WEBHOOK_SECRET'].freeze
+
+      get '/_/import' do
+        content_type :json
+        unless params[:secret] == WEBHOOK_SECRET
+          return { error: 'Invalid secret.' }.to_json
+        end
+
+        require 'soffes/blog/importer'
+        count = Soffes::Blog::Importer.new.import
+        { imported: count }.to_json
+      end
 
       get %r{/$|/(\d+)$} do |page|
         # Pagination
