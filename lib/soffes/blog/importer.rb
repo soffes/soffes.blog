@@ -69,7 +69,6 @@ module Soffes
           doc = Nokogiri::HTML.fragment(html)
           h1 = doc.search('.//h1').remove
           meta[:title] = h1.text if h1.text.length > 0
-          meta[:html] = doc.to_html
 
           # Upload images
           doc.css('img').each do |i|
@@ -81,6 +80,7 @@ module Soffes
 
             i['src'] = upload(image_path, "#{key}/#{src}")
           end
+          meta[:html] = doc.to_html
 
           # Store in Redis
           redis.hset('slugs', key, JSON.dump(meta))
