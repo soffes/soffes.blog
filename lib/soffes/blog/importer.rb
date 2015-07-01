@@ -59,8 +59,7 @@ module Soffes
 
           # Upload cover image
           if cover_image = meta['cover_image']
-            puts "  Uploading cover image..."
-            upload("#{path}/#{cover_image}", "#{key}/#{cover_image}")
+            meta['cover_image'] = upload("#{path}/#{cover_image}", "#{key}/#{cover_image}")
           end
 
           # Parse Markdown
@@ -80,8 +79,7 @@ module Soffes
             image_path = "#{path}/#{src}"
             next unless File.exists?(image_path)
 
-            puts "  Uploading #{src}"
-            upload(image_path, "#{key}/#{src}")
+            i['src'] = upload(image_path, "#{key}/#{src}")
           end
 
           # Store in Redis
@@ -107,8 +105,13 @@ module Soffes
       end
 
       def upload(local, key)
-        bucket = Aws::S3::Resource.new(client: aws).bucket(AWS_S3_BUCKET_NAME)
-        bucket.object(key).upload_file(local, acl: 'public-read')
+        unless redis.sismember('uploaded', key)
+          puts "  Uploading #{key}"
+          bucket = Aws::S3::Resource.new(client: aws).bucket(AWS_S3_BUCKET_NAME)
+          bucket.object(key).upload_file(local, acl: 'public-read')
+          redis.sadd('uploaded', key)
+        end
+        "https://#{AWS_S3_BUCKET_NAME}.s3.amazonaws.com/#{key}"
       end
     end
   end
