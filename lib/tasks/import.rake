@@ -1,5 +1,4 @@
 require 'soffes/blog'
-require 'soffes/blog/importer'
 
 desc 'Start over'
 task :clean do
@@ -9,6 +8,7 @@ end
 
 desc 'Import from a fresh start'
 task :import do
+  require 'soffes/blog/importer'
   importer = Soffes::Blog::Importer.new
   importer.import
 end
