@@ -2,6 +2,8 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
+use Rack::CanonicalHost, ENV['CANONICAL_HOST'] if ENV['CANONICAL_HOST']
+
 $LOAD_PATH.unshift 'lib'
 require 'soffes/blog'
 

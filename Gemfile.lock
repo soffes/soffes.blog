@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.3.8)
     aws-sdk (2.1.2)
       aws-sdk-resources (= 2.1.2)
     aws-sdk-core (2.1.2)
@@ -33,6 +34,9 @@ GEM
       posix-spawn (~> 0.3.6)
       yajl-ruby (~> 1.2.0)
     rack (1.6.4)
+    rack-canonical-host (0.1.0)
+      addressable
+      rack (~> 1.0)
     rack-protection (1.5.3)
       rack
     rake (10.4.2)
@@ -72,6 +76,7 @@ DEPENDENCIES
   nokogiri
   puma
   pygments.rb
+  rack-canonical-host
   rake
   redcarpet
   redis

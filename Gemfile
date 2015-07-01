@@ -9,6 +9,9 @@ gem 'puma'
 # Simple HTTP
 gem 'sinatra'
 
+# Use the right host
+gem 'rack-canonical-host'
+
 # Faster ERB
 gem 'erubis'
 
