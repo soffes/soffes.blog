@@ -8,7 +8,7 @@ module Soffes
       PAGE_SIZE = 3
       WEBHOOK_SECRET = ENV['WEBHOOK_SECRET'].freeze
 
-      get '/_/import' do
+      post '/_/import' do
         content_type :json
         unless params[:secret] == WEBHOOK_SECRET
           return { error: 'Invalid secret.' }.to_json
