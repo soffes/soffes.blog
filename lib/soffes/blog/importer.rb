@@ -2,6 +2,7 @@ require 'date'
 require 'redcarpet'
 require 'json'
 require 'nokogiri'
+require 'aws-sdk'
 
 module Soffes
   module Blog
@@ -16,10 +17,10 @@ module Soffes
         space_after_headers: true,
         superscript: true
       }.freeze
-      AWS_ACCESS_KEY_ID = ENV['AWS_ACCESS_KEY_ID'] || raise("You need to define the AWS_ACCESS_KEY_ID env var")
-      AWS_SECRET_ACCESS_KEY = ENV['AWS_SECRET_ACCESS_KEY'] || raise("You need to define the AWS_SECRET_ACCESS_KEY env var")
+      AWS_ACCESS_KEY_ID = ENV['AWS_ACCESS_KEY_ID'] || raise('You need to define the AWS_ACCESS_KEY_ID env var')
+      AWS_SECRET_ACCESS_KEY = ENV['AWS_SECRET_ACCESS_KEY'] || raise('You need to define the AWS_SECRET_ACCESS_KEY env var')
       AWS_S3_REGION = ENV['AWS_S3_REGION'] || 'us-east-1'
-      AWS_S3_BUCKET_NAME = ENV['AWS_S3_BUCKET_NAME'] || raise("You need to define the AWS_S3_BUCKET_NAME env var")
+      AWS_S3_BUCKET_NAME = ENV['AWS_S3_BUCKET_NAME'] || raise('You need to define the AWS_S3_BUCKET_NAME env var')
 
       def import
         unless File.exists?('tmp/repo')
@@ -36,6 +37,8 @@ module Soffes
         Dir['tmp/repo/published/*'].each do |path|
           matches = path.match(/\/(\d{4})-(\d{2})-(\d{2})-([\w\-]+)$/)
           key = matches[4]
+
+          puts "Importing #{key}..."
 
           # Load content
           contents = File.open("#{path}/#{key}.markdown").read
@@ -54,6 +57,12 @@ module Soffes
             meta.merge!(YAML.safe_load(result[0]))
           end
 
+          # Upload cover image
+          if cover_image = meta['cover_image']
+            puts "  Uploading cover image..."
+            upload("#{path}/#{cover_image}", "#{key}/#{cover_image}")
+          end
+
           # Parse Markdown
           html = markdown.render(contents)
 
@@ -66,7 +75,6 @@ module Soffes
           # Store in Redis
           redis.hset('slugs', key, JSON.dump(meta))
           redis.zadd('sorted-slugs', meta[:published_at], key)
-          puts "Imported #{key}"
         end
 
         puts 'Done!'
@@ -88,7 +96,7 @@ module Soffes
 
       def upload(local, key)
         bucket = Aws::S3::Resource.new(client: aws).bucket(AWS_S3_BUCKET_NAME)
-        bucket.object(key).upload_file(local)
+        bucket.object(key).upload_file(local, acl: 'public-read')
       end
     end
   end
