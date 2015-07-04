@@ -33,7 +33,11 @@ module Soffes
         post = PostsController.post(key)
         return erb :not_found unless post
 
-        erb :post, locals: { post: post }
+        erb :show, locals: {
+          post: post,
+          newer_post: PostsController.newer_post(key),
+          older_post: PostsController.older_post(key)
+        }
       end
     end
   end

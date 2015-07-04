@@ -20,13 +20,17 @@ module Soffes
 
       # Get the next newest post given a post key
       def self.newer_post(key)
-        # TODO
+        # TODO: This is broken
+        index = redis.zrank(SORTED_SET_KEY, key)
+        newer_key = redis.zrange(SORTED_SET_KEY, index, -1).last
+        return nil if newer_key == key
+        post(newer_key)
       end
 
       # Get the next oldest post given a post key
       def self.older_post(key)
-        index = redis.zrank(SORTED_SET_KEY, key)
-        post(redis.zrange(SORTED_SET_KEY, index, -1).last)
+        # TODO: Implement
+        newer_post(key)
       end
 
       # Get a list of posts given an optional page
