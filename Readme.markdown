@@ -16,9 +16,9 @@ Import my posts:
 
 Now you can start the server with Foreman:
 
-    $ bundle exec foreman start
+    $ bundle exec shotgun
 
-Then open <http://localhost:5000> in your browser to see it running.
+Then open <http://localhost:9393> in your browser to see it running.
 
 
 ## TODO

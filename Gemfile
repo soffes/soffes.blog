@@ -52,5 +52,5 @@ gem 'coffee-script'
 gem 'uglifier'
 
 group :development do
-  gem 'foreman'
+  gem 'shotgun'
 end
