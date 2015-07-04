@@ -1,6 +1,8 @@
-<% slugs.each do |slug| %>
-<%= erb :slug, locals: { slug: slug } %>
-<% end %>
+<section class="blog">
+  <% slugs.each do |slug| %>
+  <%= erb :slug, locals: { slug: slug } %>
+  <% end %>
+</section>
 
 <% if slugs.count > 0 %>
 <nav class="pagination">

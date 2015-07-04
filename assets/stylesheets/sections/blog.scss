@@ -1,7 +1,5 @@
 // Post
 article {
-  margin-bottom: 15em;
-
   h1 {
     display: none;
   }
@@ -218,7 +216,10 @@ div.tags {
   }
 }
 
-a.permalink:hover {
-  border: 0;
-  color: $link-color;
+section.blog article {
+  margin-bottom: 15em;
+
+  &:last-child {
+    margin-bottom: 2em;
+  }
 }
