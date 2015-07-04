@@ -22,7 +22,7 @@ module Soffes
       # Get the next newest post given a post key
       def self.newer_post(key)
         index = redis.zrank(SORTED_SET_KEY, key)
-        newer_key = redis.zrange(SORTED_SET_KEY, index, index + 1).last
+        newer_key = redis.zrange(SORTED_SET_KEY, index + 1, index + 2).first
         post(newer_key)
       end
 

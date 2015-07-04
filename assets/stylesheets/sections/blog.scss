@@ -93,44 +93,34 @@ article {
   }
 }
 
-div.social {
-  @include clearfix;
-  overflow: hidden;
-  margin: -4em 0 1em; // Ugly
-
-  iframe.twitter-follow-button {
-    float: right;
-  }
-}
-
 nav.posts {
   @include clearfix;
-  margin: 1em 0 0;
+  margin: 4em 0 2em;
+
+  ol {
+    margin: 0
+  }
 
   li {
     display: block;
     width: 44%;
   }
 
-  li.previous {
+  .newer {
     float: left;
   }
 
-  li.next {
+  .older {
     float: right;
     text-align: right;
   }
 
   @media #{$small-query} {
-    ul {
-      margin-bottom: 0;
-    }
-
-    li.previous {
+    .newer {
       margin-bottom: 1em;
     }
 
-    li.previous, li.next {
+    .older, .newer {
       text-align: center;
       float: none;
       width: 100%;

@@ -1,7 +1,13 @@
 <%= erb :post, locals: { post: post } %>
 
-<% if newer_post %>
+<% if newer_post || older_post %>
 <nav class="posts">
-  <a href="/<%= newer_post['key'] %>" class="newer"><%= newer_post['title'] %></a>
+  <ul>
+    <% if newer_post %>
+    <li class="newer"><a href="/<%= newer_post['key'] %>">&larr; <%= newer_post['title'] %></a></li>
+    <% end; if older_post %>
+    <li class="older"><a href="/<%= older_post['key'] %>"><%= older_post['title'] %> &rarr;</a></li>
+    <% end %>
+  </ul>
 </nav>
 <% end %>

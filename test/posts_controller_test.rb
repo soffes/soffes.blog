@@ -19,8 +19,14 @@ module Soffes::Blog
       PostsController.insert_post factory(key: 'post-4', published_at: 4)
       PostsController.insert_post factory(key: 'post-5', published_at: 5)
 
-      assert_equal 'post-4', PostsController.newer_post('post-3')['key']
+      assert_nil PostsController.older_post('post-1')
+      assert_equal 'post-2', PostsController.newer_post('post-1')['key']
+
       assert_equal 'post-2', PostsController.older_post('post-3')['key']
+      assert_equal 'post-4', PostsController.newer_post('post-3')['key']
+
+      assert_equal 'post-4', PostsController.older_post('post-5')['key']
+      assert_nil PostsController.newer_post('post-5')
     end
 
     private
