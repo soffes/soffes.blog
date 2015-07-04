@@ -49,10 +49,10 @@ module Soffes
 
           # Meta data
           meta = {
-            key: key,
-            title: key.capitalize,
-            published_at: Date.new(matches[1].to_i, matches[2].to_i, matches[3].to_i).to_time.utc.to_i,
-            type: 'post'
+            'key' => key,
+            'title' => key.capitalize,
+            'published_at' => Date.new(matches[1].to_i, matches[2].to_i, matches[3].to_i).to_time.utc.to_i,
+            'type' => 'post'
           }
 
           # Extract YAML front matter
@@ -72,7 +72,7 @@ module Soffes
           # Remove H1
           doc = Nokogiri::HTML.fragment(html)
           h1 = doc.search('.//h1').remove
-          meta[:title] = h1.text if h1.text.length > 0
+          meta['title'] = h1.text if h1.text.length > 0
 
           # Upload images
           doc.css('img').each do |i|
@@ -84,12 +84,10 @@ module Soffes
 
             i['src'] = upload(image_path, "#{key}/#{src}")
           end
-          meta[:html] = doc.to_html
+          meta['html'] = doc.to_html
 
-          # Store in Redis
-          redis.hset('slugs', key, JSON.dump(meta))
-          redis.zadd('sorted-slugs', meta[:published_at], key)
-
+          # Persist!
+          PostsController.insert_post(meta)
           count += 1
         end
 

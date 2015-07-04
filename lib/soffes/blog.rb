@@ -12,3 +12,4 @@ end
 
 require 'soffes/blog/application'
 require 'soffes/blog/markdown_renderer'
+require 'soffes/blog/posts_controller'

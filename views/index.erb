@@ -1,10 +1,10 @@
 <section class="blog">
-  <% slugs.each do |slug| %>
-  <%= erb :slug, locals: { slug: slug } %>
+  <% posts.each do |post| %>
+  <%= erb :post, locals: { post: post } %>
   <% end %>
 </section>
 
-<% if slugs.count > 0 %>
+<% if posts.count > 0 %>
 <nav class="pagination">
   <% if page > 1 %>
   <a class="previous" href="/<%= page - 1 %>" rel="previous">&larr; Previous</a>
@@ -12,7 +12,7 @@
   <span class="disabled">&larr; Previous</span>
   <% end %>
 
-  <% if page > window %>
+  <% window = 2; if page > window %>
   <% if page == window + 1 %>
   <a href="/1">1</a>
   <% else %>

@@ -4,38 +4,12 @@ article {
     display: none;
   }
 
-  h2 {
-    font-size: 1.3em;
-    font-weight: $bold-weight;
-    margin-top: 2em;
-
-    a {
-      color: $text-color;
-      border: 0;
-    }
-  }
-
-  h3 {
-    font-weight: $bold-weight;
-    color: #999;
-
-    a {
-      color: #999;
-      border: 0;
-    }
-  }
-
-  h4 {
-    color: #999;
-    font-weight: $bold-weight;
-    margin-bottom: 0.2em;
-  }
-
   header {
     margin-bottom: 1em;
 
     h2 {
       font-size: 2em;
+      line-height: 1.2em;
       margin-bottom: 0.25em;
     }
 

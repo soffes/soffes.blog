@@ -20,32 +20,20 @@ module Soffes
       end
 
       get %r{/$|/(\d+)$} do |page|
-        # Pagination
         page = (page || 1).to_i
-        start_index = (page - 1) * PAGE_SIZE
-        total_pages = (redis.zcard('sorted-slugs').to_f / PAGE_SIZE.to_f).ceil.to_i
 
-        keys = redis.zrevrange('sorted-slugs', start_index, start_index + PAGE_SIZE - 1)
-        slugs = []
-
-        if keys.length > 0
-          slugs = redis.hmget('slugs', *keys).map { |s| JSON.load(s) }
-        end
-
-        erb :index, locals: { slugs: slugs, page: page, total_pages: total_pages, window: 2 }
+        erb :index, locals: {
+          posts: PostsController.posts(page),
+          page: page,
+          total_pages: PostsController.total_pages
+        }
       end
 
       get %r{/([\w\d\-]+)$} do |key|
-        slug = redis.hget('slugs', key)
-        return erb :not_found unless slug && slug.length > 0
+        post = PostsController.post(key)
+        return erb :not_found unless post
 
-        erb :slug, locals: { slug: JSON.load(slug) }
-      end
-
-      private
-
-      def redis
-        Soffes::Blog.redis
+        erb :post, locals: { post: post }
       end
     end
   end
