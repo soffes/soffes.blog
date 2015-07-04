@@ -52,5 +52,14 @@ gem 'coffee-script'
 gem 'uglifier'
 
 group :development do
+  # Automatic reloading
   gem 'shotgun'
+end
+
+group :test do
+  # Testing
+  gem 'minitest', '>= 5.0'
+
+  # Colored output
+  gem 'minitest-reporters'
 end
