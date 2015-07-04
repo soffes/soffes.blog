@@ -61,5 +61,8 @@ group :test do
   gem 'minitest', '>= 5.0'
 
   # Colored output
-  gem 'minitest-reporters'
+  gem 'minitest-reporters', require: 'minitest/reporters'
+
+  # Fake Redis
+  gem 'fakeredis'
 end

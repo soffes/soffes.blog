@@ -51,8 +51,7 @@ module Soffes
           meta = {
             'key' => key,
             'title' => key.capitalize,
-            'published_at' => Date.new(matches[1].to_i, matches[2].to_i, matches[3].to_i).to_time.utc.to_i,
-            'type' => 'post'
+            'published_at' => Date.new(matches[1].to_i, matches[2].to_i, matches[3].to_i).to_time.utc.to_i
           }
 
           # Extract YAML front matter
