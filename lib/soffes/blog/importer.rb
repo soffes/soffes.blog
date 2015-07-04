@@ -15,7 +15,10 @@ module Soffes
         autolink: true,
         strikethrough: true,
         space_after_headers: true,
-        superscript: true
+        superscript: true,
+        with_toc_data: true,
+        underline: true,
+        highlight: true
       }.freeze
       AWS_ACCESS_KEY_ID = ENV['AWS_ACCESS_KEY_ID'] || raise('You need to define the AWS_ACCESS_KEY_ID env var')
       AWS_SECRET_ACCESS_KEY = ENV['AWS_SECRET_ACCESS_KEY'] || raise('You need to define the AWS_SECRET_ACCESS_KEY env var')
