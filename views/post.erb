@@ -5,5 +5,9 @@
     <p>Posted on <time datetime="<%= published_at.strftime('%Y-%m-%dT%H:%M:%SZ') %>"><%= published_at.strftime('%B %e, %Y') %></time></p>
     <% end %>
   </header>
+  <% if defined?(truncate) && truncate %>
+  <p><%= post['excerpt_html'] %> <a href="/<%= post['key'] %>" class="continue-reading">Continue reading &rarr;</a></p>
+  <% else %>
   <%= post['html'] %>
+  <% end %>
 </article>

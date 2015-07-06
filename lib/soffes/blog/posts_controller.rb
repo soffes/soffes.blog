@@ -3,8 +3,9 @@ require 'json'
 module Soffes
   module Blog
     class PostsController
-      SORTED_SET_KEY = 'sorted-posts'
-      HASH_KEY = 'posts'
+      SORTED_SET_KEY = 'sorted-posts'.freeze
+      HASH_KEY = 'posts'.freeze
+      DEFAULT_PAGE_SIZE = 5.freeze
 
       # Save a post given its JSON
       def self.insert_post(post)
@@ -34,7 +35,7 @@ module Soffes
       end
 
       # Get a list of posts given an optional page
-      def self.posts(page = 1, page_size = 3)
+      def self.posts(page = 1, page_size = DEFAULT_PAGE_SIZE)
         start_index = (page - 1) * page_size
         keys = redis.zrevrange(SORTED_SET_KEY, start_index, start_index + page_size - 1)
         return [] unless keys.length > 0
@@ -43,7 +44,7 @@ module Soffes
       end
 
       # Get the total number of pages
-      def self.total_pages(page_size = 3)
+      def self.total_pages(page_size = DEFAULT_PAGE_SIZE)
         (redis.zcard(SORTED_SET_KEY).to_f / page_size.to_f).ceil.to_i
       end
 

@@ -85,6 +85,9 @@ module Soffes
           end
           meta['html'] = doc.to_html
 
+          # Add excerpt
+          meta['excerpt_html'] = doc.css('p:first-child').text
+
           # Persist!
           PostsController.insert_post(meta)
           count += 1

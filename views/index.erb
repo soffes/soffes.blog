@@ -1,6 +1,6 @@
 <section class="blog">
   <% posts.each do |post| %>
-  <%= erb :post, locals: { post: post } %>
+  <%= erb :post, locals: { post: post, truncate: true } %>
   <% end %>
 </section>
 

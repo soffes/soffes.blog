@@ -128,13 +128,6 @@ nav.posts {
   }
 }
 
-// Gist
-div.gist div.gist-file div.gist-meta {
-  padding: 0.5em;
-  font-size: 0.6em;
-  line-height: 1em;
-}
-
 // Tags
 a.tag {
   word-wrap: nowrap;
@@ -181,9 +174,13 @@ div.tags {
 }
 
 section.blog article {
-  margin-bottom: 15em;
+  margin-bottom: 8em;
 
   &:last-child {
     margin-bottom: 2em;
   }
+}
+
+a.continue-reading {
+  white-space: nowrap;
 }
