@@ -3,6 +3,7 @@ require 'redcarpet'
 require 'json'
 require 'nokogiri'
 require 'aws-sdk'
+require 'dimensions'
 
 module Soffes
   module Blog
@@ -62,7 +63,12 @@ module Soffes
 
           # Upload cover image
           if cover_image = meta['cover_image']
-            meta['cover_image'] = upload("#{path}/#{cover_image}", "#{key}/#{cover_image}")
+            local_path = "#{path}/#{cover_image}"
+            meta['cover_image'] = upload(local_path, "#{key}/#{cover_image}")
+
+            dimensions = Dimensions.dimensions local_path
+            meta['cover_image_width'] = dimensions.first
+            meta['cover_image_height'] = dimensions.last
           end
 
           # Parse Markdown

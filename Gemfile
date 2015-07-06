@@ -39,6 +39,9 @@ gem 'rake'
 # JSON
 gem 'json'
 
+# Image dimensions
+gem 'dimensions', require: false
+
 # Asset uploading
 gem 'aws-sdk', require: false
 
