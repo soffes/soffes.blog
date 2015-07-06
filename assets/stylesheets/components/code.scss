@@ -1,15 +1,22 @@
 pre, code {
   font-family: $monospace-font-family;
   font-size: $monospace-size;
+  border-radius: 4px;
+  line-height: 1.5em;
 }
 
 pre {
   overflow-x: auto;
   margin-bottom: 1em;
-  background: #fbfbfb;
-  padding: 1em;
+  padding: 0.5em 1em;
+  background: #fcfcfc;
+  border: 1px solid #f0f0f0;
 }
 
+code {
+  background: #f7f7f7;
+  padding: 0.1em;
+}
 
 .highlight {
    background: #fff;
