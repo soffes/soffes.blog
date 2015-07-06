@@ -10,8 +10,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="fb:app_id" content="1159618850721771">
   <meta property="og:site_name" content="soff.es">
+  <meta property="copyright" content="&copy; 2006-<%= Time.now.year %> Sam Soffes">
   <% if @post %>
   <meta property="og:url" content="http://blog.soff.es/<%= @post['key'] %>">
+  <meta property="description" content="<%= post['excerpt_html'] %>">
+  <% if tags = post['tags'] %>
+  <meta property="keywords" content="<%= tags.join(',') %>">
+  <% end %>
   <meta property="og:type" content="article">
   <meta property="og:title" content="<%= @post['title'] %>">
   <meta property="og:description" content="<%= @post['excerpt_html'] %>">
@@ -25,12 +30,12 @@
   <% if @post['tags']; @post['tags'].each do |tag| %>
   <meta property="article:tag" content="<%= tag %>">
   <% end; end %>
-  <meta name="twitter:site" content="@soffes">
+  <meta property="twitter:site" content="@soffes">
   <% if @post['cover_image'] %>
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:card" content="summary_large_image">
   <meta name="twitter:image:src" content="<%= @post['cover_image'] %>">
   <% else %>
-  <meta name="twitter:card" content="summary">
+  <meta property="twitter:card" content="summary">
   <% end %>
   <meta name="twitter:url" content="http://blog.soff.es/<%= @post['key'] %>">
   <meta name="twitter:description" content="<%= @post['excerpt_html'] %>">
