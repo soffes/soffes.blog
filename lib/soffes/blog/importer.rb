@@ -31,7 +31,7 @@ module Soffes
           `git clone --depth 1 #{BLOG_GIT_URL} tmp/repo`
         else
           puts 'Updating posts...'
-          'cd tmp/repo && git pull origin master'
+          `cd tmp/repo && git pull origin master`
         end
 
         markdown = Redcarpet::Markdown.new(Soffes::Blog::MarkdownRenderer, MARKDOWN_OPTIONS)
