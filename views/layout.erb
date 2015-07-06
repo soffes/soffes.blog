@@ -9,6 +9,33 @@
   <link rel="author" type="text/plain" href="/humans.txt">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:site_name" content="soff.es">
+  <% if defined?(post) && post %>
+  <meta property="og:url" content="http://blog.soff.es/<%= post['key'] %>">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="<%= post['title'] %>">
+  <meta property="og:description" content="<%= post['excerpt_html'] %>">
+  <% if post['cover_image'] %>
+  <meta property="og:image" content="<%= post['cover_image'] %>">
+  <% end %>
+  <meta property="og:article:published_time" content="<%= post['published_at'] %>">
+  <meta property="og:article:author:profile:first_name" content="Sam">
+  <meta property="og:article:author:profile:last_name" content="Soffes">
+  <meta property="og:article:author:profile:username" content="soffes">
+  <meta property="og:article:author:profile:gender" content="male">
+  <% post['tags'].each do |tag| %>
+  <meta property="og:article:tag" content="<%= tag %>">
+  <% end %>
+  <meta name="twitter:site" content="@soffes">
+  <% if post['cover_image'] %>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:src" content="<%= post['cover_image'] %>">
+  <% else %>
+  <meta name="twitter:card" content="summary">
+  <% end %>
+  <meta name="twitter:url" content="http://blog.soff.es/<%= post['key'] %>">
+  <meta name="twitter:description" content="<%= post['excerpt_html'] %>">
+  <meta name="twitter:title" content="<%= post['title'] %>">
+  <% end %>
 </head>
 <body>
   <header>
