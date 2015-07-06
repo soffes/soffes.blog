@@ -19,6 +19,15 @@ module Soffes
         { imported: count }.to_json
       end
 
+      get '/sitemap.xml' do
+        posts = []
+        (1..PostsController.total_pages).each do |page|
+          posts += PostsController.posts(page)
+        end
+        content_type :xml
+        erb :sitemap, locals: { posts: posts }, layout: nil
+      end
+
       get %r{/$|/(\d+)$} do |page|
         page = (page || 1).to_i
 
