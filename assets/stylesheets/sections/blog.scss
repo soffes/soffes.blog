@@ -173,11 +173,38 @@ div.tags {
   }
 }
 
-section.blog article {
+section.posts article {
   margin-bottom: 8em;
 
   &:last-child {
-    margin-bottom: 2em;
+    margin-bottom: 3em;
+  }
+}
+
+section.post {
+  > article, > nav {
+    max-width: $width;
+    margin: 0 auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  > div.cover {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding-top: 40%;
+
+    > div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
   }
 }
 

@@ -1,51 +1,17 @@
-<section class="blog">
-  <% posts.each do |post| %>
-  <%= erb :post, locals: { post: post, truncate: true } %>
+<section class="posts">
+  <% @posts.each do |post| %>
+  <article>
+    <header>
+      <h2><a href="/<%= post['key'] %>"><%= post['title'] %></a></h2>
+      <% if post['published_at'] && published_at = Time.at(post['published_at'].to_i) %>
+      <p>Posted on <time datetime="<%= published_at.strftime('%Y-%m-%dT%H:%M:%SZ') %>"><%= published_at.strftime('%B %e, %Y') %></time></p>
+      <% end %>
+    </header>
+    <p><%= post['excerpt_html'] %> <a href="/<%= post['key'] %>" class="continue-reading">Continue reading &rarr;</a></p>
+  </article>
   <% end %>
 </section>
 
-<% if posts.count > 0 %>
-<nav class="pagination">
-  <% if page > 1 %>
-  <a class="previous" href="/<%= page - 1 %>" rel="previous">&larr; Previous</a>
-  <% else %>
-  <span class="disabled">&larr; Previous</span>
-  <% end %>
-
-  <% window = 2; if page > window %>
-  <% if page == window + 1 %>
-  <a href="/1">1</a>
-  <% else %>
-  <% (1..window).each do |i| %>
-  <a href="/<%= i %>"><%= i %></a>
-  <% end %>
-  <span class="gap">&hellip;</span>
-  <% end %>
-  <% end %>
-
-  <% if page > 1 %>
-  <a href="/<%= page - 1 %>" rel="prev"><%= page - 1 %></a>
-  <% end %>
-  <span class="current"><%= page %></span>
-  <% if page < total_pages %>
-  <a href="/<%= page + 1 %>" rel="next"><%= page + 1 %></a>
-  <% end %>
-
-  <% if page <= total_pages - window %>
-  <% if page == total_pages - window %>
-  <a href="/<%= total_pages %>"><%= total_pages %></a>
-  <% else %>
-  <span class="gap">&hellip;</span>
-  <% ((total_pages - window + 1)..total_pages).each do |i| %>
-  <a href="/<%= i %>"><%= i %></a>
-  <% end %>
-  <% end %>
-  <% end %>
-
-  <% if page < total_pages %>
-  <a class="next" href="/<%= page + 1 %>" rel="next">Next &rarr;</a>
-  <% else %>
-  <span class="disabled">Next &rarr;</span>
-  <% end %>
-</nav>
+<% if @posts.count > 0 %>
+<%= erb :pagination, locals: { page: @page, total_pages: @total_pages, window: 2 } %>
 <% end %>

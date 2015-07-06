@@ -20,33 +20,30 @@ module Soffes
       end
 
       get '/sitemap.xml' do
-        posts = []
+        @posts = []
         (1..PostsController.total_pages).each do |page|
-          posts += PostsController.posts(page)
+          @posts += PostsController.posts(page)
         end
         content_type :xml
-        erb :sitemap, locals: { posts: posts }, layout: nil
+        erb :sitemap, layout: nil
       end
 
       get %r{/$|/(\d+)$} do |page|
-        page = (page || 1).to_i
+        @page = (page || 1).to_i
+        @posts = PostsController.posts(@page)
+        @total_pages = PostsController.total_pages
 
-        erb :index, locals: {
-          posts: PostsController.posts(page),
-          page: page,
-          total_pages: PostsController.total_pages
-        }
+        erb :index
       end
 
       get %r{/([\w\d\-]+)$} do |key|
-        post = PostsController.post(key)
-        return erb :not_found unless post
+        @post = PostsController.post(key)
+        return erb :not_found unless @post
 
-        erb :show, locals: {
-          post: post,
-          newer_post: PostsController.newer_post(key),
-          older_post: PostsController.older_post(key)
-        }
+        @newer_post =  PostsController.newer_post(key)
+        @older_post = PostsController.older_post(key)
+
+        erb :show
       end
     end
   end
