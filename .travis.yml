@@ -4,8 +4,7 @@ rvm:
 services:
 - redis-server
 env:
-- COVERAGE=1
-- COVERALLS=1
+- COVERAGE=1 COVERALLS=1
 cache:
   directories:
   - vendor/bundle
