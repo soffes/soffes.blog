@@ -13,8 +13,8 @@
   <meta property="copyright" content="&copy; 2006-<%= Time.now.year %> Sam Soffes">
   <% if @post %>
   <meta property="og:url" content="http://blog.soff.es/<%= @post['key'] %>">
-  <meta property="description" content="<%= post['excerpt_html'] %>">
-  <% if tags = post['tags'] %>
+  <meta property="description" content="<%= @post['excerpt_html'] %>">
+  <% if tags = @post['tags'] %>
   <meta property="keywords" content="<%= tags.join(',') %>">
   <% end %>
   <meta property="og:type" content="article">
