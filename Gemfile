@@ -62,6 +62,7 @@ end
 group :test do
   # Code coverage
   gem 'simplecov', require: false
+  gem 'coveralls', require: false
 
   # Testing
   gem 'minitest', '>= 5.0'
