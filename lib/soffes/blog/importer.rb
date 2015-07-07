@@ -4,6 +4,7 @@ require 'json'
 require 'nokogiri'
 require 'aws-sdk'
 require 'dimensions'
+require 'safe_yaml'
 
 module Soffes
   module Blog
@@ -24,22 +25,31 @@ module Soffes
       AWS_ACCESS_KEY_ID = ENV['AWS_ACCESS_KEY_ID']
       AWS_SECRET_ACCESS_KEY = ENV['AWS_SECRET_ACCESS_KEY']
       AWS_S3_REGION = ENV['AWS_S3_REGION'] || 'us-east-1'
-      AWS_S3_BUCKET_NAME = ENV['AWS_S3_BUCKET_NAME']
+
+      def initialize(local_posts_path: 'tmp/repo', update_posts: true, bucket_name: ENV['AWS_S3_BUCKET_NAME'])
+        @local_posts_path = local_posts_path
+        @update_posts = update_posts
+        @bucket_name = bucket_name
+      end
 
       def import
-        unless File.exists?('tmp/repo')
-          puts 'Cloning posts...'
-          `git clone --depth 1 #{BLOG_GIT_URL} tmp/repo`
+        if @update_posts
+          if File.exists?(@local_posts_path)
+            puts 'Cloning posts...'
+            `git clone --depth 1 #{BLOG_GIT_URL} #{@local_posts_path}`
+          else
+            puts 'Updating posts...'
+            `cd #{@local_posts_path} && git pull origin master`
+          end
         else
-          puts 'Updating posts...'
-          `cd tmp/repo && git pull origin master`
+          raise 'Posts not found.' unless File.exists?(@local_posts_path)
         end
 
         markdown = Redcarpet::Markdown.new(Soffes::Blog::MarkdownRenderer, MARKDOWN_OPTIONS)
         count = 0
 
         # Posts
-        Dir['tmp/repo/published/*'].each do |path|
+        Dir["#{@local_posts_path}/published/*"].each do |path|
           matches = path.match(/\/(\d{4})-(\d{2})-(\d{2})-([\w\-]+)$/)
           key = matches[4]
 
@@ -120,11 +130,11 @@ module Soffes
       def upload(local, key)
         unless redis.sismember('uploaded', key)
           puts "  Uploading #{key}"
-          bucket = Aws::S3::Resource.new(client: aws).bucket(AWS_S3_BUCKET_NAME)
+          bucket = Aws::S3::Resource.new(client: aws).bucket(@bucket_name)
           bucket.object(key).upload_file(local, acl: 'public-read')
           redis.sadd('uploaded', key)
         end
-        "https://#{AWS_S3_BUCKET_NAME}.s3.amazonaws.com/#{key}"
+        "https://#{@bucket_name}.s3.amazonaws.com/#{key}"
       end
     end
   end
