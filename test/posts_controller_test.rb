@@ -28,16 +28,5 @@ module Soffes::Blog
       assert_equal 'post-4', PostsController.older_post('post-5')['key']
       assert_nil PostsController.newer_post('post-5')
     end
-
-    private
-
-    def factory(key:, title: key, html: '<p>Hi</p>', published_at: Time.now.to_i)
-      {
-        'key' => key,
-        'title' => title,
-        'html' => html,
-        'published_at' => published_at
-      }
-    end
   end
 end

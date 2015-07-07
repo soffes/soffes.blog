@@ -50,7 +50,7 @@ gem 'sass'
 gem 'sprockets-sass'
 gem 'bourbon'
 
-# Javascript
+# JavaScript
 gem 'coffee-script'
 gem 'uglifier'
 
@@ -68,4 +68,7 @@ group :test do
 
   # Fake Redis
   gem 'fakeredis'
+
+  # Web testing
+  gem 'capybara'
 end
