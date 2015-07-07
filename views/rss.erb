@@ -11,7 +11,7 @@
     <% @posts.each do |post| %>
     <item>
       <title><![CDATA[<%= post['title'] %>]]></title>
-        <description><![CDATA[<%= post['excerpt'] %>]]></description>
+        <description><![CDATA[<%= post['excerpt_html'] %>]]></description>
         <link>http://blog.soff.es/<%= post['key'] %></link>
         <guid isPermaLink="true">http://blog.soff.es/<%= post['key'] %></guid>
         <dc:creator><![CDATA[Sam Soffes]]></dc:creator>
