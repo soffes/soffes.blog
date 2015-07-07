@@ -1,8 +1,10 @@
 language: ruby
 rvm:
-  - 2.2.2
+- 2.2.2
 services:
-  - redis-server
+- redis-server
+env:
+- COVERAGE=1
 cache:
   directories:
   - vendor/bundle

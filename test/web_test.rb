@@ -8,15 +8,14 @@ module Soffes::Blog
     end
 
     def test_show
-      factory(key: 'test', html: '<p>This is a test.</p>')
-      visit('/test')
-      assert page.has_content?('This is a test.')
+      PostsController.insert_post factory(key: 'pizza', html: '<p>This is delicious.</p>')
+      visit('/pizza')
+      assert page.has_content?('This is delicious.')
     end
 
     def test_show_redirect
-      factory(key: 'test')
-      visit('/test/')
-      assert_equal '/test', page.current_path
+      visit('/something-interesting/')
+      assert_equal '/something-interesting', page.current_path
     end
   end
 end
