@@ -34,7 +34,7 @@ gem 'safe_yaml'
 gem 'sprockets'
 
 # Utilities
-gem 'rake'
+gem 'rake', require: false
 
 # JSON
 gem 'json'
@@ -56,7 +56,7 @@ gem 'uglifier'
 
 group :development do
   # Automatic reloading
-  gem 'shotgun'
+  gem 'shotgun', require: false
 end
 
 group :test do
