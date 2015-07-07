@@ -1,0 +1,32 @@
+{
+  "name": "Sam Soffes Blog",
+  "description": "The blog of Sam Soffes",
+  "keywords": [
+    "blog"
+  ],
+  "website": "http://blog.soff.es/",
+  "repository": "https://github.com/soffes/blog.soff.es",
+  "success_url": "/",
+  "scripts": {
+    "postdeploy": "bundle exec rake import"
+  },
+  "env": {
+    "WEBHOOK_SECRET": {
+      "description": "A secret key for the webhook.",
+      "generator": "secret"
+    },
+    "AWS_S3_BUCKET_NAME": {
+      "description": "The S3 bucket name.",
+      "value": "soffes-blog"
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "description": "The S3 access key."
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "description": "The S3 secret access key."
+    }
+  },
+  "addons": [
+    "heroku-redis:hobby-dev"
+  ]
+}
