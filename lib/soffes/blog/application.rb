@@ -1,6 +1,6 @@
 require 'sinatra'
-require 'redis'
 require 'json'
+require 'soffes/blog/posts_controller'
 
 module Soffes
   module Blog
@@ -8,7 +8,7 @@ module Soffes
       PAGE_SIZE = 3
       WEBHOOK_SECRET = ENV['WEBHOOK_SECRET'].freeze
 
-      post '/_webhookt' do
+      post '/_webhook' do
         content_type :json
         unless params[:secret] == WEBHOOK_SECRET
           return { error: 'Invalid secret.' }.to_json

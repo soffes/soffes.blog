@@ -1,3 +1,4 @@
 tmp
 *.rdb
 .env
+coverage

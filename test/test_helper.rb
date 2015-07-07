@@ -1,8 +1,16 @@
 require 'bundler'
 Bundler.require :test
 
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter '/test/'
+  end
+end
+
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'soffes/blog'
+require 'soffes/blog/importer'
 
 # require 'minitest/reporters'
 Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new({ color: true })]

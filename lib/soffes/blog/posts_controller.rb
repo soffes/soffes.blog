@@ -1,3 +1,4 @@
+require 'soffes/blog/redis'
 require 'json'
 
 module Soffes

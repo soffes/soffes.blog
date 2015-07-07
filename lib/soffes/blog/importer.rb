@@ -21,10 +21,10 @@ module Soffes
         underline: true,
         highlight: true
       }.freeze
-      AWS_ACCESS_KEY_ID = ENV['AWS_ACCESS_KEY_ID'] || raise('You need to define the AWS_ACCESS_KEY_ID env var')
-      AWS_SECRET_ACCESS_KEY = ENV['AWS_SECRET_ACCESS_KEY'] || raise('You need to define the AWS_SECRET_ACCESS_KEY env var')
+      AWS_ACCESS_KEY_ID = ENV['AWS_ACCESS_KEY_ID']
+      AWS_SECRET_ACCESS_KEY = ENV['AWS_SECRET_ACCESS_KEY']
       AWS_S3_REGION = ENV['AWS_S3_REGION'] || 'us-east-1'
-      AWS_S3_BUCKET_NAME = ENV['AWS_S3_BUCKET_NAME'] || raise('You need to define the AWS_S3_BUCKET_NAME env var')
+      AWS_S3_BUCKET_NAME = ENV['AWS_S3_BUCKET_NAME']
 
       def import
         unless File.exists?('tmp/repo')
