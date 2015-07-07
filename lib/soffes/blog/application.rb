@@ -8,7 +8,7 @@ module Soffes
       PAGE_SIZE = 3
       WEBHOOK_SECRET = ENV['WEBHOOK_SECRET'].freeze
 
-      set :views, File.dirname(__FILE__) + '../../../views'
+      set :views, File.dirname(__FILE__) + '/../../../views'
 
       post '/_webhook' do
         content_type :json
