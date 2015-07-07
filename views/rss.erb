@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title><![CDATA[Hi, I'm Sam]]></title>
+    <description><![CDATA[This is my blog. Enjoy.]]></description>
+    <link>http://blog.soff.es/</link>
+    <lastBuildDate><%= Time.at(@posts.first['published_at']).rfc822 %></lastBuildDate>
+    <atom:link href="http://blog.soff.es/rss" rel="self" type="application/rss+xml"/>
+    <ttl>60</ttl>
+
+    <% @posts.each do |post| %>
+    <item>
+      <title><![CDATA[<%= post['title'] %>]]></title>
+        <description><![CDATA[<%= post['excerpt'] %>]]></description>
+        <link>http://blog.soff.es/<%= post['key'] %></link>
+        <guid isPermaLink="true">http://blog.soff.es/<%= post['key'] %></guid>
+        <dc:creator><![CDATA[Sam Soffes]]></dc:creator>
+        <pubDate><%= Time.at(post['published_at']).rfc822 %></pubDate>
+        <content:encoded><![CDATA[<%= post['html'] %>]]></content:encoded>
+    </item>
+    <% end %>
+  </channel>
+</rss>
+

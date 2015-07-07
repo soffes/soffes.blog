@@ -30,6 +30,16 @@ module Soffes
         erb :sitemap, layout: nil
       end
 
+      get '/rss' do
+        @posts = PostsController.posts(1)
+        content_type :xml
+        erb :rss, layout: nil
+      end
+
+      get '/rss/' do
+        redirect '/rss'
+      end
+
       get %r{^/$|/(\d+)$} do |page|
         @page = (page || 1).to_i
         @posts = PostsController.posts(@page)
