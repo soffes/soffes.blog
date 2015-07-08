@@ -34,7 +34,7 @@ module Soffes
 
       def import
         if @update_posts
-          if File.exists?(@local_posts_path)
+          if !File.exists?(@local_posts_path)
             puts 'Cloning posts...'
             `git clone --depth 1 #{BLOG_GIT_URL} #{@local_posts_path}`
           else
