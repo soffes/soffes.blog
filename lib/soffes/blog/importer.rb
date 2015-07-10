@@ -5,6 +5,9 @@ require 'nokogiri'
 require 'aws-sdk'
 require 'dimensions'
 require 'safe_yaml'
+require 'soffes/blog/markdown_renderer'
+require 'soffes/blog/redis'
+require 'soffes/blog/posts_controller'
 
 module Soffes
   module Blog
