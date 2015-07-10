@@ -56,6 +56,7 @@ module Soffes
         @post = PostsController.post(key)
         return erb :not_found unless @post
 
+        @title = @post['title']
         @newer_post =  PostsController.newer_post(key)
         @older_post = PostsController.older_post(key)
 
