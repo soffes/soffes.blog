@@ -25,11 +25,16 @@ article {
     }
   }
 
+  > h3, > h4, > h5, > h6 {
+    padding: 1em 0 0.25em;
+  }
+
   ul, ol {
     margin: 0 0 2em 0.5em;
 
     li {
       margin-left: 1em;
+      margin-bottom: 0.5em;
     }
   }
 
