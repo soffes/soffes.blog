@@ -11,16 +11,12 @@
     </header>
     <%= @post['html'] %>
   </article>
-
-  <% if @newer_post || @older_post %>
-  <nav class="posts">
-    <ul>
-      <% if @newer_post %>
-      <li class="newer"><a href="/<%= @newer_post['key'] %>">&larr; <%= @newer_post['title'] %></a></li>
-      <% end; if @older_post %>
-      <li class="older"><a href="/<%= @older_post['key'] %>"><%= @older_post['title'] %> &rarr;</a></li>
-      <% end %>
-    </ul>
-  </nav>
-  <% end %>
+  <% if @older_post; @hide_footer = true %>
+  <footer>
+    <div>
+      <%= erb :'_post', locals: { post: @older_post } %>
+      <p class="copyright">© 2006-<%= Time.now.year %> <a href="/" rel="home">Sam Soffes</a></p>
+    </div>
+  </footer>
+<% end %>
 </section>

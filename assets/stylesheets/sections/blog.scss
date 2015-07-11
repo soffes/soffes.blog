@@ -10,7 +10,7 @@ article {
     h2 {
       font-size: 2em;
       line-height: 1.2em;
-      margin-bottom: 0.25em;
+      margin: 1em 0 0.2em;
     }
 
     p {
@@ -25,8 +25,8 @@ article {
     }
   }
 
-  > h3, > h4, > h5, > h6 {
-    padding: 1em 0 0.25em;
+  > h2, > h3, > h4, > h5, > h6 {
+    padding: 1em 0 0.2em;
   }
 
   ul, ol {
@@ -98,86 +98,6 @@ article {
   }
 }
 
-nav.posts {
-  @include clearfix;
-  margin: 4em 0 2em;
-
-  ol {
-    margin: 0
-  }
-
-  li {
-    display: block;
-    width: 44%;
-  }
-
-  .newer {
-    float: left;
-  }
-
-  .older {
-    float: right;
-    text-align: right;
-  }
-
-  @media #{$small-query} {
-    .newer {
-      margin-bottom: 1em;
-    }
-
-    .older, .newer {
-      text-align: center;
-      float: none;
-      width: 100%;
-    }
-  }
-}
-
-// Tags
-a.tag {
-  word-wrap: nowrap;
-}
-
-a.tag:before {
-  content: "#";
-}
-
-div.tags {
-  text-align: center;
-  margin-bottom: 3em;
-
-  a {
-    text-shadow: none;
-    margin: 5px;
-    word-wrap: nowrap;
-    line-height: 1.5em;
-  }
-
-  .nube1 {
-    font-size: 1em;
-  }
-
-  .nube2 {
-    font-size: 1.2em;
-  }
-
-  .nube3 {
-    font-size: 1.4em;
-  }
-
-  .nube4 {
-    font-size: 1.6em;
-  }
-
-  .nube5 {
-    font-size: 1.8em;
-  }
-
-  .nube6 {
-    font-size: 2em;
-  }
-}
-
 section.posts article {
   margin-bottom: 8em;
 
@@ -187,7 +107,7 @@ section.posts article {
 }
 
 section.post {
-  > article, > nav {
+  > article {
     max-width: $width;
     margin: 0 auto;
     padding: 0 16px;
@@ -209,6 +129,54 @@ section.post {
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
+    }
+  }
+
+  > footer {
+    width: 100%;
+    background: #383c40;
+    margin: 4em 0 0;
+    padding: 1em;
+    color: #aaa;
+
+    a {
+      color: #64c1f8;
+    }
+
+    div {
+      max-width: $width;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+
+    article {
+      font-size: 0.9em;
+      margin-bottom: 2em;
+
+      header {
+        margin-bottom: 0;
+
+        h2 {
+          font-size: 1.5em;
+          color: #ccc;
+          margin-bottom: 0;
+
+          a {
+            color: #ccc;
+          }
+        }
+      }
+    }
+
+    p.copyright {
+      text-align: center;
+      font-size: 0.8em;
+      color: #777;
+
+      a {
+        color: #777;
+      }
     }
   }
 }

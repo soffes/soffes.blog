@@ -1,14 +1,6 @@
 <section class="posts">
   <% @posts.each do |post| %>
-  <article>
-    <header>
-      <h2><a href="/<%= post['key'] %>"><%= post['title'] %></a></h2>
-      <% if post['published_at'] && published_at = Time.at(post['published_at'].to_i) %>
-      <p>Posted on <time datetime="<%= published_at.strftime('%Y-%m-%dT%H:%M:%SZ') %>"><%= published_at.strftime('%B %e, %Y') %></time></p>
-      <% end %>
-    </header>
-    <p><%= post['excerpt_html'] %> <a href="/<%= post['key'] %>" class="continue-reading">Continue reading &rarr;</a></p>
-  </article>
+  <%= erb :'_post', locals: { post: post } %>
   <% end %>
 </section>
 
