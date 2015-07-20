@@ -40,6 +40,10 @@ module Soffes
         redirect '/rss'
       end
 
+      get %r{^/page/(\d+)$} do |page|
+        redirect "/#{page}"
+      end
+
       get %r{^/$|/(\d+)$} do |page|
         @page = (page || 1).to_i
         @posts = PostsController.posts(@page)
