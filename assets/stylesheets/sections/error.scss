@@ -1,17 +1,6 @@
-body.error {
-  background: $red-color;
-  color: #fff;
-
-  div#error {
-    max-width: $width;
-    margin: 2em auto;
-  }
-
-  h1, a {
-    color: #fff;
-  }
-
-  a {
-    border-bottom: 1px solid;
-  }
+section.error {
+  max-width: $width;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
