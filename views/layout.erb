@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+<head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# article: https://ogp.me/ns/article#">
   <meta charset="utf-8">
   <title><%= (@title && !@title.empty? ? "#{@title} — Hi, I’m Sam" : "Hi, I’m Sam") %></title>
-  <link rel="stylesheet" type="text/css" href="//cloud.typography.com/619254/777982/css/fonts.css">
+  <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/619254/777982/css/fonts.css">
   <link href="/assets/application.css" rel="stylesheet">
-  <link rel="me" href="http://www.google.com/profiles/samsoffes">
+  <link rel="me" href="https://www.google.com/profiles/samsoffes">
   <link rel="author" type="text/plain" href="/humans.txt">
-  <link rel="alternate" type="application/rss+xml" title="Hi, I'm Sam" href="http://blog.soff.es/rss">
+  <link rel="alternate" type="application/rss+xml" title="Hi, I'm Sam" href="https://blog.soff.es/rss">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="fb:app_id" content="1159618850721771">
   <meta property="og:site_name" content="soff.es">
   <meta property="copyright" content="&copy; 2006-<%= Time.now.year %> Sam Soffes">
   <% if @post %>
-  <meta property="og:url" content="http://blog.soff.es/<%= @post['key'] %>">
+  <meta property="og:url" content="https://blog.soff.es/<%= @post['key'] %>">
   <meta property="description" content="<%= @post['excerpt_html'] %>">
   <% if tags = @post['tags'] %>
   <meta property="keywords" content="<%= tags.join(',') %>">
@@ -27,7 +27,7 @@
   <meta property="og:image:height" content="<%= @post['cover_image_height'] %>">
   <% end %>
   <meta property="article:published_time" content="<%= Time.at(@post['published_at']).utc.iso8601 %>">
-  <meta property="article:author" content="http://soff.es/">
+  <meta property="article:author" content="https://soff.es/">
   <% if @post['tags']; @post['tags'].each do |tag| %>
   <meta property="article:tag" content="<%= tag %>">
   <% end; end %>
@@ -38,7 +38,7 @@
   <% else %>
   <meta property="twitter:card" content="summary">
   <% end %>
-  <meta name="twitter:url" content="http://blog.soff.es/<%= @post['key'] %>">
+  <meta name="twitter:url" content="https://blog.soff.es/<%= @post['key'] %>">
   <meta name="twitter:description" content="<%= @post['excerpt_html'] %>">
   <meta name="twitter:title" content="<%= @post['title'] %>">
   <% end %>

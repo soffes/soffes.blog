@@ -4,7 +4,7 @@
   "keywords": [
     "blog"
   ],
-  "website": "http://blog.soff.es/",
+  "website": "https://blog.soff.es/",
   "repository": "https://github.com/soffes/blog.soff.es",
   "success_url": "/",
   "scripts": {

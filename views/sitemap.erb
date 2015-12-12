@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
-      <loc>http://blog.soff.es/</loc>
+      <loc>https://blog.soff.es/</loc>
       <lastmod><%= Time.at(@posts.first['published_at']).strftime('%Y-%m-%d') %></lastmod>
       <priority>1.0</priority>
    </url>
    <% @posts.each do |post| %>
    <url>
-      <loc>http://blog.soff.es/<%= post['key'] %></loc>
+      <loc>https://blog.soff.es/<%= post['key'] %></loc>
       <lastmod><%= Time.at(post['published_at']).strftime('%Y-%m-%d') %></lastmod>
    </url>
    <% end %>

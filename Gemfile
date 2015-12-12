@@ -12,6 +12,9 @@ gem 'sinatra'
 # Use the right host
 gem 'rack-canonical-host'
 
+# Always use SSL
+gem 'rack-ssl'
+
 # Faster ERB
 gem 'erubis'
 
