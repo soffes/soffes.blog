@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Latest Ruby
-ruby '2.2.3'
+ruby '2.3.1'
 
 # Web server
 gem 'puma'
@@ -11,6 +11,9 @@ gem 'sinatra'
 
 # Use the right host
 gem 'rack-canonical-host'
+
+# ACME challenges
+gem 'acme_challenge'
 
 # Always use SSL
 gem 'rack-ssl'
