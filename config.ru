@@ -3,8 +3,8 @@ require 'bundler'
 Bundler.require
 
 use Rack::CanonicalHost, ENV['CANONICAL_HOST'] if ENV['CANONICAL_HOST']
-use Rack::SSL if ENV['RACK_ENV'] == 'production'
 use AcmeChallenge, ENV['ACME_CHALLENGE'] if ENV['ACME_CHALLENGE']
+use Rack::SSL if ENV['RACK_ENV'] == 'production'
 
 $LOAD_PATH.unshift 'lib'
 require 'soffes/blog/application'
