@@ -24,7 +24,7 @@ module Soffes::Blog
       PostsController.insert_post factory(key: 'pizza', html: '<p>This is delicious.</p>')
       visit '/sitemap.xml'
       assert_equal 200, page.status_code
-      assert page.has_content?('https://blog.soff.es/pizza')
+      assert page.has_content?('https://soffes.blog/pizza')
 
       # Validate
       schema = Nokogiri::XML::Schema(File.read('test/resources/sitemap.xsd'))

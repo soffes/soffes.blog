@@ -3,17 +3,17 @@
   <channel>
     <title><![CDATA[Hi, I'm Sam]]></title>
     <description><![CDATA[This is my blog. Enjoy.]]></description>
-    <link>https://blog.soff.es/</link>
+    <link>https://soffes.blog/</link>
     <lastBuildDate><%= Time.at(@posts.first['published_at']).rfc822 %></lastBuildDate>
-    <atom:link href="https://blog.soff.es/rss" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://soffes.blog/rss" rel="self" type="application/rss+xml"/>
     <ttl>60</ttl>
 
     <% @posts.each do |post| %>
     <item>
       <title><![CDATA[<%= post['title'] %>]]></title>
         <description><![CDATA[<%= post['excerpt_html'] %>]]></description>
-        <link>https://blog.soff.es/<%= post['key'] %></link>
-        <guid isPermaLink="true">https://blog.soff.es/<%= post['key'] %></guid>
+        <link>https://soffes.blog/<%= post['key'] %></link>
+        <guid isPermaLink="true">https://soffes.blog/<%= post['key'] %></guid>
         <dc:creator><![CDATA[Sam Soffes]]></dc:creator>
         <pubDate><%= Time.at(post['published_at']).rfc822 %></pubDate>
         <content:encoded><![CDATA[<%= post['html'] %>]]></content:encoded>

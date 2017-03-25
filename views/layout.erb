@@ -7,13 +7,13 @@
   <link href="/assets/application.css" rel="stylesheet">
   <link rel="me" href="https://www.google.com/profiles/samsoffes">
   <link rel="author" type="text/plain" href="/humans.txt">
-  <link rel="alternate" type="application/rss+xml" title="Hi, I'm Sam" href="https://blog.soff.es/rss">
+  <link rel="alternate" type="application/rss+xml" title="Hi, I'm Sam" href="https://soffes.blog/rss">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="fb:app_id" content="1159618850721771">
   <meta property="og:site_name" content="soff.es">
   <meta property="copyright" content="&copy; 2006-<%= Time.now.year %> Sam Soffes">
   <% if @post %>
-  <meta property="og:url" content="https://blog.soff.es/<%= @post['key'] %>">
+  <meta property="og:url" content="https://soffes.blog/<%= @post['key'] %>">
   <meta property="description" content="<%= @post['excerpt_html'] %>">
   <% if tags = @post['tags'] %>
   <meta property="keywords" content="<%= tags.join(',') %>">
@@ -38,7 +38,7 @@
   <% else %>
   <meta property="twitter:card" content="summary">
   <% end %>
-  <meta name="twitter:url" content="https://blog.soff.es/<%= @post['key'] %>">
+  <meta name="twitter:url" content="https://soffes.blog/<%= @post['key'] %>">
   <meta name="twitter:description" content="<%= @post['excerpt_html'] %>">
   <meta name="twitter:title" content="<%= @post['title'] %>">
   <% end %>

@@ -1,6 +1,6 @@
-# blog.soff.es
+# soffes.blog
 
-[![Build Status](https://travis-ci.org/soffes/blog.soff.es.svg?branch=master)](https://travis-ci.org/soffes/blog.soff.es) [![Coverage Status](https://coveralls.io/repos/github/soffes/blog.soff.es/badge.svg?branch=master)](https://coveralls.io/github/soffes/blog.soff.es?branch=master)
+[![Build Status](https://travis-ci.org/soffes/soffes.blog.svg?branch=master)](https://travis-ci.org/soffes/soffes.blog) [![Coverage Status](https://coveralls.io/repos/github/soffes/soffes.blog/badge.svg?branch=master)](https://coveralls.io/github/soffes/soffes.blog?branch=master)
 
 This is my blog. It's pretty simple. It stores all of the posts in Redis. They are updated via GitHub post-commit hook. My posts are stored [here](https://github.com/soffes/blog).
 
@@ -9,8 +9,8 @@ This is my blog. It's pretty simple. It stores all of the posts in Redis. They a
 
 Get the source
 
-    $ git clone https://github.com/soffes/blog.soff.es.git
-    $ cd blog.soff.es
+    $ git clone https://github.com/soffes/soffes.blog.git
+    $ cd soffes.blog
 
 Import my posts:
 

@@ -4,8 +4,8 @@
   "keywords": [
     "blog"
   ],
-  "website": "https://blog.soff.es/",
-  "repository": "https://github.com/soffes/blog.soff.es",
+  "website": "https://soffes.blog/",
+  "repository": "https://github.com/soffes/soffes.blog",
   "success_url": "/",
   "scripts": {
     "postdeploy": "bundle exec rake import"
