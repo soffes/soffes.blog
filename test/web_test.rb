@@ -32,6 +32,13 @@ module Soffes::Blog
       assert_equal 0, validation_errors.length
     end
 
+    def test_json_feed
+      PostsController.insert_post factory(key: 'pizza', html: '<p>This is delicious.</p>')
+      visit '/feeds/json'
+      assert_equal 200, page.status_code
+      assert page.has_content?('https://soffes.blog/pizza')
+    end
+
     def test_page_redirect
       visit '/page/2'
       assert_equal '/2', page.current_path

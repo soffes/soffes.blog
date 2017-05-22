@@ -5,7 +5,7 @@
     <description><![CDATA[This is my blog. Enjoy.]]></description>
     <link>https://soffes.blog/</link>
     <lastBuildDate><%= Time.at(@posts.first['published_at']).rfc822 %></lastBuildDate>
-    <atom:link href="https://soffes.blog/rss" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://soffes.blog/feeds/rss" rel="self" type="application/rss+xml"/>
     <ttl>60</ttl>
 
     <% @posts.each do |post| %>

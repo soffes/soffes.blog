@@ -7,7 +7,8 @@
   <link href="/assets/application.css" rel="stylesheet">
   <link rel="me" href="https://www.google.com/profiles/samsoffes">
   <link rel="author" type="text/plain" href="/humans.txt">
-  <link rel="alternate" type="application/rss+xml" title="Hi, I'm Sam" href="https://soffes.blog/rss">
+  <link rel="alternate" type="application/rss+xml" href="https://soffes.blog/feeds/rss">
+  <link rel="alternate" type="application/json" href="https://soffes.blog/feeds/json">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="fb:app_id" content="1159618850721771">
   <meta property="og:site_name" content="soff.es">
@@ -55,6 +56,7 @@
   </main>
   <% unless @hide_footer %>
   <footer>
+    <p><a href="/feeds/rss">RSS</a> &bull; <a href="/feeds/json">JSON Feed</a></p>
     <p>© 2006-<%= Time.now.year %> <a href="/" rel="home">Sam Soffes</a></p>
   </footer>
   <% end %>
