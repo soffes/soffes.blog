@@ -41,7 +41,7 @@ a {
   }
 }
 
-strong {
+strong, b {
   font-weight: $bold-weight;
   font-style: normal;
 }
@@ -57,7 +57,7 @@ mark {
   }
 }
 
-i {
+em, i {
   font-style:italic
 }
 
