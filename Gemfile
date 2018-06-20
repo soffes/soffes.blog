@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Latest Ruby
-ruby '2.3.3'
+ruby '2.5.1'
 
 # Web server
 gem 'puma'
@@ -49,12 +49,11 @@ gem 'json'
 gem 'dimensions', require: false
 
 # Asset uploading
-gem 'aws-sdk', require: false
+gem 'aws-sdk-s3', require: false
 
 # Stylesheet
 gem 'sass'
 gem 'sprockets-sass'
-gem 'bourbon'
 
 # JavaScript
 gem 'coffee-script'
@@ -70,15 +69,15 @@ group :test do
   gem 'simplecov', require: false
   gem 'coveralls', require: false
 
-  # Testing
-  gem 'minitest', '>= 5.0'
-
-  # Colored output
-  gem 'minitest-reporters', require: 'minitest/reporters'
-
   # Fake Redis
   gem 'fakeredis'
 
   # Web testing
   gem 'capybara'
+
+  # Testing
+  gem 'minitest', '>= 5.0'
+
+  # Colored output
+  gem 'minitest-reporters', require: 'minitest/reporters'
 end

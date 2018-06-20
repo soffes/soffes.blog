@@ -42,7 +42,7 @@ module Soffes
 
       get '/feeds/json' do
         content_type 'application/json; charset=utf8'
-        
+
         feed = {
           version: 'https://jsonfeed.org/version/1',
           title: 'Hi, I’m Sam',
@@ -92,11 +92,11 @@ module Soffes
         erb :index
       end
 
-      get %r{^/([\w\d\-]+)/$} do |key|
+      get %r{^/([\w\-]+)/$} do |key|
         redirect "/#{key}"
       end
 
-      get %r{^/([\w\d\-]+)$} do |key|
+      get %r{^/([\w\-]+)$} do |key|
         @post = PostsController.post(key)
         return erb :not_found unless @post
 

@@ -21,7 +21,9 @@ require 'soffes/blog/importer'
 Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new({ color: true })]
 require 'minitest/autorun'
 
+require 'capybara/minitest'
 Capybara.app = Soffes::Blog::Application
+
 Aws.config[:stub_responses] = true
 
 module Soffes::Blog
