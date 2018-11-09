@@ -80,11 +80,11 @@ module Soffes
         feed.to_json
       end
 
-      get %r{^/page/(\d+)$} do |page|
+      get %r{/page/(\d+)} do |page|
         redirect "/#{page}"
       end
 
-      get %r{^/$|/(\d+)$} do |page|
+      get %r{/|/(\d+)} do |page|
         @page = (page || 1).to_i
         @posts = PostsController.posts(@page)
         @total_pages = PostsController.total_pages
@@ -92,11 +92,11 @@ module Soffes
         erb :index
       end
 
-      get %r{^/([\w\-]+)/$} do |key|
+      get %r{/([\w\-]+)/} do |key|
         redirect "/#{key}"
       end
 
-      get %r{^/([\w\-]+)$} do |key|
+      get %r{/([\w\-]+)} do |key|
         @post = PostsController.post(key)
         return erb :not_found unless @post
 
