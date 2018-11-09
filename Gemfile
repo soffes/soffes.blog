@@ -38,6 +38,9 @@ gem 'safe_yaml'
 
 # Asset pipeline
 gem 'sprockets'
+gem 'sass'
+gem 'sprockets-sass'
+gem 'uglifier'
 
 # Utilities
 gem 'rake', require: false
@@ -50,14 +53,6 @@ gem 'dimensions', require: false
 
 # Asset uploading
 gem 'aws-sdk-s3', require: false
-
-# Stylesheet
-gem 'sass'
-gem 'sprockets-sass'
-
-# JavaScript
-gem 'coffee-script'
-gem 'uglifier'
 
 group :development do
   # Automatic reloading
