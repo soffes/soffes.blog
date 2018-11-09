@@ -62,7 +62,6 @@ end
 group :test do
   # Code coverage
   gem 'simplecov', require: false
-  gem 'coveralls', require: false
 
   # Fake Redis
   gem 'fakeredis'

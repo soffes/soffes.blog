@@ -1,12 +1,12 @@
 sudo: false
 language: ruby
 rvm:
-- 2.3.3
+- 2.5.1
 services:
 - redis-server
 env:
-- COVERAGE=1 COVERALLS=1
-before_install: gem install bundler -v 1.14.5
+- COVERAGE=1
+before_install: gem install bundler -v 1.17.1
 cache:
   directories:
   - vendor/bundle

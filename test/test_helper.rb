@@ -8,11 +8,6 @@ if ENV['COVERAGE']
   end
 end
 
-if ENV['COVERALLS']
-  require 'coveralls'
-  Coveralls.wear!
-end
-
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'soffes/blog'
 require 'soffes/blog/importer'

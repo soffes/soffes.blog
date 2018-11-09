@@ -1,6 +1,6 @@
 # soffes.blog
 
-[![Build Status](https://travis-ci.org/soffes/soffes.blog.svg?branch=master)](https://travis-ci.org/soffes/soffes.blog) [![Coverage Status](https://coveralls.io/repos/github/soffes/soffes.blog/badge.svg?branch=master)](https://coveralls.io/github/soffes/soffes.blog?branch=master)
+[![Build Status](https://travis-ci.org/soffes/soffes.blog.svg?branch=master)](https://travis-ci.org/soffes/soffes.blog)
 
 This is my blog. It's pretty simple. It stores all of the posts in Redis. They are updated via GitHub post-commit hook. My posts are stored [here](https://github.com/soffes/blog).
 
@@ -16,7 +16,7 @@ Import my posts:
 
     $ rake import
 
-Now you can start the server with Foreman:
+Now you can start the server with Shotgun:
 
     $ bundle exec shotgun
 
