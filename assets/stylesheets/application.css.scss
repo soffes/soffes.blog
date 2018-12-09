@@ -46,6 +46,7 @@ strong, b {
 }
 
 mark {
+  color: #000;
   background-color: $highligh-color;
   padding: 0.05em 0.1em;
   box-shadow: $highligh-color 0 0 5px;
@@ -78,7 +79,7 @@ hr {
 
 blockquote {
   border-left: 5px solid #ddd;
-  color: #888;
+  color: #555;
   margin: 0 0 1em;
   padding-left: 1em;
 
