@@ -29,10 +29,12 @@ module Soffes
       AWS_SECRET_ACCESS_KEY = ENV['AWS_SECRET_ACCESS_KEY']
       AWS_S3_REGION = ENV['AWS_S3_REGION'] || 'us-east-1'
 
-      def initialize(local_posts_path: 'tmp/repo', update_posts: true, bucket_name: ENV['AWS_S3_BUCKET_NAME'])
+      def initialize(local_posts_path: 'tmp/repo', update_posts: true, include_drafts: false, use_s3: true, bucket_name: ENV['AWS_S3_BUCKET_NAME'])
         @local_posts_path = local_posts_path
         @update_posts = update_posts
         @bucket_name = bucket_name
+        @include_drafts = include_drafts
+        @use_s3 = use_s3
       end
 
       def import
@@ -52,7 +54,13 @@ module Soffes
         count = 0
 
         # Posts
-        Dir["#{@local_posts_path}/published/*"].each do |path|
+        paths = if @include_drafts
+          Dir["#{@local_posts_path}/drafts/*"]
+        else
+          Dir["#{@local_posts_path}/published/*"]
+        end
+
+        paths.each do |path|
           matches = path.match(/\/(\d{4})-(\d{2})-(\d{2})-([\w\-]+)$/)
           key = matches[4]
 
@@ -75,7 +83,7 @@ module Soffes
           end
 
           # Upload cover image
-          if cover_image = meta['cover_image']
+          if @use_s3 && (cover_image = meta['cover_image'])
             local_path = "#{path}/#{cover_image}"
             meta['cover_image'] = upload(local_path, "#{key}/#{cover_image}")
 
@@ -93,14 +101,16 @@ module Soffes
           meta['title'] = h1.text if h1.text.length > 0
 
           # Upload images
-          doc.css('img').each do |i|
-            src = i['src']
-            next if src.start_with?('http')
+          if @use_s3
+            doc.css('img').each do |i|
+              src = i['src']
+              next if src.start_with?('http')
 
-            image_path = "#{path}/#{src}"
-            next unless File.exists?(image_path)
+              image_path = "#{path}/#{src}"
+              next unless File.exists?(image_path)
 
-            i['src'] = upload(image_path, "#{key}/#{src}")
+              i['src'] = upload(image_path, "#{key}/#{src}")
+            end
           end
 
           # Add HTML

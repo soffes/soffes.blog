@@ -12,3 +12,26 @@ task :import do
   importer = Soffes::Blog::Importer.new
   importer.import
 end
+
+desc 'Import local posts without images'
+task :'import:local' do
+  require 'soffes/blog/importer'
+  importer = Soffes::Blog::Importer.new(
+    local_posts_path: '../blog',
+    update_posts: false,
+    use_s3: false
+  )
+  importer.import
+end
+
+desc 'Import drafts without images'
+task :'import:local_drafts' do
+  require 'soffes/blog/importer'
+  importer = Soffes::Blog::Importer.new(
+    local_posts_path: '../blog',
+    update_posts: false,
+    include_drafts: true,
+    use_s3: false
+  )
+  importer.import
+end
