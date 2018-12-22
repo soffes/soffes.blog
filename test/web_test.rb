@@ -41,7 +41,7 @@ module Soffes::Blog
 
     def test_page_redirect
       visit '/page/2'
-      assert_equal '/2', page.current_path
+      assert_equal 'https://soffes.blog/?page=2', page.current_url
     end
   end
 end
