@@ -169,6 +169,15 @@ section.post {
           }
         }
       }
+
+      mark {
+        background: #ddd;
+        box-shadow: none;
+      }
+
+      blockquote {
+        color: #eee;
+      }
     }
 
     p.copyright {
