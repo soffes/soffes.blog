@@ -69,7 +69,6 @@ module Soffes
 
         posts = PostsController.posts(page)
         feed[:items] = posts.map do |post|
-          # TODO: content_text, summary, image, tags
           url = "https://soffes.blog/#{post['key']}"
           item = {
             id: url,
@@ -78,6 +77,10 @@ module Soffes
             content_html: post['html'],
             date_published: Time.at(post['published_at']).to_datetime.rfc3339
           }
+
+          if tags = post['tags']
+            item[:tags] = tags
+          end
 
           item['banner_image'] = post['cover_image'] if post['cover_image']
 

@@ -114,13 +114,13 @@ module Soffes
           end
 
           # Add HTML
-          meta['html'] = doc.to_html
+          meta['html'] = doc.to_html.chomp
 
           # Add naïve word count
           meta['word_count'] = doc.text.split(/\s+/m).length
 
           # Add excerpt
-          meta['excerpt_html'] = doc.css('p:first-child').text
+          meta['excerpt_html'] = doc.css('p:first-child').text.chomp
 
           # Persist!
           PostsController.insert_post(meta)
