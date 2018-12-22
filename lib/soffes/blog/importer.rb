@@ -124,10 +124,11 @@ module Soffes
           doc.children.each do |block|
             next if block.to_html.strip.empty?
             next if block.name == 'h2' || block.name == 'h3'
-            nodes << block.to_html
+            nodes << block
             break if nodes.count == 3
           end
-          meta['excerpt_html'] = nodes.join
+          meta['excerpt_html'] = nodes.map { |e| e.to_html }.join
+          meta['excerpt_text'] = nodes.map { |e| e.text }.join(' ')
 
           # Persist!
           PostsController.insert_post(meta)
