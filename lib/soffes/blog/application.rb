@@ -48,7 +48,7 @@ module Soffes
           title: 'Hi, I’m Sam',
           description: 'This is my blog. Enjoy.',
           home_page_url: 'https://soffes.blog/',
-          feed_url: 'https://soffes.blog/feed.json',
+          feed_url: 'https://soffes.blog/feeds/json',
           icon: 'https://soffes.blog/icon.png',
           favicon: 'https://soffes.blog/favicon.png',
           author: {
@@ -58,9 +58,14 @@ module Soffes
           }
         }
 
-        # TODO: next_url
+        page = (params[:page] || 1).to_i
+        total_pages = PostsController.total_pages
 
-        posts = PostsController.posts(1)
+        if page < total_pages
+          feed[:next_url] = feed[:feed_url] + "?page=#{page + 1}"
+        end
+
+        posts = PostsController.posts(page)
         feed[:items] = posts.map do |post|
           # TODO: content_text, summary, image, tags
           url = "https://soffes.blog/#{post['key']}"
@@ -84,8 +89,12 @@ module Soffes
         redirect "/#{page}"
       end
 
-      get %r{/|/(\d+)} do |page|
-        @page = (page || 1).to_i
+      get %r{/(\d+)} do |page|
+        redirect "/?page=#{page}"
+      end
+
+      get '/' do
+        @page = (params[:page] || 1).to_i
         @posts = PostsController.posts(@page)
         @total_pages = PostsController.total_pages
 

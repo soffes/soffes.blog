@@ -2,7 +2,7 @@
 <html>
 <head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# article: https://ogp.me/ns/article#">
   <meta charset="utf-8">
-  <title><%= (@title && !@title.empty? ? "#{@title} — Hi, I’m Sam" : "Hi, I’m Sam") %></title>
+  <title><%= (@title && !@title.empty? ? "#{@title} — " : '') %>Hi, I’m Sam</title>
   <link rel="mask-icon" sizes="any" href="/favicon.svg" color="#f6291d">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="/apple-touch-icon-192x192.png" sizes="192x192">
@@ -12,6 +12,12 @@
   <link rel="author" type="text/plain" href="/humans.txt">
   <link rel="alternate" type="application/rss+xml" href="https://soffes.blog/feeds/rss">
   <link rel="alternate" type="application/json" href="https://soffes.blog/feeds/json">
+  <% if @page && @page > 1 %>
+  <link rel="prev" href="https://soffes.blog/?page=<%= @page - 1 %>">
+  <% end %>
+  <% if @page && @page < @total_pages %>
+  <link rel="next" href="https://soffes.blog/?page=<%= @page + 1 %>">
+  <% end %>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="fb:app_id" content="1159618850721771">
   <meta property="og:site_name" content="soff.es">
