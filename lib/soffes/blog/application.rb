@@ -34,13 +34,15 @@ module Soffes
         redirect '/feeds/rss'
       end
 
-      get '/feeds/rss' do
-        @posts = PostsController.posts(1)
+      get '/feeds/rss/?' do
+        @page = (params[:page] || 1).to_i
+        @total_pages = PostsController.total_pages
+        @posts = PostsController.posts(@page)
         content_type :xml
         erb :rss, layout: nil
       end
 
-      get '/feeds/json' do
+      get '/feeds/json/?' do
         content_type 'application/json; charset=utf8'
 
         feed = {
