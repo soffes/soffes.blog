@@ -29,7 +29,7 @@ module Soffes
       AWS_SECRET_ACCESS_KEY = ENV['AWS_SECRET_ACCESS_KEY']
       AWS_S3_REGION = ENV['AWS_S3_REGION'] || 'us-east-1'
 
-      def initialize(local_posts_path: 'tmp/repo', update_posts: true, include_drafts: false, use_s3: true, bucket_name: ENV['AWS_S3_BUCKET_NAME'])
+      def initialize(local_posts_path: 'tmp/repo', update_posts: true, include_drafts: false, bucket_name: ENV['AWS_S3_BUCKET_NAME'], use_s3: true)
         @local_posts_path = local_posts_path
         @update_posts = update_posts
         @bucket_name = bucket_name
@@ -101,16 +101,14 @@ module Soffes
           meta['title'] = h1.text if h1.text.length > 0
 
           # Upload images
-          if @use_s3
-            doc.css('img').each do |i|
-              src = i['src']
-              next if src.start_with?('http')
+          doc.css('img').each do |i|
+            src = i['src']
+            next if src.start_with?('http')
 
-              image_path = "#{path}/#{src}"
-              next unless File.exists?(image_path)
+            image_path = "#{path}/#{src}"
+            next unless File.exists?(image_path)
 
-              i['src'] = upload(image_path, "#{key}/#{src}")
-            end
+            i['src'] = upload(image_path, "#{key}/#{src}")
           end
 
           # Add HTML
@@ -154,12 +152,13 @@ module Soffes
       end
 
       def upload(local, key)
-        unless redis.sismember('uploaded', key)
+        if @use_s3 && !redis.sismember('uploaded', key)
           puts "  Uploading #{key}"
           bucket = Aws::S3::Resource.new(client: aws).bucket(@bucket_name)
           bucket.object(key).upload_file(local, acl: 'public-read')
           redis.sadd('uploaded', key)
         end
+
         "https://#{@bucket_name}.s3.amazonaws.com/#{key}"
       end
     end

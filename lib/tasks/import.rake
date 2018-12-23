@@ -19,6 +19,7 @@ task :'import:local' do
   importer = Soffes::Blog::Importer.new(
     local_posts_path: '../blog',
     update_posts: false,
+    bucket_name: 'soffes-blog',
     use_s3: false
   )
   importer.import
@@ -31,6 +32,7 @@ task :'import:local_drafts' do
     local_posts_path: '../blog',
     update_posts: false,
     include_drafts: true,
+    bucket_name: 'soffes-blog',
     use_s3: false
   )
   importer.import
