@@ -18,3 +18,8 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task :default => :test
+
+desc 'Start development server'
+task :server do
+  system 'bundle exec shotgun'
+end
