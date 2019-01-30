@@ -8,7 +8,10 @@ baseurl: ""
 url: "https://soffes.blog"
 twitter_username: soffes
 github_username:  soffes
-
+timezone: America/Los_Angeles
+encoding: utf-8
+strict_front_matter: true
+permalink: /:title
 markdown: kramdown
 theme: minima
 plugins:

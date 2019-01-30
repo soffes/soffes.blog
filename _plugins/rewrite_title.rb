@@ -1,4 +1,4 @@
-class H1ToTitle < Jekyll::Generator
+class RewriteTitle < Jekyll::Generator
   safe true
 
   REGEX = /(?:---\n[\s\w]*\n---\n)?(# (.*)\n\n)/.freeze
@@ -9,6 +9,6 @@ class H1ToTitle < Jekyll::Generator
       document.content.gsub!(REGEX, '')
       document.data['title'] = title.to_s
     end
-    puts '        - Title Filter'
+    puts '        - Rewrite Title'
   end
 end
