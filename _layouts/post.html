@@ -2,7 +2,15 @@
 layout: default
 ---
 
-<h1>{{ page.title }}</h1>
-<p>{{ page.date | date: "%-d %B %Y" }}</p>
-
-{{content}}
+<section class="post">
+  {% if page.cover_image %}
+  <div class="cover"><div style="background-image:url({{ page.cover_image }})"></div></div>
+  {% endif %}
+  <article>
+    <header>
+      <h2><a href="{{ page.url }}">{{ page.title }}</a></h2>
+      <p>Posted on <time datetime="{{ page.date | date: "%Y-%m-%dT%H:%M:%SZ" }}">{{ page.date | date: "%B %e, %Y" }}</time></p>
+    </header>
+    {{ content }}
+  </article>
+</section>
