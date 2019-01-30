@@ -2,3 +2,6 @@ tmp
 *.rdb
 .env
 coverage
+_posts
+_site
+_assets

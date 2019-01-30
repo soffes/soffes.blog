@@ -1,9 +1,0 @@
-<section class="posts">
-  <% @posts.each do |post| %>
-  <%= erb :'_post', locals: { post: post } %>
-  <% end %>
-</section>
-
-<% if @posts.count > 0 %>
-<%= erb :pagination, locals: { page: @page, total_pages: @total_pages, window: 2 } %>
-<% end %>

@@ -1,0 +1,16 @@
+title: Sam Soffes
+email: sam@soff.es
+description: >-
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+baseurl: ""
+url: "https://soffes.blog"
+twitter_username: soffes
+github_username:  soffes
+
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
