@@ -7,6 +7,10 @@ class RewriteImages < Jekyll::Generator
     site.posts.docs.each do |document|
       assets_path = assets_path_for(document)
       document.content.gsub!(REGEX, "![\\1](#{assets_path}\\2)")
+
+      if document.data['cover_image']
+        document.data['cover_image'] = assets_path + document.data['cover_image']
+      end
     end
     puts '        - Rewrite Images'
   end
