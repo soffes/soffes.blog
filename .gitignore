@@ -3,5 +3,6 @@ tmp
 .env
 coverage
 _posts
+_drafts
 _site
 assets
