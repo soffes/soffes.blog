@@ -1,4 +1,4 @@
-title: Sam Soffes
+title: Hi, I’m Sam
 email: sam@soff.es
 author: Sam Soffes
 description: >-
@@ -12,7 +12,8 @@ encoding: utf-8
 strict_front_matter: true
 permalink: /:title
 markdown: kramdown
+sass:
+  style: compressed
 plugins:
   - jekyll-feed
   - jekyll-sitemap
-  - jekyll-seo-tag
