@@ -1,5 +1,6 @@
 title: Sam Soffes
 email: sam@soff.es
+author: Sam Soffes
 description: >-
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
@@ -13,7 +14,7 @@ encoding: utf-8
 strict_front_matter: true
 permalink: /:title
 markdown: kramdown
-theme: minima
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-seo-tag
