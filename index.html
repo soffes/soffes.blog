@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+<section class="posts">
+  {% for post in paginator.posts %}
+  <article>
+    <header>
+      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      <p>Posted on <time datetime="{{ page.date | date: "%Y-%m-%dT%H:%M:%SZ" }}">{{ page.date | date: "%B %e, %Y" }}</time></p>
+    </header>
+    <p>{{ post.excerpt }} <a href="{{ post.url }}" class="continue-reading">Continue reading &rarr;</a></p>
+  </article>
+  {% endfor %}
+</section>
+
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path }}" class="previous">
+      Previous
+    </a>
+  {% else %}
+    <span class="previous">Previous</span>
+  {% endif %}
+  <span class="page_number ">
+    Page: {{ paginator.page }} of {{ paginator.total_pages }}
+  </span>
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+  {% else %}
+    <span class="next ">Next</span>
+  {% endif %}
+</div>

@@ -11,9 +11,14 @@ timezone: America/Los_Angeles
 encoding: utf-8
 strict_front_matter: true
 permalink: /:title
+paginate: 5
+paginate_path: "/:num"
+exclude:
+  - README.md
 markdown: kramdown
 sass:
   style: compressed
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-paginate
