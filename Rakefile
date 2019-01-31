@@ -3,11 +3,11 @@ task :import => :clean do
   `rm -rf _posts assets`
   `mkdir -p assets`
 
-  unless Dir.exists?('tmp/blog')
+  unless File.directory?('tmp/blog')
     `mkdir -p tmp`
     `git clone https://github.com/soffes/blog tmp/blog`
   else
-    `cd tmp/blog && git pull origin master`
+    `cd tmp/blog && git pull origin master && cd ..`
   end
 
   import_directory('tmp/blog/published', '_posts')
@@ -34,18 +34,18 @@ private
 def import_directory(source, destination)
   `cp -r "#{source}" "#{destination}"`
 
-  Dir.chdir(destination)
+  Dir.chdir(destination) do
+    Dir['*'].each do |dir|
+      md = Dir["#{dir}/*.markdown"].first
+      `mv "#{md}" "#{dir}.md"`
 
-  Dir['*'].each do |dir|
-    md = Dir["#{dir}/*.markdown"].first
-    `mv "#{md}" "#{dir}.md"`
+      if Dir.empty?(dir)
+        `rm -rf "#{dir}"`
+      else
+        `mv "#{dir}" "../assets/"`
+      end
 
-    if Dir.empty?(dir)
       `rm -rf "#{dir}"`
-    else
-      `mv "#{dir}" "../assets/"`
     end
-
-    `rm -rf "#{dir}"`
   end
 end
