@@ -13,4 +13,13 @@ layout: default
     </header>
     {{ content }}
   </article>
+  {% if page.previous %}
+  <footer>
+    <div>
+      {% assign post=page.previous %}
+      {% include post.html %}
+      {% include footer.html %}
+    </div>
+  </footer>
+  {% endif %}
 </section>

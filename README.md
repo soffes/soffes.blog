@@ -14,6 +14,6 @@ Rewrite in Jekyll
 - [ ] Auto deploy when `blog` changes
 - [x] Highlight
 - [ ] Redirects
-- [ ] Next/previous post on show page
+- [x] Next post on show page
 - [x] `cover_image_width` and `cover_image_height`
 - [x] `excerpt_text`
