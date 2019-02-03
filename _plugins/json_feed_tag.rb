@@ -7,10 +7,10 @@ class JsonFeedTag < Liquid::Tag
       version: 'https://jsonfeed.org/version/1',
       title: site['title'],
       description: 'This is my blog.',
-      home_page_url: 'https://soffes.blog/',
-      feed_url: 'https://soffes.blog/feeds/json',
-      icon: 'https://soffes.blog/icon.png',
-      favicon: 'https://soffes.blog/favicon.png',
+      home_page_url: site['url'],
+      feed_url: site['url'] + '/feed.json',
+      icon: site['url'] + '/icon.png',
+      favicon: site['url'] + '/favicon.png',
       author: {
         name: 'Sam Soffes',
         url: 'https://soff.es/',
@@ -19,7 +19,7 @@ class JsonFeedTag < Liquid::Tag
     }
 
     feed[:items] = site['posts'].map do |post|
-      url = "https://soffes.blog/#{post['permalink']}"
+      url = "#{site['url']}/#{post.data['slug']}"
       item = {
         id: url,
         url: url,

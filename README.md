@@ -13,3 +13,5 @@ Rewrite in Jekyll
 - [x] Exclude README
 - [ ] Auto deploy when `blog` changes
 - [x] Highlight
+- [ ] Redirects
+- [ ] Next/previous post on show page
