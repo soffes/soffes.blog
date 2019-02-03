@@ -12,4 +12,4 @@ Rewrite in Jekyll
 - [x] Excerpts
 - [x] Exclude README
 - [ ] Auto deploy when `blog` changes
-- [ ] Highlight
+- [x] Highlight

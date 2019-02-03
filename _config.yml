@@ -15,7 +15,7 @@ paginate: 5
 paginate_path: "/:num"
 exclude:
   - README.md
-markdown: kramdown
+markdown: Custom
 sass:
   style: compressed
 plugins:
