@@ -4,11 +4,12 @@ Rewrite in Jekyll
 
 ## Todo
 
-- [ ] Pagination
+- [x] Pagination
 - [ ] RSS
 - [ ] JSON
 - [ ] SEO
 - [ ] Test sitemap
-- [x] Excerpts
+- [ ] Excerpts
 - [x] Exclude README
 - [ ] Auto deploy when `blog` changes
+- [ ] Highlight
