@@ -19,6 +19,7 @@ class RewriteImages < Jekyll::Generator
   private
 
   def assets_path_for(document)
-    "/assets/#{document.data['date'].strftime('%Y-%m-%d')}-#{document.data['slug']}/"
+    url = ENV['ASSET_URL'] || '/assets/'
+    "#{url + document.data['date'].strftime('%Y-%m-%d')}-#{document.data['slug']}/"
   end
 end

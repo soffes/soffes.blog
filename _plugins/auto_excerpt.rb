@@ -2,9 +2,6 @@ require 'nokogiri'
 
 class AutoExcerpts < Jekyll::Generator
   safe true
-
-  # This needs to run last after the other content filters have
-  # processed the posts.
   priority :low
 
   def generate(site)

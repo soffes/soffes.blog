@@ -1,10 +1,6 @@
 class PaginationTag < Liquid::Tag
   WINDOW = 1
 
-  def initialize(tag_name, text, tokens)
-    super
-  end
-
   def render(context)
     window = WINDOW
     page = context['paginator']['page']

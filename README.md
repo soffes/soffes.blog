@@ -6,7 +6,7 @@ Rewrite in Jekyll
 
 - [x] Pagination
 - [x] RSS
-- [ ] JSON
+- [x] JSON Feed
 - [ ] SEO
 - [ ] Test sitemap
 - [x] Excerpts
