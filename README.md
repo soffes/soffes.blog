@@ -9,7 +9,6 @@ Rewrite in Jekyll
 - [ ] JSON
 - [ ] SEO
 - [ ] Test sitemap
-- [ ] Excerpts
-- [ ] Partial for index
+- [x] Excerpts
 - [x] Exclude README
 - [ ] Auto deploy when `blog` changes
