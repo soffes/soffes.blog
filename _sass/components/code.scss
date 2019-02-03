@@ -19,8 +19,11 @@ code {
 }
 
 .highlight {
-   background: #fff;
    color: #4d4d4c;
+
+   code {
+    background: transparent;
+   }
 
   .hll {background-color: #d6d6d6 }
   .c { color: #8e908c } /* Comment */

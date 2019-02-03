@@ -6,9 +6,10 @@ class RewriteTitle < Jekyll::Generator
   def generate(site)
     site.posts.docs.each do |document|
       next unless title = document.content.match(REGEX)[2]
-      document.content.gsub!(REGEX, '')
+      document.content.sub!(REGEX, '')
       document.data['title'] = title.to_s
     end
+
     puts '        - Rewrite Title'
   end
 end

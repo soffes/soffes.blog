@@ -12,6 +12,7 @@ class RewriteImages < Jekyll::Generator
         document.data['cover_image'] = assets_path + document.data['cover_image']
       end
     end
+
     puts '        - Rewrite Images'
   end
 

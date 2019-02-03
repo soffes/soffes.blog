@@ -6,6 +6,7 @@ class DefaultLayout < Jekyll::Generator
       next if document.to_liquid.key? 'layout'
       document.data['layout'] = 'post'
     end
+
     puts '        - Default Layout'
   end
 end
