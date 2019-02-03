@@ -8,7 +8,7 @@ Rewrite in Jekyll
 - [x] RSS
 - [x] JSON Feed
 - [ ] SEO
-- [ ] Test sitemap
+- [x] Test sitemap
 - [x] Excerpts
 - [x] Exclude README
 - [ ] Auto deploy when `blog` changes
