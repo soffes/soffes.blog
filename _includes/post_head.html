@@ -1,0 +1,29 @@
+  {% assign post = page %}
+  <meta property="og:url" content="{{ post.url | prepend: site.url }}">
+  <meta property="description" content="{{ post.excerpt_text }}">
+  {%- if post.tags %}
+  <meta property="keywords" content="{{ post.tags | join: "," }}">
+  {% endif -%}
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ post.title }}">
+  <meta property="og:description" content="{{ post.excerpt_text }}">
+  {%- if post.cover_image %}
+  <meta property="og:image" content="{{ post.cover_image }}">
+  <meta property="og:image:width" content="{{ post.cover_image_width }}">
+  <meta property="og:image:height" content="{{ post.cover_image_height }}">
+  {%- endif %}
+  <meta property="article:published_time" content="{{ post.date | date_to_rfc822 }}">
+  <meta property="article:author" content="https://soff.es/">
+  {%- for tag in post.tags %}
+  <meta property="article:tag" content="{{ tag }}">
+  {%- endfor %}
+  <meta property="twitter:site" content="@soffes">
+  {%- if post.cover_image %}
+  <meta property="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:src" content="{{ post.cover_image }}">
+  {% else %}
+  <meta property="twitter:card" content="summary">
+  {% endif -%}
+  <meta name="twitter:url" content="{{ post.url | prepend: site.url }}">
+  <meta name="twitter:description" content="{{ post.excerpt_text }}">
+  <meta name="twitter:title" content="{{ post.title }}">

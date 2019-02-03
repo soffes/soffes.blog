@@ -15,3 +15,5 @@ Rewrite in Jekyll
 - [x] Highlight
 - [ ] Redirects
 - [ ] Next/previous post on show page
+- [ ] `cover_image_width` and `cover_image_height`
+- [ ] `excerpt_text`

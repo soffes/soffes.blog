@@ -15,6 +15,13 @@ paginate: 5
 paginate_path: "/:num"
 exclude:
   - README.md
+defaults:
+  -
+    scope:
+      path: ""
+      type: posts
+    values:
+      is_post: true
 markdown: Custom
 sass:
   style: compressed
