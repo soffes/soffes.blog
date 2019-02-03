@@ -5,7 +5,7 @@ Contact:      sam@soff.es
 Twitter:      @soffes
 
 /* SITE */
-Last update:  03/16/13
+Last update:  2019-02-03
 Language:     English
 Doctype:      HTML5
-Tools:        Ruby, HTML, SCSS on Heroku
+Tools:        Jekyll, Ruby, HTML, SCSS on Netlify
