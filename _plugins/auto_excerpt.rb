@@ -1,25 +1,41 @@
-require 'strscan'
+require 'nokogiri'
 
 class AutoExcerpts < Jekyll::Generator
-  H1_REGEX = /^# .*$\n\n/
-
   safe true
+
+  # This needs to run last after the other content filters have
+  # processed the posts.
   priority :low
 
   def generate(site)
-    markdown = site.find_converter_instance(Jekyll::Converters::Markdown)
+    @site = site
+
     site.posts.docs.each do |document|
-      scanner = StringScanner.new(document.content)
-      scanner.scan_until H1_REGEX
-
-      3.times do
-        scanner.scan_until /^\n/
-      end
-
-      excerpt = document.content[0...scanner.charpos]
-      document.data['excerpt'] = markdown.convert(excerpt)
+      document.data['excerpt'] = excerpt_for(document.content)
     end
 
     puts '        - Auto Excerpts'
+  end
+
+  private
+
+  def excerpt_for(markdown)
+    html = html_for(markdown)
+    doc = Nokogiri::HTML.fragment(html)
+
+    nodes = []
+    doc.children.each do |block|
+      next if block.to_html.strip.empty?
+      next if block.name == 'h2' || block.name == 'h3'
+      nodes << block
+      break if nodes.count == 3
+    end
+
+    nodes.map { |e| e.to_html }.join
+  end
+
+  def html_for(markdown)
+    @_markdown ||= @site.find_converter_instance(Jekyll::Converters::Markdown)
+    @_markdown.convert(markdown)
   end
 end
