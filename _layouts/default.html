@@ -2,7 +2,7 @@
 <html lang="{{ site.lang | default: "en-US" }}">
 <head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# article: https://ogp.me/ns/article#">
   <meta charset="utf-8">
-  <!-- <title><%= (@title && !@title.empty? ? "#{@title} — " : '') %>Hi, I’m Sam</title> -->
+  <title>{% if page.title %}{{ page.title }} — {% endif %}Hi, I’m Sam</title>
   <link rel="mask-icon" sizes="any" href="/favicon.svg" color="#f6291d">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="/apple-touch-icon-192x192.png" sizes="192x192">
@@ -10,19 +10,19 @@
   <link href="/css/styles.css" rel="stylesheet">
   <link rel="me" href="https://www.google.com/profiles/samsoffes">
   <link rel="author" type="text/plain" href="/humans.txt">
-<!--   <link rel="alternate" type="application/rss+xml" href="https://soffes.blog/feeds/rss">
-  <link rel="alternate" type="application/json" href="https://soffes.blog/feeds/json">
-  <% if @page && @page > 1 %>
+  <link rel="alternate" type="application/rss+xml" href="https://soffes.blog/rss.xml">
+  <link rel="alternate" type="application/json" href="https://soffes.blog/feed.json">
+<!--   <% if @page && @page > 1 %>
   <link rel="prev" href="https://soffes.blog/?page=<%= @page - 1 %>">
   <% end %>
   <% if @page && @page < @total_pages %>
   <link rel="next" href="https://soffes.blog/?page=<%= @page + 1 %>">
   <% end %>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ -->  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="fb:app_id" content="1159618850721771">
   <meta property="og:site_name" content="soff.es">
-  <meta property="copyright" content="&copy; 2006-<%= Time.now.year %> Sam Soffes">
-  <% if @post %>
+  <meta property="copyright" content="&copy; 2006-2019 Sam Soffes">
+  <!-- <% if @post %>
   <meta property="og:url" content="https://soffes.blog/<%= @post['key'] %>">
   <meta property="description" content="<%= @post['excerpt_text'] %>">
   <% if tags = @post['tags'] %>
@@ -64,7 +64,7 @@
   {{ content }}
   </main>
   <footer>
-    <p><a href="/feeds/rss">RSS</a> &bull; <a href="/feeds/json">JSON Feed</a></p>
+    <p><a href="/rss.xml">RSS</a> &bull; <a href="/feed.json">JSON Feed</a></p>
     <p>© 2006–2019 <a href="/" rel="home">Sam Soffes</a></p>
   </footer>
   <script src="/js/application.js"></script>
