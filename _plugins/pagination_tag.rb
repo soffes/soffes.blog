@@ -1,5 +1,5 @@
 class PaginationTag < Liquid::Tag
-  WINDOW = 2
+  WINDOW = 1
 
   def initialize(tag_name, text, tokens)
     super
@@ -26,19 +26,19 @@ class PaginationTag < Liquid::Tag
           output << link_for(i)
         end
 
-        if page > window * 2
+        if page > (window * 2) + 1
           output << gap
         end
       end
     end
 
-    if page > 1
+    if page > 2
       output << %(<a href="#{path_for(page - 1)}" rel="prev">#{page - 1}</a>)
     end
 
     output << %(<span class="current">#{page}</span>)
 
-    if page < total_pages
+    if page < total_pages - 1
       output << %(<a href="#{path_for(page + 1)}" rel="next">#{page + 1}</a>)
     end
 
