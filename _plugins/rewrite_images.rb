@@ -1,3 +1,5 @@
+require 'dimensions'
+
 class RewriteImages < Jekyll::Generator
   safe true
 
@@ -7,11 +9,16 @@ class RewriteImages < Jekyll::Generator
     @site = site
 
     site.posts.docs.each do |document|
-      assets_path = assets_path_for(document)
-      document.content.gsub!(REGEX, "![\\1](#{assets_path}\\2)")
+      assets_url = assets_url_for(document)
+      document.content.gsub!(REGEX, "![\\1](#{assets_url}\\2)")
 
       if document.data['cover_image']
-        document.data['cover_image'] = assets_path + document.data['cover_image']
+        path = assets_path_for(document) + document.data['cover_image']
+        document.data['cover_image'] = assets_url + document.data['cover_image']
+
+        size = Dimensions.dimensions(path)
+        document.data['cover_image_width'] = size[0]
+        document.data['cover_image_height'] = size[1]
       end
     end
 
@@ -20,7 +27,11 @@ class RewriteImages < Jekyll::Generator
 
   private
 
+  def assets_url_for(document)
+    "#{@site.data['url']}/#{assets_path_for(document)}"
+  end
+
   def assets_path_for(document)
-    "#{@site.data['url']}/assets/#{document.data['date'].strftime('%Y-%m-%d')}-#{document.data['slug']}/"
+    "assets/#{document.data['date'].strftime('%Y-%m-%d')}-#{document.data['slug']}/"
   end
 end

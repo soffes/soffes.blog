@@ -7,7 +7,7 @@ Rewrite in Jekyll
 - [x] Pagination
 - [x] RSS
 - [x] JSON Feed
-- [ ] SEO
+- [x] SEO
 - [x] Test sitemap
 - [x] Excerpts
 - [x] Exclude README
@@ -15,5 +15,5 @@ Rewrite in Jekyll
 - [x] Highlight
 - [ ] Redirects
 - [ ] Next/previous post on show page
-- [ ] `cover_image_width` and `cover_image_height`
-- [ ] `excerpt_text`
+- [x] `cover_image_width` and `cover_image_height`
+- [x] `excerpt_text`

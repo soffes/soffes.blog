@@ -1,6 +1,9 @@
+require 'action_view'
 require 'nokogiri'
 
 class AutoExcerpts < Jekyll::Generator
+  include ActionView::Helpers::TextHelper
+
   safe true
   priority :low
 
@@ -8,7 +11,11 @@ class AutoExcerpts < Jekyll::Generator
     @site = site
 
     site.posts.docs.each do |document|
-      document.data['excerpt'] = excerpt_for(document.content)
+      nodes = excerpt_for(document.content)
+      document.data['excerpt'] = nodes.map { |e| e.to_html }.join
+
+      text = nodes.map { |e| e.text }.join(' ').gsub(/\n/, ' ').gsub(/\s+/, ' ')
+      document.data['excerpt_text'] = truncate(text, length: 150, separator: /\s/)
     end
 
     puts '        - Auto Excerpts'
@@ -27,8 +34,7 @@ class AutoExcerpts < Jekyll::Generator
       nodes << block
       break if nodes.count == 3
     end
-
-    nodes.map { |e| e.to_html }.join
+    nodes
   end
 
   def html_for(markdown)
