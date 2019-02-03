@@ -5,7 +5,7 @@ Rewrite in Jekyll
 ## Todo
 
 - [x] Pagination
-- [ ] RSS
+- [x] RSS
 - [ ] JSON
 - [ ] SEO
 - [ ] Test sitemap

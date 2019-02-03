@@ -19,6 +19,5 @@ markdown: Custom
 sass:
   style: compressed
 plugins:
-  - jekyll-feed
   - jekyll-sitemap
   - jekyll-paginate
