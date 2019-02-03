@@ -1,6 +1,7 @@
 class RewriteImages < Jekyll::Generator
   safe true
 
+  ASSETS_URL = ENV['ASSETS_URL'] || '/assets/'
   REGEX = /!\[(.*)\]\((?!http)(.*)\)/.freeze
 
   def generate(site)
@@ -19,7 +20,6 @@ class RewriteImages < Jekyll::Generator
   private
 
   def assets_path_for(document)
-    url = ENV['ASSET_URL'] || '/assets/'
-    "#{url + document.data['date'].strftime('%Y-%m-%d')}-#{document.data['slug']}/"
+    "#{ASSETS_URL + document.data['date'].strftime('%Y-%m-%d')}-#{document.data['slug']}/"
   end
 end
