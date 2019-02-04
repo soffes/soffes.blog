@@ -96,6 +96,19 @@ article {
     float: right;
     margin: 0 0 1em 1em;
   }
+
+  div.thanks {
+    color: $gray-color;
+    padding-top: 2em;
+
+    a {
+      color: $gray-color - #333;
+
+      &:hover {
+        color: $link-color;
+      }
+    }
+  }
 }
 
 section.posts article {
