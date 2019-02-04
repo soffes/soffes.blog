@@ -5,6 +5,7 @@ description: >-
   This is my blog. I also have a <a href="https://soff.es/" rel="external">website thing</a>.
 baseurl: ""
 url: "https://soffes.blog"
+google_analytics: UA-5609322-18
 twitter_username: soffes
 github_username:  soffes
 timezone: America/Los_Angeles
