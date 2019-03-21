@@ -1,4 +1,4 @@
-desc 'Import posts'
+desc 'Import published posts'
 task :import => :clean do
   `rm -rf _posts assets`
   `mkdir -p assets`
@@ -11,8 +11,21 @@ task :import => :clean do
   end
 
   import_directory('tmp/blog/published', '_posts')
-  # import_directory('tmp/blog/drafts', '_drafts')
 end
+
+namespace :import do
+  desc 'Import posts'
+  task :local => :clean do
+    `rm -rf _posts assets tmp/blog`
+    `mkdir -p assets`
+    `mkdir -p tmp`
+    `cp -r ../blog tmp/blog`
+
+    import_directory('tmp/blog/published', '_posts')
+    import_directory('tmp/blog/drafts', '_drafts')
+  end
+end
+
 
 desc 'Build'
 task :build => :import do
@@ -25,13 +38,15 @@ task :clean do
 end
 
 desc 'Local server'
-task :server => :import do
+task :server do
   `bundle exec jekyll serve`
 end
 
 private
 
 def import_directory(source, destination)
+  return unless File.directory?(source)
+
   `cp -r "#{source}" "#{destination}"`
 
   Dir.chdir(destination) do
