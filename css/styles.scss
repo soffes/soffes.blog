@@ -114,10 +114,13 @@ h1 {
   color: #000;
   font-size: 3em;
   margin-bottom: 0.5em;
-  font-family: 'Landmark Dimensional A', 'Landmark Dimensional B';
   font-weight: 400;
   text-transform: capitalize;
   line-height: 1em;
+
+  span {
+    display: none;
+  }
 }
 
 body > header h1 {

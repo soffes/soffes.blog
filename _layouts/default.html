@@ -2,11 +2,10 @@
 <html lang="{{ site.lang | default: "en-US" }}">
 <head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# article: https://ogp.me/ns/article#">
   <meta charset="utf-8">
-  <title>{% if page.title %}{{ page.title }} — {% endif %}Hi, I’m Sam</title>
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
   <link rel="mask-icon" sizes="any" href="/favicon.svg" color="#f6291d">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="/apple-touch-icon-192x192.png" sizes="192x192">
-  <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/619254/777982/css/fonts.css">
   <link href="/css/styles.css" rel="stylesheet">
   <link rel="me" href="https://www.google.com/profiles/samsoffes">
   <link rel="author" type="text/plain" href="/humans.txt">
@@ -27,7 +26,10 @@
 <body>
   {% unless page.cover_image %}
   <header>
-    <h1><a href="/" rel="home">{{ site.title }}</a></h1>
+    <h1><a href="/" rel="home" title="{{ site.title }}">
+      <span>{{ site.title }}</span>
+      <img src="/logo.svg" width="361" height="65" alt="{{ site.title }}">
+    </a></h1>
     <p>{{ site.description }}</p>
   </header>
   {% endunless %}
