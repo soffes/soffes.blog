@@ -27,7 +27,5 @@ defaults:
       is_post: true
       layout: post
 markdown: Custom
-sass:
-  style: compressed
 plugins:
   - jekyll-paginate
