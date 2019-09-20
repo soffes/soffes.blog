@@ -6,3 +6,4 @@ _posts
 _drafts
 _site
 assets
+.jekyll-cache/
