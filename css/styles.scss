@@ -22,10 +22,10 @@ html {
 
 body {
   color: $text-color;
-  font-size: 20px;
-  font-family: $font-family;
-  font-weight: $standard-weight;
-  line-height: 1.55em;
+  font-size: $body-font-size;
+  font-family: $body-font-family;
+  font-weight: $body-font-weight;
+  line-height: 1.7em;
 }
 
 input {
@@ -45,7 +45,7 @@ a {
 }
 
 strong, b {
-  font-weight: $bold-weight;
+  font-weight: $bold-font-weight;
   font-style: normal;
 }
 
@@ -112,15 +112,12 @@ small {
 
 h1 {
   color: #000;
+  font-family: $logo-font-family;
+  font-weight: $logo-font-weight;
   font-size: 3em;
   margin-bottom: 0.5em;
-  font-weight: 400;
   text-transform: capitalize;
-  line-height: 1em;
-
-  span {
-    display: none;
-  }
+  line-height: 1.2em;
 }
 
 body > header h1 {
@@ -132,7 +129,7 @@ body > header h1 {
 
 h2 {
   font-size: 1.3em;
-  font-weight: $bold-weight;
+  font-weight: $bold-font-weight;
 
   a {
     color: $text-color;
@@ -141,7 +138,7 @@ h2 {
 }
 
 h3 {
-  font-weight: $bold-weight;
+  font-weight: $bold-font-weight;
   color: #666;
   font-size: 1.1em;
 
@@ -153,7 +150,7 @@ h3 {
 
 h4 {
   color: #999;
-  font-weight: $bold-weight;
+  font-weight: $bold-font-weight;
   margin-bottom: 0.2em;
 }
 

@@ -2,11 +2,15 @@
 $width: 708px;
 
 // Fonts
-$font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-$standard-weight: 400;
-$bold-weight: 600;
+$body-font-family: "Whitney SSm A", "Whitney SSm B", -apple-system, BlinkMacSystemFont, sans-serif;
+$body-font-weight: 400;
+$bold-font-weight: 700;
+$body-font-size: 18px;
 $monospace-font-family: 'Menlo', 'Monaco', monospace;
 $monospace-size: 17px;
+
+$logo-font-family: "Landmark Dimensional A", "Landmark Dimensional B";
+$logo-font-weight: 400;
 
 // Colors
 $link-color: #0881b3;
