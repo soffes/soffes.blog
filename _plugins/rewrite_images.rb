@@ -3,14 +3,13 @@ require 'dimensions'
 class RewriteImages < Jekyll::Generator
   safe true
 
-  REGEX = /!\[(.*)\]\((?!http)(.*)\)/.freeze
-
   def generate(site)
     @site = site
 
     site.posts.docs.each do |document|
       assets_url = assets_url_for(document)
-      document.content.gsub!(REGEX, "![\\1](#{assets_url}\\2)")
+      document.content.gsub!(/!\[(.*)\]\((?!http)(.*)\)/, "![\\1](#{assets_url}\\2)")
+      document.content.gsub!(/(<img.*src=")(?!http)([^"]+)(".*>)/, "\\1#{assets_url}\\2\\3")
 
       if document.data['cover_image']
         path = assets_path_for(document) + document.data['cover_image']
