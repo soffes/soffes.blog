@@ -7,7 +7,7 @@
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="/apple-touch-icon-192x192.png" sizes="192x192">
   <link rel="stylesheet" href="https://cloud.typography.com/619254/6911812/css/fonts.css">
-  <link href="/css/styles.css" rel="stylesheet">
+  <link href="/css/blog.css" rel="stylesheet">
   {%- if page.is_gallery %}
   <link href="/css/gallery.css" rel="stylesheet">{% endif %}
   <link rel="me" href="https://www.google.com/profiles/samsoffes">
@@ -42,7 +42,9 @@
     {% include footer.html %}
   </footer>
   {% endunless %}
-  <script src="/js/application.js"></script>
+  <script src="/js/blog.js"></script>
+  {%- if page.is_gallery %}
+  <script src="/js/gallery.js"></script>{% endif %}
   {% if site.google_analytics %}
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-5609322-18"></script>
 <script>window.dataLayer=window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '{{ site.google_analytics }}');</script>
