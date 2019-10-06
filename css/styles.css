@@ -604,3 +604,36 @@ nav.pagination em {
     display: inline
   }
 }
+
+/* Gallery */
+
+.gallery {
+  width: 100%;
+}
+
+.gallery-bottom {
+  margin-bottom: 1em;
+}
+
+.gallery > div {
+  display: grid;
+  width: 100%;
+  grid-gap: 8px;
+}
+
+.gallery .gallery-row2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.gallery .gallery-row3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.gallery a, .gallery a:hover {
+  border: 0;
+}
+
+.gallery a img {
+  width: 100%;
+}
