@@ -30,7 +30,7 @@ class AutoExcerpts < Jekyll::Generator
     nodes = []
     doc.children.each do |block|
       next if block.to_html.strip.empty?
-      next if block.name == 'h2' || block.name == 'h3'
+      next if block.name == 'h2' || block.name == 'h3' || block.name == 'div'
       nodes << block
       break if nodes.count == 3
     end
