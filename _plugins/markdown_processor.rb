@@ -1,10 +1,11 @@
-require 'pygments'
+require 'rouge'
 require 'redcarpet'
 
 class MarkdownRenderer < Redcarpet::Render::HTML
   def block_code(code, language)
     if language
-      Pygments.highlight(code, lexer: language.to_sym)
+      language = 'objective_c' if language == 'objective-c' || language == 'objc'
+      %(<div class="highlight"><pre>#{Rouge.highlight(code, language, 'html')}</pre></div>)
     else
       "<pre>#{code}</pre>"
     end

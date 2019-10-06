@@ -34,12 +34,12 @@ end
 
 desc 'Clean'
 task :clean do
-  `rm -rf _posts _drafts _site assets`
+  `rm -rf _posts _drafts _site assets .jekyll-cache`
 end
 
 desc 'Local server'
 task :server do
-  `bundle exec jekyll serve`
+  `bundle exec jekyll serve --trace`
 end
 
 private
