@@ -9,8 +9,8 @@ class RewriteImages < Jekyll::Generator
     site.posts.docs.each do |document|
       assets_url = assets_url_for(document)
       document.content.gsub!(/!\[(.*)\]\((?!http)(.*)\)/, "![\\1](#{assets_url}\\2)")
-      document.content.gsub!(/(<img.*src=")(?!http)([^"]+\.(?:jpg|png))(".*>)/, "\\1#{assets_url}\\2\\3")
-      document.content.gsub!(/(<a.*href=")(?!http)([^"]+\.(?:jpg|png))(".*>)/, "\\1#{assets_url}\\2\\3")
+      document.content.gsub!(/(<img.*src=")(?!http)([^"]+\.(?:jpg|png|svg))(".*>)/, "\\1#{assets_url}\\2\\3")
+      document.content.gsub!(/(<a.*href=")(?!http)([^"]+\.(?:jpg|png|svg))(".*>)/, "\\1#{assets_url}\\2\\3")
 
       if document.data['cover_image']
         path = assets_path_for(document) + document.data['cover_image']

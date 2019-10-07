@@ -29,7 +29,7 @@ end
 
 desc 'Build'
 task :build => :import do
-  `bundle exec jekyll build --config _config.yml`
+  `bundle exec jekyll build --config _config.yml --trace `
 end
 
 desc 'Clean'
@@ -39,7 +39,7 @@ end
 
 desc 'Local server'
 task :server do
-  `bundle exec jekyll serve --trace`
+  `bundle exec jekyll serve --config _config.yml --trace`
 end
 
 private

@@ -2,18 +2,18 @@ require 'action_view'
 require 'nokogiri'
 
 Jekyll::Hooks.register :posts, :post_render do |post|
-  generator = AutoExcerptGenerator.new(post)
-  generator.generate
+  processor = AutoExcerptProcessor.new(post)
+  processor.process!
 end
 
-class AutoExcerptGenerator
+class AutoExcerptProcessor
   include ActionView::Helpers::TextHelper
 
   def initialize(document)
     @document = document
   end
 
-  def generate
+  def process!
     nodes = excerpt_for(@document.content)
     @document.data['excerpt'] = nodes.map { |e| e.to_html }.join
 

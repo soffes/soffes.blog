@@ -13,7 +13,13 @@ $ git clone https://github.com/soffes/soffes.blog.git
 $ cd soffes.blog
 ```
 
-Install dependencies (you’ll need [Bundler](https://bundler.io) installed first):
+You’ll need Image Magick first. You can install this with [Homebrew](https://brew.sh):
+
+```bash
+$ brew install imagemagick
+```
+
+Install the Ruby dependencies (you’ll need [Bundler](https://bundler.io) installed first):
 
 ```bash
 $ bundle install
@@ -22,7 +28,8 @@ $ bundle install
 Now you can import my posts and start the server:
 
 ```bash
+$ rake import
 $ rake server
 ```
 
-Then open [localhost:4000](http://localhost:4000) in your browser to see it running.
+Now open [localhost:4000](http://localhost:4000) in your browser to see it running.
