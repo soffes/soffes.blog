@@ -1,4 +1,4 @@
-class RewriteTitle < Jekyll::Generator
+class AutoTitle < Jekyll::Generator
   safe true
 
   REGEX = /(?:---\n[\s\w]*\n---\n)?(# (.*)\n\n)/.freeze

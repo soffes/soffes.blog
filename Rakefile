@@ -5,9 +5,9 @@ task :import => :clean do
 
   unless File.directory?('tmp/blog')
     `mkdir -p tmp`
-    `git clone https://github.com/soffes/blog tmp/blog`
+    system 'git clone https://github.com/soffes/blog tmp/blog'
   else
-    `cd tmp/blog && git pull origin master && cd ..`
+    system 'cd tmp/blog && git pull origin master && cd ..'
   end
 
   import_directory('tmp/blog/published', '_posts')
@@ -29,8 +29,10 @@ end
 
 desc 'Build'
 task :build => :import do
-  `bundle exec jekyll build --config _config.yml --trace `
+  system 'bundle exec jekyll build --config _config.yml --trace'
 end
+
+task default: :build
 
 desc 'Clean'
 task :clean do
@@ -39,7 +41,7 @@ end
 
 desc 'Local server'
 task :server do
-  `bundle exec jekyll serve --config _config.yml --trace`
+  system 'bundle exec jekyll serve --config _config.yml --trace'
 end
 
 private

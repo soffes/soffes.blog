@@ -33,7 +33,6 @@ section.post > div.cover > div {
   display: grid;
   width: 100%;
   grid-gap: 8px;
-  margin-bottom: 8px;
 }
 
 .gallery .gallery-row2 {
