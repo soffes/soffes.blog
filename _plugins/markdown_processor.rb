@@ -3,6 +3,21 @@ require 'redcarpet'
 require 'nokogiri'
 require 'mini_magick'
 
+class Jekyll::Document
+  def assets_url
+    "#{site.data['url']}/#{assets_path}"
+  end
+
+  def assets_path
+    "assets/#{data['date'].strftime('%Y-%m-%d')}-#{data['slug']}/"
+  end
+end
+
+Jekyll::Hooks.register :site, :post_render do |site|
+  # Reread to find the new images we just wrote
+  site.read
+end
+
 module MiniMagick
   class Image
     def pixel_at(x, y)

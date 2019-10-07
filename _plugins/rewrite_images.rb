@@ -5,13 +5,13 @@ class RewriteImages < Jekyll::Generator
     @site = site
 
     site.posts.docs.each do |document|
-      assets_url = assets_url_for(document)
+      assets_url = document.assets_url
       document.content.gsub!(/!\[(.*)\]\((?!http)(.*)\)/, "![\\1](#{assets_url}\\2)")
       document.content.gsub!(/(<img.*src=")(?!http)([^"]+\.(?:jpg|png|svg))(".*>)/, "\\1#{assets_url}\\2\\3")
       document.content.gsub!(/(<a.*href=")(?!http)([^"]+\.(?:jpg|png|svg))(".*>)/, "\\1#{assets_url}\\2\\3")
 
       if document.data['cover_image']
-        path = assets_path_for(document) + document.data['cover_image']
+        path = document.assets_path + document.data['cover_image']
         document.data['cover_image'] = assets_url + document.data['cover_image']
 
         size = MiniMagick::Image.open(path).dimensions
@@ -21,16 +21,6 @@ class RewriteImages < Jekyll::Generator
     end
 
     puts '        - Rewrite Images'
-  end
-
-  private
-
-  def assets_url_for(document)
-    "#{@site.data['url']}/#{assets_path_for(document)}"
-  end
-
-  def assets_path_for(document)
-    "assets/#{document.data['date'].strftime('%Y-%m-%d')}-#{document.data['slug']}/"
   end
 end
 
