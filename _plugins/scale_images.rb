@@ -46,8 +46,6 @@ class ImageProcessor
       full_resized_path = ".#{resized_path}"
       srcset << "#{resized_path} #{size}w"
 
-      next if File.exist?(full_resized_path)
-
       image = MiniMagick::Image.open(full_path)
       image.resize "#{size}x#{size}>"
       image.write(full_resized_path)
