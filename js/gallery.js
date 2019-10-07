@@ -21,6 +21,8 @@ addLoadEvent(function() {
 
     const lightbox = document.createElement('DIV');
     lightbox.className = 'lightbox';
+    lightbox.setAttribute('tabindex', '-1');
+
     document.body.appendChild(lightbox);
     window.lightbox = lightbox;
 
@@ -28,6 +30,16 @@ addLoadEvent(function() {
       console.log('click')
       close();
     });
+
+    lightbox.addEventListener('keydown', function(event) {
+      // Escape
+      if (event.keyCode === 27) {
+        close();
+        event.preventDefault();
+      }
+    });
+
+    lightbox.focus();
   };
 
   // Show an image. This expects an `<a>` as its parameter.

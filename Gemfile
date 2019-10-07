@@ -8,7 +8,6 @@ gem 'nokogiri'
 gem 'rouge'
 gem 'redcarpet'
 gem 'actionview'
-gem 'dimensions'
 gem 'mini_magick'
 
 group :jekyll_plugins do

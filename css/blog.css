@@ -200,8 +200,8 @@ sup {
   vertical-align: super;
 }
 
-body > header, main > section.posts, main > nav, body > footer {
-  max-width: 708px;
+body > header, main > section.posts, main > nav, body > footer, section.post > article, section.post > footer div, section.error {
+  max-width: 800px;
   margin: 0 auto;
   padding: 0 16px;
   box-sizing: border-box;
@@ -367,13 +367,6 @@ section.posts article:last-child {
   margin-bottom: 3em;
 }
 
-section.post > article {
-  max-width: 708px;
-  margin: 0 auto;
-  padding: 0 16px;
-  box-sizing: border-box;
-}
-
 section.post > div.cover {
   position: relative;
   width: 100%;
@@ -404,13 +397,6 @@ section.post > footer {
 
 section.post > footer a {
   color: #64c1f8;
-}
-
-section.post > footer div {
-  max-width: 708px;
-  margin: 0 auto;
-  padding: 0 16px;
-  box-sizing: border-box;
 }
 
 section.post > footer article {
@@ -458,13 +444,6 @@ section.post > footer p.copyright a {
 
 a.continue-reading {
   white-space: nowrap;
-}
-
-section.error {
-  max-width: 708px;
-  margin: 0 auto;
-  padding: 0 16px;
-  box-sizing: border-box;
 }
 
 a.twitter-username:before {

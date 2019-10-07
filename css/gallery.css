@@ -1,7 +1,7 @@
 /* Post */
 
 section.post-gallery article {
-  max-width: 1024px;
+  max-width: 1056px;
 }
 
 section.post-gallery > div.cover {
@@ -33,6 +33,7 @@ section.post > div.cover > div {
   display: grid;
   width: 100%;
   grid-gap: 8px;
+  margin-bottom: 8px;
 }
 
 .gallery .gallery-row2 {
@@ -63,10 +64,14 @@ section.post > div.cover > div {
   background: rgba(0, 0, 0, 0.9);
   padding: 32px;
   box-sizing: border-box;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: 0;
 }
 
+/* This assumes landscape */
 .lightbox img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: auto;
 }
