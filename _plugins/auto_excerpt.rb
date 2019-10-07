@@ -1,30 +1,29 @@
 require 'action_view'
 require 'nokogiri'
 
-class AutoExcerpts < Jekyll::Generator
+Jekyll::Hooks.register :posts, :post_render do |post|
+  generator = AutoExcerptGenerator.new(post)
+  generator.generate
+end
+
+class AutoExcerptGenerator
   include ActionView::Helpers::TextHelper
 
-  safe true
-  priority :low
+  def initialize(document)
+    @document = document
+  end
 
-  def generate(site)
-    @site = site
+  def generate
+    nodes = excerpt_for(@document.content)
+    @document.data['excerpt'] = nodes.map { |e| e.to_html }.join
 
-    site.posts.docs.each do |document|
-      nodes = excerpt_for(document.content)
-      document.data['excerpt'] = nodes.map { |e| e.to_html }.join
-
-      text = nodes.map { |e| e.text }.join(' ').gsub(/\n/, ' ').gsub(/\s+/, ' ')
-      document.data['excerpt_text'] = truncate(text, length: 150, separator: /\s/)
-    end
-
-    puts '        - Auto Excerpts'
+    text = nodes.map { |e| e.text }.join(' ').gsub(/\n/, ' ').gsub(/\s+/, ' ')
+    @document.data['excerpt_text'] = truncate(text, length: 150, separator: /\s/)
   end
 
   private
 
-  def excerpt_for(markdown)
-    html = html_for(markdown)
+  def excerpt_for(html)
     doc = Nokogiri::HTML.fragment(html)
 
     nodes = []
@@ -35,10 +34,5 @@ class AutoExcerpts < Jekyll::Generator
       break if nodes.count == 3
     end
     nodes
-  end
-
-  def html_for(markdown)
-    @_markdown ||= @site.find_converter_instance(Jekyll::Converters::Markdown)
-    @_markdown.convert(markdown)
   end
 end
