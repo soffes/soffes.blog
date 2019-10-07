@@ -33,3 +33,4 @@ class RewriteImages < Jekyll::Generator
     "assets/#{document.data['date'].strftime('%Y-%m-%d')}-#{document.data['slug']}/"
   end
 end
+
