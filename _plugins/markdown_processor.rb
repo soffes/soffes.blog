@@ -3,6 +3,17 @@ require 'redcarpet'
 require 'nokogiri'
 require 'mini_magick'
 
+module MiniMagick
+  class Image
+    def pixel_at(x, y)
+      run_command("convert", "#{path}[1x1+#{x.to_i}+#{y.to_i}]", 'txt:').split("\n").each do |line|
+        return $1 if /^0,0:.*(#[0-9a-fA-F]+)/.match(line)
+      end
+      nil
+    end
+  end
+end
+
 class MarkdownRenderer < Redcarpet::Render::HTML
   def block_code(code, language)
     if language
@@ -37,25 +48,23 @@ class Jekyll::Converters::Markdown::Custom
     html = @processor.render(content)
 
     doc = Nokogiri::HTML.fragment(html)
-    unless (images = doc.css('article img')).blank?
-      images.each do |node|
-        src = node['src']
-        next if src.start_with?('http')
-        next unless src.end_with?('png') || src.end_with?('jpg')
+    doc.css('img').each do |node|
+      src = node['src']
 
-        path = ".#{src}"
-        unless File.exist?(path)
-          puts "Missing image: #{path}"
-          next
-        end
+      next if src.start_with?('http')
+      next unless src.end_with?('png') || src.end_with?('jpg')
 
-        process_image(node)
+      path = ".#{src}"
+      unless File.exist?(path)
+        puts "--------> Missing image #{path}"
+        next
       end
 
-      html = doc.to_html
+      puts "        - Processing #{src}"
+      process_image(node)
     end
 
-    html
+    doc.to_html
   end
 
   def process_image(node)
@@ -64,7 +73,7 @@ class Jekyll::Converters::Markdown::Custom
     srcset = []
     original_width = MiniMagick::Image.open(full_path).width.to_i
 
-    SIZES.each do |size|
+    IMAGE_SIZES.each do |size|
       next unless size < original_width
 
       resized_path = path.sub(/\.(png|jpg)$/, "-#{size}w.\\1")
@@ -74,13 +83,21 @@ class Jekyll::Converters::Markdown::Custom
       next if File.exist?(full_resized_path)
 
       image = MiniMagick::Image.open(full_path)
-      image.resize "#{size}x#{size}>"
+      image.resize("#{size}x#{size}>")
       image.write(full_resized_path)
     end
 
-    return if srcset.blank?
+    unless srcset.blank?
+      node['srcset'] = srcset.join(', ')
+      node['sizes'] = '80vw'
+    end
 
-    node['srcset'] = srcset.join(', ')
-    node['sizes'] = '80vw'
+    if path.end_with?('jpg')
+      image = MiniMagick::Image.open(full_path)
+      image.resize('1x1')
+      if color = image.pixel_at(1, 1)
+        node['style'] = "background-color:#{color.downcase}"
+      end
+    end
   end
 end
