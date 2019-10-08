@@ -23,7 +23,7 @@ module MiniMagick
 end
 
 class RewriteImages < Jekyll::Generator
-  IMAGE_SIZES = [320, 640, 1024, 2048]
+  IMAGE_SIZES = [640, 1024]
 
   def generate(site)
     @site = site
