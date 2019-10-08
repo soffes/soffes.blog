@@ -90,6 +90,7 @@ class RewriteImages < Jekyll::Generator
     end
 
     unless srcset.blank?
+      srcset << "#{path} #{original_width}w"
       node['srcset'] = srcset.join(', ')
       node['sizes'] = '80vw'
     end
