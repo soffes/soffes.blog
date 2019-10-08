@@ -7,3 +7,4 @@ _drafts
 _site
 assets
 .jekyll-cache/
+.jekyll-metadata
