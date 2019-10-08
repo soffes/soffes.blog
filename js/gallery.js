@@ -47,6 +47,7 @@ addLoadEvent(function() {
     setup();
 
     const image = element.children[0].cloneNode(true);
+    image.removeAttribute('style');
     window.lightbox.appendChild(image);
   }
 

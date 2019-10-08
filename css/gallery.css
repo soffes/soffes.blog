@@ -68,7 +68,8 @@ section.post > div.cover > div {
   outline: 0;
 }
 
-/* This assumes landscape */
 .lightbox img {
-  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }
