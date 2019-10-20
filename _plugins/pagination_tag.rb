@@ -3,8 +3,9 @@ class PaginationTag < Liquid::Tag
 
   def render(context)
     window = WINDOW
-    page = context['paginator']['page']
-    total_pages = context['paginator']['total_pages']
+    return unless paginator = context['paginator']
+    page = paginator['page']
+    total_pages = paginator['total_pages']
 
     output = '<nav class="pagination">'
 

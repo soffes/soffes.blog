@@ -1,10 +1,7 @@
 desc 'Import published posts'
-task :import => :clean do
-  `rm -rf _posts assets`
-  `mkdir -p assets`
-
+task :import do
   unless File.directory?('tmp/blog')
-    `mkdir -p tmp`
+    system 'mkdir -p tmp'
     system 'git clone https://github.com/soffes/blog tmp/blog'
   else
     system 'cd tmp/blog && git pull origin master && cd ..'
@@ -14,21 +11,25 @@ task :import => :clean do
 end
 
 namespace :import do
-  desc 'Import posts'
-  task :local => :clean do
-    `rm -rf _posts assets tmp/blog`
-    `mkdir -p assets`
-    `mkdir -p tmp`
-    `cp -r ../blog tmp/blog`
-
+  desc 'Import all local posts'
+  task :local do
+    import_local
     import_directory('tmp/blog/published', '_posts')
+  end
+
+  desc 'Import local drafts'
+  task :drafts do
+    import_local
     import_directory('tmp/blog/drafts', '_drafts')
   end
 end
 
-
 desc 'Build'
-task :build => :import do
+task :build do
+  unless File.directory?('_posts')
+    Rake::Task['import'].invoke
+  end
+
   system 'bundle exec jekyll build --config _config.yml --trace'
 end
 
@@ -36,33 +37,43 @@ task default: :build
 
 desc 'Clean'
 task :clean do
-  `rm -rf _posts _drafts _site assets .jekyll-cache`
+  system 'rm -rf tmp _posts _drafts _site assets .jekyll-cache'
 end
 
 desc 'Local server'
 task :server do
-  system 'bundle exec jekyll serve --config _config.yml --trace'
+  system 'bundle exec jekyll serve --config _config.yml --drafts --trace'
 end
 
 private
 
 def import_directory(source, destination)
-  return unless File.directory?(source)
+  unless File.directory?(source)
+    abort "Missing directory `#{source}`"
+  end
 
-  `cp -r "#{source}" "#{destination}"`
+  system %(mkdir -p #{destination})
+  system %(mkdir -p assets)
+  system %(cp -r #{source}/* #{destination})
 
-  Dir.chdir(destination) do
-    Dir['*'].each do |dir|
-      md = Dir["#{dir}/*.markdown"].first
-      `mv "#{md}" "#{dir}.md"`
+  Dir["#{destination}/*"].each do |dir|
+    md = Dir["#{dir}/*.markdown"].first
+    system %(mv #{md} #{dir}.md)
 
-      if Dir.empty?(dir)
-        `rm -rf "#{dir}"`
-      else
-        `mv "#{dir}" "../assets/"`
-      end
-
-      `rm -rf "#{dir}"`
+    if Dir.empty?(dir)
+      system %(rm -rf #{dir})
+    else
+      system %(mv #{dir} assets)
     end
   end
+end
+
+def import_local
+  unless File.directory?('../blog')
+    abort 'Expected blog directory at `../blog/`'
+  end
+
+  system 'rm -rf tmp/blog'
+  system 'mkdir -p tmp'
+  system 'cp -r ../blog tmp/blog'
 end
