@@ -33,7 +33,7 @@ class JsonFeedTag < Liquid::Tag
       end
 
       if cover_image = post.data['cover_image']
-        item['banner_image'] = cover_image
+        item['banner_image'] = site['url'] + cover_image
       end
 
       item

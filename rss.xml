@@ -14,7 +14,7 @@ layout: null
     {% for post in site.posts %}
     <item>
       <title><![CDATA[{{ post.title }}]]></title>
-        <description><![CDATA[{{ post.excerpt }}]]></description>
+        <description><![CDATA[{{ post.excerpt }}<p><a href="{{ post.url | prepend: site.url }}">Continue reading →</a></p>]]></description>
         <link>{{ post.url | prepend: site.url }}</link>
         <guid isPermaLink="true">{{ post.url | prepend: site.url }}</guid>
         <dc:creator><![CDATA[{{ site.author }}]]></dc:creator>
