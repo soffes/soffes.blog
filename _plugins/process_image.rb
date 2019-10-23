@@ -68,6 +68,8 @@ class ImageProcessor
       node['sizes'] = '80vw'
     end
 
+    node['loading'] = 'lazy'
+
     if path.end_with?('jpg')
       image = MiniMagick::Image.open(full_path)
       image.resize('1x1')
