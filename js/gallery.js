@@ -1,23 +1,16 @@
-addLoadEvent(function() {
-  if (!document.querySelectorAll) {
-    return;
-  }
-
-  // Find all gallery anchors
-  const anchors = document.querySelectorAll('div.gallery a');
-
-  // Close lightbox
-  const close = function() {
+class Lightbox {
+  // Close the lightbox
+  close() {
     if (!window.lightbox) {
       return;
     }
 
     window.lightbox.parentNode.removeChild(window.lightbox);
     window.lightbox = null;
-  };
+  }
 
-  // Create lightbox if needed
-  const setup = function() {
+  // Create the elements if needed
+  setup() {
     if (window.lightbox) {
       return;
     }
@@ -29,99 +22,71 @@ addLoadEvent(function() {
     document.body.appendChild(lightbox);
     window.lightbox = lightbox;
 
-    lightbox.addEventListener('click', function() {
-      console.log('click')
-      close();
-    });
-
-    lightbox.addEventListener('keydown', function(event) {
+    lightbox.addEventListener('keydown', (event) => {
       // Escape
       if (event.keyCode === 27) {
-        close();
-        event.preventDefault();
-        return;
-      }
-
-
-      // Previous
-      if (event.keyCode === 37) {
-        showPrevious();
-        event.preventDefault();
-        return;
-      }
-
-      // Next
-      if (event.keyCode === 39) {
-        showNext();
+        this.close();
         event.preventDefault();
         return;
       }
     });
 
-    lightbox.focus();
-  };
+    lightbox.addEventListener('click', () => {
+      this.close();
+    });
+  }
 
-  // Show an image. This expects an `<a>` as its parameter.
-  const show = function(element) {
+  // Show an image. This expects an `<img>` as its parameter.
+  show(element) {
     if (!element) {
       return;
     }
 
-    setup();
+    this.setup();
 
     // Reset
     window.lightbox.innerHTML = '';
 
-    const image = element.children[0].cloneNode(true);
+    const image = element.cloneNode(true);
     image.removeAttribute('style');
     window.lightbox.appendChild(image);
   }
+}
 
-  // Find the index of the current lightbox image
-  const currentIndex = function() {
-    if (!window.lightbox || !window.lightbox.children[0]) {
-      return null;
+
+class PhotoGallery extends HTMLElement {
+  connectedCallback() {
+    for (let image of this._allImages()) {
+      image.addEventListener('click', (event) => {
+        event.preventDefault();
+        new Lightbox().show(image);
+      });
     }
+  }
 
-    const src = window.lightbox.children[0].getAttribute('src');
-    let index = 0;
+  _allImages() {
+    return Array.from(this.querySelectorAll('img'));
+  }
+}
+window.customElements.define('photo-gallery', PhotoGallery);
 
-    for (let anchor of anchors) {
-      if (anchor.children[0].getAttribute('src') === src) {
-        return index;
+
+class PhotoGalleryRow extends HTMLElement {
+  connectedCallback() {
+    this.style.display = "grid";
+    this.style.width = "100%";
+    this.style.gridGap = "8px";
+    this.style.marginBottom = "8px";
+
+    const images = this.querySelectorAll('img');
+    if (images.length > 1) {
+      let columns = "";
+      for (let image of images) {
+        columns += "1fr ";
       }
 
-      index += 1;
+      this.style.gridTemplateColumns = columns;
     }
-
-    return null;
   }
-
-  // Show previous image
-  const showPrevious = function() {
-    const index = currentIndex();
-    if (index === null || index - 1 === -1) {
-      return;
-    }
-
-    show(anchors[index - 1]);
-  };
-
-  // Show next image
-  const showNext = function() {
-    const index = currentIndex();
-    if (index === null || index + 1 === anchors.length) {
-      return;
-    }
-
-    show(anchors[index + 1]);
-  };
-
-  // Find all gallery links and make them show the lightbox
-  for (let anchor of anchors) {
-    anchor.addEventListener('click', function(event) {
-      event.preventDefault();
-      show(anchor);
-    });
-  }
-});
+}
+window.customElements.define('photo-gallery-row', PhotoGalleryRow);
