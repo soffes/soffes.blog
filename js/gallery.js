@@ -71,22 +71,69 @@ class PhotoGallery extends HTMLElement {
 window.customElements.define('photo-gallery', PhotoGallery);
 
 
+const rowTemplate = document.createElement('template');
+rowTemplate.innerHTML = `
+<style>
+:host {
+  display: grid;
+  width: 100%;
+  grid-gap: 8px;
+  margin-bottom: 8px;
+}
+
+img {
+  width: 100%;
+}
+
+[style*="--aspect-ratio"] > :first-child {
+  width: 100%;
+}
+
+[style*="--aspect-ratio"] > img {
+  height: auto;
+}
+
+@supports (--custom:property) {
+  [style*="--aspect-ratio"] {
+    position: relative;
+  }
+
+  [style*="--aspect-ratio"]::before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+  }
+
+  [style*="--aspect-ratio"] > :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+}
+</style>`;
 class PhotoGalleryRow extends HTMLElement {
+  constructor() {
+    super();
+
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.appendChild(rowTemplate.content.cloneNode(true));
+  }
+
   connectedCallback() {
-    this.style.display = "grid";
-    this.style.width = "100%";
-    this.style.gridGap = "8px";
-    this.style.marginBottom = "8px";
+    const images = this.querySelectorAll("img");
+    let columns = "";
+    for (let image of images) {
+      image.parentNode.removeChild(image);
 
-    const images = this.querySelectorAll('img');
-    if (images.length > 1) {
-      let columns = "";
-      for (let image of images) {
-        columns += "1fr ";
-      }
-
-      this.style.gridTemplateColumns = columns;
+      const wrapper = document.createElement("div");
+      wrapper.style = "--aspect-ratio:" + image.getAttribute("data-width") + "/" + image.getAttribute("data-height")
+      wrapper.appendChild(image);
+      this.shadowRoot.appendChild(wrapper);
+      columns += "1fr ";
     }
+
+    this.style.gridTemplateColumns = columns.trim();
   }
 }
 window.customElements.define('photo-gallery-row', PhotoGalleryRow);
