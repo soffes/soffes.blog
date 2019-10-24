@@ -65,13 +65,17 @@ class ImageProcessor
     unless srcset.blank?
       srcset << "#{path} #{original_width}w"
       node['srcset'] = srcset.join(', ')
-      node['sizes'] = '80vw'
     end
 
     node['loading'] = 'lazy'
 
     if path.end_with?('jpg')
       image = MiniMagick::Image.open(full_path)
+
+      size = image.dimensions
+      node['data-width'] = size[0]
+      node['data-height'] = size[1]
+
       image.resize('1x1')
       if color = image.pixel_at(1, 1)
         node['style'] = "background-color:#{color.downcase}"
