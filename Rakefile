@@ -56,7 +56,13 @@ def import_directory(source, destination)
   system %(mkdir -p assets)
   system %(cp -r #{source}/* #{destination})
 
-  Dir["#{destination}/*"].each do |dir|
+  limit = ENV['LIMIT']
+  Dir["#{destination}/*"].sort.reverse.each_with_index do |dir, i|
+    if limit && i >= limit.to_i
+      system %(rm -rf #{dir})
+      next
+    end
+
     md = Dir["#{dir}/*.markdown"].first
     system %(mv #{md} #{dir}.md)
 
