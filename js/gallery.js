@@ -112,7 +112,7 @@ img {
   }
 }
 </style>`;
-class PhotoGalleryRow extends HTMLElement {
+class PhotoRow extends HTMLElement {
   constructor() {
     super();
 
@@ -136,4 +136,4 @@ class PhotoGalleryRow extends HTMLElement {
     this.style.gridTemplateColumns = columns.trim();
   }
 }
-window.customElements.define('photo-gallery-row', PhotoGalleryRow);
+window.customElements.define('photo-row', PhotoRow);
