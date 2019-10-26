@@ -1,5 +1,61 @@
-class Lightbox {
-  // Close the lightbox
+const lightboxTemplate = document.createElement('template');
+lightboxTemplate.innerHTML = `
+<style>
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  outline: 0;
+  cursor: zoom-out;
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  cursor: default;
+}
+</style>
+`;
+class PhotoLightbox extends HTMLElement {
+  constructor() {
+    super();
+
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.appendChild(lightboxTemplate.content.cloneNode(true));
+  }
+
+  connectedCallback() {
+    this.tabIndex = "-1";
+  }
+
+  show(image) {
+    const exisiting = this.shadowRoot.querySelector('img');
+    if (exisiting) {
+      exisiting.parentNode.removeChild(exisiting);
+    }
+
+    const img = image.cloneNode(true);
+    img.removeAttribute('style');
+    this.shadowRoot.appendChild(img);
+  }
+}
+window.customElements.define('photo-lightbox', PhotoLightbox);
+
+
+class LightboxController {
+  show(image) {
+    this._setup();
+    window.lightbox.show(image);
+  }
+
   close() {
     if (!window.lightbox) {
       return;
@@ -9,16 +65,12 @@ class Lightbox {
     window.lightbox = null;
   }
 
-  // Create the elements if needed
-  setup() {
+  _setup() {
     if (window.lightbox) {
       return;
     }
 
-    const lightbox = document.createElement('DIV');
-    lightbox.className = 'lightbox';
-    lightbox.setAttribute('tabindex', '-1');
-
+    const lightbox = document.createElement('photo-lightbox');
     document.body.appendChild(lightbox);
     window.lightbox = lightbox;
 
@@ -34,24 +86,11 @@ class Lightbox {
     lightbox.addEventListener('click', () => {
       this.close();
     });
-  }
 
-  // Show an image. This expects an `<img>` as its parameter.
-  show(element) {
-    if (!element) {
-      return;
-    }
-
-    this.setup();
-
-    // Reset
-    window.lightbox.innerHTML = '';
-
-    const image = element.cloneNode(true);
-    image.removeAttribute('style');
-    window.lightbox.appendChild(image);
+    lightbox.focus();
   }
 }
+const _lightbox = new LightboxController();
 
 
 class PhotoGallery extends HTMLElement {
@@ -59,7 +98,7 @@ class PhotoGallery extends HTMLElement {
     for (let image of this._allImages()) {
       image.addEventListener('click', (event) => {
         event.preventDefault();
-        new Lightbox().show(image);
+        _lightbox.show(image);
       });
     }
   }
