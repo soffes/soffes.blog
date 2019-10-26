@@ -33,10 +33,12 @@ section.post > div.cover > div {
   display: flex;
   justify-content: center;
   outline: 0;
+  cursor: zoom-out;
 }
 
 .lightbox img {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
+  cursor: default;
 }

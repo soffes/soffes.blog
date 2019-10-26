@@ -79,6 +79,7 @@ rowTemplate.innerHTML = `
   width: 100%;
   grid-gap: 8px;
   margin-bottom: 8px;
+  cursor: zoom-in;
 }
 
 img {
