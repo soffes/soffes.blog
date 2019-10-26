@@ -37,7 +37,7 @@ class PhotoLightbox extends HTMLElement {
   }
 
   show(image) {
-    const exisiting = this.shadowRoot.querySelector('img');
+    const exisiting = this.image();
     if (exisiting) {
       exisiting.parentNode.removeChild(exisiting);
     }
@@ -45,6 +45,10 @@ class PhotoLightbox extends HTMLElement {
     const img = image.cloneNode(true);
     img.removeAttribute('style');
     this.shadowRoot.appendChild(img);
+  }
+
+  image() {
+    return this.shadowRoot.querySelector('img');
   }
 }
 window.customElements.define('photo-lightbox', PhotoLightbox);
@@ -81,6 +85,20 @@ class LightboxController {
         event.preventDefault();
         return;
       }
+
+      // Previous
+      if (event.keyCode === 37) {
+        this._showPrevious();
+        event.preventDefault();
+        return;
+      }
+
+      // Next
+      if (event.keyCode === 39) {
+        this._showNext();
+        event.preventDefault();
+        return;
+      }
     });
 
     lightbox.addEventListener('click', () => {
@@ -88,6 +106,47 @@ class LightboxController {
     });
 
     lightbox.focus();
+  }
+
+  _allImages() {
+    return Array.from(document.querySelectorAll("photo-row")).map((row) => row.images()).flat();
+  }
+
+  _currentIndex() {
+    if (!window.lightbox) {
+      return null;
+    }
+
+    const image = window.lightbox.image();
+    if (!image) {
+      return null;
+    }
+
+    const srcs = this._allImages().map((img) => img.getAttribute("src"))
+    return srcs.indexOf(image.getAttribute("src"));
+  }
+
+  _showPrevious() {
+    const index = this._currentIndex();
+    if (index === null || index - 1 === -1) {
+      return;
+    }
+
+    this.show(this._allImages()[index - 1]);
+  }
+
+  _showNext() {
+    const index = this._currentIndex();
+    if (index === null) {
+      return;
+    }
+
+    const images = this._allImages();
+    if (index + 1 === images.length) {
+      return;
+    }
+
+    this.show(images[index + 1]);
   }
 }
 const _lightbox = new LightboxController();
@@ -174,6 +233,10 @@ class PhotoRow extends HTMLElement {
     }
 
     this.style.gridTemplateColumns = columns.trim();
+  }
+
+  images() {
+    return Array.from(this.shadowRoot.querySelectorAll('img'));
   }
 }
 window.customElements.define('photo-row', PhotoRow);
