@@ -4,6 +4,8 @@ require 'nokogiri'
 class AutoExcerpts < Jekyll::Generator
   include ActionView::Helpers::TextHelper
 
+  OMITTED_TAGS = %w{h2 h3 div photo-gallery}
+
   safe true
   priority :low
 
@@ -30,7 +32,8 @@ class AutoExcerpts < Jekyll::Generator
     nodes = []
     doc.children.each do |block|
       next if block.to_html.strip.empty?
-      next if block.name == 'h2' || block.name == 'h3' || block.name == 'div'
+      next if OMITTED_TAGS.include?(block.name)
+      next if block.children.first && OMITTED_TAGS.include?(block.children.first.name)
       nodes << block
       break if nodes.count == 3
     end
