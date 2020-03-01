@@ -2,7 +2,7 @@ require 'mini_magick'
 
 class Jekyll::Document
   def assets_url
-    "#{site.data['url']}/#{assets_path}"
+    "/#{assets_path}"
   end
 
   def assets_path

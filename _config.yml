@@ -4,7 +4,8 @@ author: Sam Soffes
 description: >-
   This is my blog. I also have a <a href="https://soff.es/" rel="external">website thing</a>.
 baseurl: ""
-url: "https://soffes.blog"
+url: https://soffes.blog
+cdn_url: https://soffes-blog.imgix.net
 google_analytics: UA-5609322-18
 twitter_username: soffes
 github_username:  soffes

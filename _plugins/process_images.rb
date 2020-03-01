@@ -1,19 +1,7 @@
 require 'nokogiri'
-require 'mini_magick'
-
-module MiniMagick
-  class Image
-    def pixel_at(x, y)
-      run_command("convert", "#{path}[1x1+#{x.to_i}+#{y.to_i}]", 'txt:').split("\n").each do |line|
-        return $1 if /^0,0:.*(#[0-9a-fA-F]+)/.match(line)
-      end
-      nil
-    end
-  end
-end
 
 class ImageProcessor
-  IMAGE_SIZES = [640, 1024]
+  IMAGE_SIZES = [1024, 508, 382, 343, 336, 288, 187, 168, 140, 122, 109, 90].freeze
 
   def initialize(post)
     @post = post
@@ -27,12 +15,6 @@ class ImageProcessor
       next if src.start_with?('http')
       next unless src.end_with?('png') || src.end_with?('jpg')
 
-      path = ".#{src}"
-      unless File.exist?(path)
-        puts "--------> Missing image #{path}"
-        next
-      end
-
       process_image(node)
     end
 
@@ -42,45 +24,26 @@ class ImageProcessor
   private
 
   def process_image(node)
-    path = node['src']
-    full_path = ".#{path}"
-    srcset = []
-    original_width = MiniMagick::Image.open(full_path).width.to_i
+    src = node['src']
 
-    IMAGE_SIZES.each do |size|
-      next unless size < original_width
+    node.name = 'picture'
+    node.attributes.keys.each { |name| node.remove_attribute(name) }
 
-      resized_path = path.sub(/\.(png|jpg)$/, "-#{size}w.\\1")
-      full_resized_path = ".#{resized_path}"
-      srcset << "#{resized_path} #{size}w"
-      @site.static_files << Jekyll::StaticFile.new(@site, '.', File.dirname(full_resized_path), File.basename(full_resized_path))
+    url = @site.config['cdn_url'] + src
 
-      next if File.exist?(full_resized_path)
-
-      image = MiniMagick::Image.open(full_path)
-      image.resize("#{size}x#{size}>")
-      image.write(full_resized_path)
+    sizes = IMAGE_SIZES.dup
+    smallest = sizes.pop
+    sizes.each do |size|
+      source = Nokogiri::XML::Node.new('source', node.document)
+      source['srcset'] ="#{url}?w=#{size} 1x,#{url}?w=#{size}&dpr=2 2x, #{url}?w=#{size}&dpr=3 3x"
+      source['media'] = "(min-width: #{size}px)"
+      node.add_child(source)
     end
 
-    unless srcset.blank?
-      srcset << "#{path} #{original_width}w"
-      node['srcset'] = srcset.join(', ')
-    end
-
-    node['loading'] = 'lazy'
-
-    if path.end_with?('jpg')
-      image = MiniMagick::Image.open(full_path)
-
-      size = image.dimensions
-      node['data-width'] = size[0]
-      node['data-height'] = size[1]
-
-      image.resize('1x1')
-      if color = image.pixel_at(1, 1)
-        node['style'] = "background-color:#{color.downcase}"
-      end
-    end
+    img = Nokogiri::XML::Node.new('img', node.document)
+    img['src'] = "#{url}?w=#{smallest}"
+    img['srcset'] ="#{url}?w=#{smallest} 1x,#{url}?w=#{smallest}&dpr=2 2x, #{url}?w=#{smallest}&dpr=3 3x"
+    node.add_child(img)
   end
 end
 
