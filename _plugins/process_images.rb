@@ -1,6 +1,17 @@
 require 'nokogiri'
 require 'mini_magick'
 
+module MiniMagick
+  class Image
+    def pixel_at(x, y)
+      run_command("convert", "#{path}[1x1+#{x.to_i}+#{y.to_i}]", 'txt:').split("\n").each do |line|
+        return $1 if /^0,0:.*(#[0-9a-fA-F]+)/.match(line)
+      end
+      nil
+    end
+  end
+end
+
 class ImageProcessor
   IMAGE_SIZES = [1024, 508, 382, 343, 336, 288, 187, 168, 140, 122, 109, 90].freeze
 
@@ -45,10 +56,10 @@ class ImageProcessor
       node['data-width'] = size[0]
       node['data-height'] = size[1]
 
-      # image.resize('1x1')
-      # if color = image.pixel_at(1, 1)
-      #   node['style'] = "background-color:#{color.downcase}"
-      # end
+      image.resize('1x1')
+      if color = image.pixel_at(1, 1)
+        node['style'] = "background-color:#{color.downcase}"
+      end
     end
   end
 end
