@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'mini_magick'
 
 class ImageProcessor
   IMAGE_SIZES = [1024, 508, 382, 343, 336, 288, 187, 168, 140, 122, 109, 90].freeze
@@ -25,25 +26,30 @@ class ImageProcessor
 
   def process_image(node)
     src = node['src']
-
-    node.name = 'picture'
-    node.attributes.keys.each { |name| node.remove_attribute(name) }
-
     url = @site.config['cdn_url'] + src
+    srcset = []
 
-    sizes = IMAGE_SIZES.dup
-    smallest = sizes.pop
-    sizes.each do |size|
-      source = Nokogiri::XML::Node.new('source', node.document)
-      source['srcset'] ="#{url}?w=#{size} 1x,#{url}?w=#{size}&dpr=2 2x, #{url}?w=#{size}&dpr=3 3x"
-      source['media'] = "(min-width: #{size}px)"
-      node.add_child(source)
+    IMAGE_SIZES.each do |size|
+      srcset += ["#{url}?w=#{size} 1x", "#{url}?w=#{size}&dpr=2 2x", "#{url}?w=#{size}&dpr=3 3x"]
     end
 
-    img = Nokogiri::XML::Node.new('img', node.document)
-    img['src'] = "#{url}?w=#{smallest}"
-    img['srcset'] ="#{url}?w=#{smallest} 1x,#{url}?w=#{smallest}&dpr=2 2x, #{url}?w=#{smallest}&dpr=3 3x"
-    node.add_child(img)
+    node['src'] = "#{url}?w=#{IMAGE_SIZES.last}"
+    node['srcset'] = srcset.join(',')
+
+    node['loading'] = 'lazy'
+
+    if src.end_with?('jpg')
+      image = MiniMagick::Image.open(".#{src}")
+
+      size = image.dimensions
+      node['data-width'] = size[0]
+      node['data-height'] = size[1]
+
+      # image.resize('1x1')
+      # if color = image.pixel_at(1, 1)
+      #   node['style'] = "background-color:#{color.downcase}"
+      # end
+    end
   end
 end
 
