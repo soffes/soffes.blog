@@ -13,7 +13,36 @@ module MiniMagick
 end
 
 class ImageProcessor
-  IMAGE_SIZES = [1024, 508, 382, 343, 336, 288, 187, 168, 140, 122, 109, 90].freeze
+  # 4.5", 4.0" (2x):            228w, 140w,  91w,  66w
+  # 4.7", 5.8" (2x, 3x):        343w, 168w, 109w,  80w
+  # 5.5", 6.1", 6.5" (2x, 3x):  382w, 137w, 122w,  90w
+  # Deskop (1x, 2x, 3x):       1024w, 508w, 336w, 250w
+  IMAGE_SIZES = [
+    [
+      { width: 1024, scales: [1, 2, 3] },
+      { width: 382, scales: [2, 3] },
+      { width: 343, scales: [2, 3] },
+      { width: 228, scales: [2] }
+    ],
+    [
+      { width: 508, scales: [1, 2, 3] },
+      { width: 137, scales: [2, 3] },
+      { width: 168, scales: [2, 3] },
+      { width: 140, scales: [2] }
+    ],
+    [
+      { width: 336, scales: [1, 2, 3] },
+      { width: 122, scales: [2, 3] },
+      { width: 109, scales: [2, 3] },
+      { width: 91, scales: [2] }
+    ],
+    [
+      { width: 250, scales: [1, 2, 3] },
+      { width: 90, scales: [2, 3] },
+      { width: 80, scales: [2, 3] },
+      { width: 66, scales: [2] }
+    ]
+  ].freeze
 
   def initialize(post)
     @post = post
@@ -40,11 +69,14 @@ class ImageProcessor
     url = @site.config['cdn_url'] + src
     srcset = []
 
-    IMAGE_SIZES.each do |size|
-      srcset += ["#{url}?w=#{size} 1x", "#{url}?w=#{size}&dpr=2 2x", "#{url}?w=#{size}&dpr=3 3x"]
+    sizes = node.parent.name == 'photo-row' ? IMAGE_SIZES[node.parent.css('img').count - 1] : IMAGE_SIZES.first
+    sizes.each do |size|
+      size[:scales].reverse.each do |scale|
+        srcset += ["#{url}?w=#{size[:width]}&dpr=#{scale} #{scale}x"]
+      end
     end
 
-    node['src'] = "#{url}?w=#{IMAGE_SIZES.last}"
+    node['src'] = "#{url}?w=1024"
     node['srcset'] = srcset.join(',')
 
     node['loading'] = 'lazy' unless node['loading']
