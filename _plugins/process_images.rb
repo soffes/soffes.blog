@@ -1,3 +1,4 @@
+require 'base64'
 require 'nokogiri'
 require 'mini_magick'
 
@@ -13,7 +14,36 @@ module MiniMagick
 end
 
 class ImageProcessor
-  IMAGE_SIZES = [1024, 508, 382, 343, 336, 288, 187, 168, 140, 122, 109, 90].freeze
+  # 4.5", 4.0" (2x):            228w, 140w,  91w,  66w
+  # 4.7", 5.8" (2x, 3x):        343w, 168w, 109w,  80w
+  # 5.5", 6.1", 6.5" (2x, 3x):  382w, 137w, 122w,  90w
+  # Deskop (1x, 2x, 3x):       1024w, 508w, 336w, 250w
+  IMAGE_SIZES = [
+    [
+      { width: 1024, scales: [1, 2], max_width: 1024 },
+      { width: 382, scales: [2, 3], max_width: 414 },
+      { width: 343, scales: [2, 3], max_width: 375 },
+      { width: 228, scales: [2], max_width: 320 }
+    ],
+    [
+      { width: 508, scales: [1, 2], max_width: 1024 },
+      { width: 137, scales: [2, 3], max_width: 414 },
+      { width: 168, scales: [2, 3], max_width: 375 },
+      { width: 140, scales: [2], max_width: 320 }
+    ],
+    [
+      { width: 336, scales: [1, 2], max_width: 1024 },
+      { width: 122, scales: [2, 3], max_width: 414 },
+      { width: 109, scales: [2, 3], max_width: 375 },
+      { width: 91, scales: [2], max_width: 320 }
+    ],
+    [
+      { width: 250, scales: [1, 2], max_width: 1024 },
+      { width: 90, scales: [2, 3], max_width: 414 },
+      { width: 80, scales: [2, 3], max_width: 375 },
+      { width: 66, scales: [2], max_width: 320 }
+    ]
+  ].freeze
 
   def initialize(post)
     @post = post
@@ -39,15 +69,42 @@ class ImageProcessor
     src = node['src']
     url = @site.config['cdn_url'] + src
     srcset = []
+    sizes = []
 
-    IMAGE_SIZES.each do |size|
-      srcset += ["#{url}?w=#{size} 1x", "#{url}?w=#{size}&dpr=2 2x", "#{url}?w=#{size}&dpr=3 3x"]
+    is_cover = node.parent['class'] == 'cover'
+    up = 1
+    if node.parent.name == 'photo-row'
+      count = node.parent.css('img').count
+      if count > 4
+        puts "Error: #{@post.data['slug']} has invalid photo-row"
+      else
+        up = count
+      end
     end
 
-    node['src'] = "#{url}?w=#{IMAGE_SIZES.last}"
-    node['srcset'] = srcset.join(',')
+    image_sizes = IMAGE_SIZES[up - 1]
+    image_sizes.reverse.each do |size|
+      # Remove this variant for covers on small phones since it gets pixelated.
+      # Ideally, we'd have a separate set of image sizes just for covers, but this is fine for now.
+      next if is_cover && size[:max_width] == 320
 
-    node['loading'] = 'lazy'
+      size[:scales].reverse.each do |scale|
+        srcset += ["#{url}?w=#{size[:width]}&dpr=#{scale} #{size[:width] * scale}w"]
+      end
+
+      if size[:max_width] == 1024
+        sizes << '1024px'
+      else
+        sizes << "(max-width: #{size[:max_width]}px) #{size[:width]}px"
+      end
+    end
+
+
+    node['src'] = "#{url}?w=1024&dpr=2"
+    node['srcset'] = srcset.join(',')
+    node['sizes'] = sizes.join(',')
+
+    node['loading'] = 'lazy' unless node['loading']
 
     if src.end_with?('jpg')
       image = MiniMagick::Image.open(".#{src}")
@@ -56,9 +113,16 @@ class ImageProcessor
       node['data-width'] = size[0]
       node['data-height'] = size[1]
 
-      image.resize('1x1')
-      if color = image.pixel_at(1, 1)
-        node['style'] = "background-color:#{color.downcase}"
+      if ENV['RACK_ENV'] == 'production'
+        if is_cover
+          image.resize('4x4')
+          node['style'] = "background-image:url(data:image/png;base64,#{Base64.urlsafe_encode64(image.to_blob)});background-repeat:no-repeat;background-size:cover"
+        else
+          image.resize('1x1')
+          if color = image.pixel_at(1, 1)
+            node['style'] = "background-color:#{color.downcase}"
+          end
+        end
       end
     end
   end

@@ -6,7 +6,6 @@
   <link rel="mask-icon" sizes="any" href="/favicon.svg" color="#f6291d">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="/apple-touch-icon-192x192.png" sizes="192x192">
-  <link rel="stylesheet" href="https://cloud.typography.com/619254/6911812/css/fonts.css">
   <link href="/css/blog.css" rel="stylesheet">
   <link rel="me" href="https://www.google.com/profiles/samsoffes">
   <link rel="author" type="text/plain" href="/humans.txt">
@@ -40,7 +39,7 @@
     {% include footer.html %}
   </footer>
   {% endunless %}
-  <script src="/js/blog.js"></script>
+  <script>const addLoadEvent=function(t){const n=window.onload;return"function"!=typeof window.onload?window.onload=t:window.onload=function(){return n&&n(),t()}};addLoadEvent(function(){if(document.getElementsByTagName&&String.prototype.indexOf)for(let t of document.getElementsByTagName("a")){const n=t.getAttribute("rel"),e=n&&n.indexOf("external")>=0;t.getAttribute("href")&&!0===e&&(t.target="_blank")}});</script>
   {%- if page.is_gallery %}
   <script src="/js/gallery.js"></script>{% endif %}
   {% if site.google_analytics %}

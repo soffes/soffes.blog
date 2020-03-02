@@ -44,6 +44,8 @@ class PhotoLightbox extends HTMLElement {
 
     const img = image.cloneNode(true);
     img.removeAttribute('style');
+    img.removeAttribute('srcset');
+    img.removeAttribute('sizes');
     this.shadowRoot.appendChild(img);
   }
 
