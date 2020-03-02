@@ -47,7 +47,7 @@ class ImageProcessor
     node['src'] = "#{url}?w=#{IMAGE_SIZES.last}"
     node['srcset'] = srcset.join(',')
 
-    node['loading'] = 'lazy'
+    node['loading'] = 'lazy' unless node['loading']
 
     if src.end_with?('jpg')
       image = MiniMagick::Image.open(".#{src}")
