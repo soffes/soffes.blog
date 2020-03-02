@@ -100,7 +100,7 @@ class ImageProcessor
     end
 
 
-    node['src'] = url
+    node['src'] = "#{url}?w=1024&dpr=2"
     node['srcset'] = srcset.join(',')
     node['sizes'] = sizes.join(',')
 
