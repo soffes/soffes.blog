@@ -19,28 +19,28 @@ class ImageProcessor
   # Deskop (1x, 2x, 3x):       1024w, 508w, 336w, 250w
   IMAGE_SIZES = [
     [
-      { width: 1024, scales: [1, 2, 3] },
-      { width: 382, scales: [2, 3] },
-      { width: 343, scales: [2, 3] },
-      { width: 228, scales: [2] }
+      { width: 1024, scales: [1, 2], max_width: 1024 },
+      { width: 382, scales: [2, 3], max_width: 414 },
+      { width: 343, scales: [2, 3], max_width: 375 },
+      { width: 228, scales: [2], max_width: 320 }
     ],
     [
-      { width: 508, scales: [1, 2, 3] },
-      { width: 137, scales: [2, 3] },
-      { width: 168, scales: [2, 3] },
-      { width: 140, scales: [2] }
+      { width: 508, scales: [1, 2], max_width: 1024 },
+      { width: 137, scales: [2, 3], max_width: 414 },
+      { width: 168, scales: [2, 3], max_width: 375 },
+      { width: 140, scales: [2], max_width: 320 }
     ],
     [
-      { width: 336, scales: [1, 2, 3] },
-      { width: 122, scales: [2, 3] },
-      { width: 109, scales: [2, 3] },
-      { width: 91, scales: [2] }
+      { width: 336, scales: [1, 2], max_width: 1024 },
+      { width: 122, scales: [2, 3], max_width: 414 },
+      { width: 109, scales: [2, 3], max_width: 375 },
+      { width: 91, scales: [2], max_width: 320 }
     ],
     [
-      { width: 250, scales: [1, 2, 3] },
-      { width: 90, scales: [2, 3] },
-      { width: 80, scales: [2, 3] },
-      { width: 66, scales: [2] }
+      { width: 250, scales: [1, 2], max_width: 1024 },
+      { width: 90, scales: [2, 3], max_width: 414 },
+      { width: 80, scales: [2, 3], max_width: 375 },
+      { width: 66, scales: [2], max_width: 320 }
     ]
   ].freeze
 
@@ -68,16 +68,35 @@ class ImageProcessor
     src = node['src']
     url = @site.config['cdn_url'] + src
     srcset = []
+    sizes = []
 
-    sizes = node.parent.name == 'photo-row' ? IMAGE_SIZES[node.parent.css('img').count - 1] : IMAGE_SIZES.first
-    sizes.each do |size|
-      size[:scales].reverse.each do |scale|
-        srcset += ["#{url}?w=#{size[:width]}&dpr=#{scale} #{scale}x"]
+    up = 1
+    if node.parent.name == 'photo-row'
+      count = node.parent.css('img').count
+      if count > 4
+        puts "Error: #{@post.data['slug']} has invalid photo-row"
+      else
+        up = count
       end
     end
 
-    node['src'] = "#{url}?w=1024"
+    image_sizes = IMAGE_SIZES[up - 1]
+    image_sizes.reverse.each do |size|
+      size[:scales].reverse.each do |scale|
+        srcset += ["#{url}?w=#{size[:width]}&dpr=#{scale} #{size[:width] * scale}w"]
+      end
+
+      if size[:max_width] == 1024
+        sizes << '1024px'
+      else
+        sizes << "(max-width: #{size[:max_width]}px) #{size[:width]}px"
+      end
+    end
+
+
+    node['src'] = url
     node['srcset'] = srcset.join(',')
+    node['sizes'] = sizes.join(',')
 
     node['loading'] = 'lazy' unless node['loading']
 
