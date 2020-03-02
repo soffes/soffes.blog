@@ -1,3 +1,4 @@
+require 'base64'
 require 'nokogiri'
 require 'mini_magick'
 
@@ -70,6 +71,7 @@ class ImageProcessor
     srcset = []
     sizes = []
 
+    is_cover = node.parent['class'] == 'cover'
     up = 1
     if node.parent.name == 'photo-row'
       count = node.parent.css('img').count
@@ -82,6 +84,10 @@ class ImageProcessor
 
     image_sizes = IMAGE_SIZES[up - 1]
     image_sizes.reverse.each do |size|
+      # Remove this variant for covers on small phones since it gets pixelated.
+      # Ideally, we'd have a separate set of image sizes just for covers, but this is fine for now.
+      next if is_cover && size[:max_width] == 320
+
       size[:scales].reverse.each do |scale|
         srcset += ["#{url}?w=#{size[:width]}&dpr=#{scale} #{size[:width] * scale}w"]
       end
@@ -106,6 +112,11 @@ class ImageProcessor
       size = image.dimensions
       node['data-width'] = size[0]
       node['data-height'] = size[1]
+
+      if is_cover
+        image.resize('4x4')
+        node['src'] = "data:image/png;base64,#{Base64.urlsafe_encode64(image.to_blob)}"
+      end
 
       if ENV['RACK_ENV'] == 'production'
         image.resize('1x1')
