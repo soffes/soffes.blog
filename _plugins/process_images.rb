@@ -1,3 +1,4 @@
+require 'addressable'
 require 'base64'
 require 'nokogiri'
 require 'mini_magick'
@@ -60,6 +61,13 @@ class ImageProcessor
       process_image(node)
     end
 
+    doc.css('meta[property="og:image"], meta[name="twitter:image"]').each do |node|
+      url = Addressable::URI.parse(@site.config['cdn_url'])
+      url.path = Addressable::URI.parse(node['content']).path
+      url.query = 'w=512&dpr=2&auto=format,compress'
+      node['content'] = url.to_s
+    end
+
     @post.output = doc.to_html
   end
 
@@ -89,7 +97,7 @@ class ImageProcessor
       next if is_cover && size[:max_width] == 320
 
       size[:scales].reverse.each do |scale|
-        srcset += ["#{url}?w=#{size[:width]}&dpr=#{scale} #{size[:width] * scale}w"]
+        srcset += ["#{url}?w=#{size[:width]}&dpr=#{scale}&auto=format,compress #{size[:width] * scale}w"]
       end
 
       if size[:max_width] == 1024
@@ -100,7 +108,7 @@ class ImageProcessor
     end
 
 
-    node['src'] = "#{url}?w=1024&dpr=2"
+    node['src'] = "#{url}?w=1024&dpr=2&auto=format,compress"
     node['srcset'] = srcset.join(',')
     node['sizes'] = sizes.join(',')
 
