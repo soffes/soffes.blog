@@ -364,21 +364,16 @@ section.posts article:last-child {
 }
 
 section.post > div.cover {
-  position: relative;
   width: 100%;
   height: auto;
   padding-top: 40%;
+  overflow: hidden;
+  display: flex;
 }
 
-section.post > div.cover > div {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+section.post > div.cover > img {
+  object-fit: cover;
+  width: 100%;
 }
 
 section.post-gallery article {

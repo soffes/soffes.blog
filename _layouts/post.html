@@ -4,7 +4,7 @@ layout: default
 
 <section class="post{% if page.is_gallery %} post-gallery{% endif %}">
   {% if page.cover_image %}
-  <div class="cover"><div style="background-image:url({{ page.cover_image }})"></div></div>
+  <div class="cover"><img src="{{ page.cover_image }}"></div>
   {% endif %}
   <article>
     <header>
