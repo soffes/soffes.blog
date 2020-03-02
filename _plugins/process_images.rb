@@ -113,15 +113,15 @@ class ImageProcessor
       node['data-width'] = size[0]
       node['data-height'] = size[1]
 
-      if is_cover
-        image.resize('4x4')
-        node['src'] = "data:image/png;base64,#{Base64.urlsafe_encode64(image.to_blob)}"
-      end
-
       if ENV['RACK_ENV'] == 'production'
-        image.resize('1x1')
-        if color = image.pixel_at(1, 1)
-          node['style'] = "background-color:#{color.downcase}"
+        if is_cover
+          image.resize('4x4')
+          node['style'] = "background-image:url(data:image/png;base64,#{Base64.urlsafe_encode64(image.to_blob)});background-repeat:no-repeat;background-size:cover"
+        else
+          image.resize('1x1')
+          if color = image.pixel_at(1, 1)
+            node['style'] = "background-color:#{color.downcase}"
+          end
         end
       end
     end
