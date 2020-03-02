@@ -56,9 +56,11 @@ class ImageProcessor
       node['data-width'] = size[0]
       node['data-height'] = size[1]
 
-      image.resize('1x1')
-      if color = image.pixel_at(1, 1)
-        node['style'] = "background-color:#{color.downcase}"
+      if ENV['RACK_ENV'] == 'production'
+        image.resize('1x1')
+        if color = image.pixel_at(1, 1)
+          node['style'] = "background-color:#{color.downcase}"
+        end
       end
     end
   end
