@@ -11,3 +11,4 @@ https://blog.soff.es/* https://soffes.blog/:splat 301!
 /post/*     /:splat
 /posts/*    /:splat
 /apple-touch-icon.png /apple-touch-icon-192x192.png
+/apple-touch-icon-precomposed.png /apple-touch-icon-192x192.png
