@@ -3,8 +3,11 @@ https://blog.samsoff.es/* https://soffes.blog/:splat 301!
 https://blog.soff.es/* https://soffes.blog/:splat 301!
 
 /rss        /rss.xml
+/feed       /rss.xml
+/feeds/     /rss.xml
 /feeds/rss  /rss.xml
 /feeds/json /feed.json
 /page/*     /:splat
 /post/*     /:splat
 /posts/*    /:splat
+/apple-touch-icon.png /apple-touch-icon-192x192.png
