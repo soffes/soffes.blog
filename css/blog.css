@@ -365,10 +365,9 @@ section.posts article:last-child {
 
 section.post > div.cover {
   width: 100%;
-  height: auto;
-  padding-top: 40%;
   overflow: hidden;
   display: flex;
+  height: 60vh;
 }
 
 section.post > div.cover > img {
@@ -382,7 +381,6 @@ section.post-gallery article {
 
 section.post-gallery > div.cover {
   height: 70vh;
-  padding-top: 0;
 }
 
 section.post > div.cover > div {
