@@ -348,7 +348,7 @@ article div.thanks {
 }
 
 article div.thanks a {
-  color: var(--light-foreground);
+  color: var(--light-link-foreground);
 }
 
 article div.thanks a:hover {
