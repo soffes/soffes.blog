@@ -507,7 +507,7 @@ div.video iframe {
 
 pre, code {
   font-family: var(--code-font-family);
-  font-size: 17px;
+  font-size: 16px;
   border-radius: 4px;
   line-height: 1.5em;
 }
