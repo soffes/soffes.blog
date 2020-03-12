@@ -39,9 +39,11 @@
     {% include footer.html %}
   </footer>
   {% endunless %}
-  <script>const addLoadEvent=function(t){const n=window.onload;return"function"!=typeof window.onload?window.onload=t:window.onload=function(){return n&&n(),t()}};addLoadEvent(function(){if(document.getElementsByTagName&&String.prototype.indexOf)for(let t of document.getElementsByTagName("a")){const n=t.getAttribute("rel"),e=n&&n.indexOf("external")>=0;t.getAttribute("href")&&!0===e&&(t.target="_blank")}});</script>
   {%- if page.is_gallery %}
   <script src="/js/gallery.js"></script>{% endif %}
-  <script>(function(f, a, t, h, o, m){a[h]=a[h]||function(){(a[h].q=a[h].q||[]).push(arguments)};o=f.createElement('script'),m=f.getElementsByTagName('script')[0];o.async=1; o.src=t; o.id='fathom-script';m.parentNode.insertBefore(o,m)})(document,window,'https://cdn.usefathom.com/tracker.js','fathom');fathom('set','siteId','AUCYEDXU');fathom('trackPageview');</script>
+  <script>
+    const addLoadEvent=function(t){const n=window.onload;return"function"!=typeof window.onload?window.onload=t:window.onload=function(){return n&&n(),t()}};addLoadEvent(function(){if(document.getElementsByTagName&&String.prototype.indexOf)for(let t of document.getElementsByTagName("a")){const n=t.getAttribute("rel"),e=n&&n.indexOf("external")>=0;t.getAttribute("href")&&!0===e&&(t.target="_blank")}});
+    (function(f,a,t,h,o,m){a[h]=a[h]||function(){(a[h].q=a[h].q||[]).push(arguments)};o=f.createElement('script'),m=f.getElementsByTagName('script')[0];o.async=1; o.src=t; o.id='fathom-script';m.parentNode.insertBefore(o,m)})(document,window,'https://cdn.usefathom.com/tracker.js','fathom');fathom('set','siteId','AUCYEDXU');fathom('trackPageview');
+  </script>
 </body>
 </html>
