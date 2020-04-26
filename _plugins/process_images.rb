@@ -1,7 +1,8 @@
-require 'addressable'
+require 'addressable/uri'
 require 'base64'
-require 'nokogiri'
 require 'mini_magick'
+require 'nokogiri'
+require 'nokogiri'
 
 module MiniMagick
   class Image

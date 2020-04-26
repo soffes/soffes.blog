@@ -12,13 +12,11 @@ end
 
 class RewriteImages < Jekyll::Generator
   def generate(site)
-    @site = site
-    markdown_converter = @site.find_converter_instance(Jekyll::Converters::Markdown)
-
     site.posts.docs.each do |document|
       assets_url = document.assets_url
       document.content.gsub!(/(<img.*src=")(?!http)([^"]+\.(?:jpg|png|svg))(".*>)/, "\\1#{assets_url}\\2\\3")
       document.content.gsub!(/(<a.*href=")(?!http)([^"]+\.(?:jpg|png|svg))(".*>)/, "\\1#{assets_url}\\2\\3")
+      document.content.gsub!(/\[!\[(.*)\]\((?!http)(.*)\)\]\(/, %([<img src="#{assets_url}\\2" alt="\\1">]\())
       document.content.gsub!(/!\[(.*)\]\((?!http)(.*)\)/, %(<img src="#{assets_url}\\2" alt="\\1">))
 
       if document.data['cover_image']
