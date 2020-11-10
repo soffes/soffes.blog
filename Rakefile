@@ -4,7 +4,7 @@ task :import do
     system 'mkdir -p tmp'
     system 'git clone https://github.com/soffes/blog tmp/blog'
   else
-    system 'cd tmp/blog && git pull origin master && cd ..'
+    system 'cd tmp/blog && git pull origin main && cd ..'
   end
 
   import_directory('tmp/blog/published', '_posts')
