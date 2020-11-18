@@ -13,6 +13,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
   --title-font-weight: var(--bold-font-weight);
 
   --code-font-family: ui-monospace, "Menlo", "Monaco", monospace;
+  --code-font-weight: 500;
 
   --body-foreground: #111;
   --body-background: #fff;
@@ -507,6 +508,7 @@ div.video iframe {
 
 pre, code {
   font-family: var(--code-font-family);
+  font-weight: var(--code-font-weight);
   font-size: 16px;
   border-radius: 4px;
   line-height: 1.5em;
