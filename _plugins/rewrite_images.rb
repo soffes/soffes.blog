@@ -3,6 +3,7 @@
 require 'mini_magick'
 
 module Jekyll
+  # Extension on `Jekyll::Document`
   class Document
     def assets_url
       "/#{assets_path}"
@@ -14,6 +15,7 @@ module Jekyll
   end
 end
 
+# Jekyll generator to rewrite image URLs
 class RewriteImages < Jekyll::Generator
   def generate(site)
     site.posts.docs.each do |document|

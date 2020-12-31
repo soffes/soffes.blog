@@ -4,19 +4,23 @@ require 'addressable/uri'
 require 'base64'
 require 'mini_magick'
 require 'nokogiri'
-require 'nokogiri'
 
 module MiniMagick
+  # Extension on `MiniMagick::Image`
   class Image
+    # rubocop:disable Naming/MethodParameterName
     def pixel_at(x, y)
       run_command('convert', "#{path}[1x1+#{x.to_i}+#{y.to_i}]", 'txt:').split("\n").each do |line|
-        return Regexp.last_match(1) if /^0,0:.*(#[0-9a-fA-F]+)/.match(line)
+        matches = /^0,0:.*(#[0-9a-fA-F]+)/.match(line)
+        return matches[1] if matches
       end
       nil
     end
+    # rubocop:enable Naming/MethodParameterName
   end
 end
 
+# Jekyll hook to process images
 class ImageProcessor
   # 4.5", 4.0" (2x):            228w, 140w,  91w,  66w
   # 4.7", 5.8" (2x, 3x):        343w, 168w, 109w,  80w
@@ -57,9 +61,9 @@ class ImageProcessor
   def process!
     doc = Nokogiri::HTML.fragment(@post.output)
     doc.css('img').each do |node|
-      next unless src = node['src']
+      next unless (src = node['src'])
       next if src.start_with?('http')
-      next unless src.end_with?('png') || src.end_with?('jpg')
+      next unless src.end_with?('png', 'jpg')
 
       process_image(node)
     end
@@ -94,12 +98,12 @@ class ImageProcessor
     end
 
     image_sizes = IMAGE_SIZES[up - 1]
-    image_sizes.reverse.each do |size|
+    image_sizes.reverse_each do |size|
       # Remove this variant for covers on small phones since it gets pixelated.
       # Ideally, we'd have a separate set of image sizes just for covers, but this is fine for now.
       next if is_cover && size[:max_width] == 320
 
-      size[:scales].reverse.each do |scale|
+      size[:scales].reverse_each do |scale|
         srcset += ["#{url}?w=#{size[:width]}&dpr=#{scale}&auto=format,compress #{size[:width] * scale}w"]
       end
 
@@ -116,24 +120,25 @@ class ImageProcessor
 
     node['loading'] = 'lazy' unless node['loading']
 
-    if src.end_with?('jpg')
-      image = MiniMagick::Image.open(".#{src}")
+    next unless src.end_with?('jpg')
 
-      size = image.dimensions
-      node['data-width'] = size[0]
-      node['data-height'] = size[1]
+    image = MiniMagick::Image.open(".#{src}")
 
-      if ENV['RACK_ENV'] == 'production'
-        if is_cover
-          image.resize('4x4')
-          node['style'] =
-            "background-image:url(data:image/png;base64,#{Base64.urlsafe_encode64(image.to_blob)});background-repeat:no-repeat;background-size:cover"
-        else
-          image.resize('1x1')
-          if color = image.pixel_at(1, 1)
-            node['style'] = "background-color:#{color.downcase}"
-          end
-        end
+    size = image.dimensions
+    node['data-width'] = size[0]
+    node['data-height'] = size[1]
+
+    next unless ENV['RACK_ENV'] == 'production'
+
+    if is_cover
+      image.resize('4x4')
+      node['style'] =
+        "background-image:url(data:image/png;base64,#{Base64.urlsafe_encode64(image.to_blob)});" \
+        'background-repeat:no-repeat;background-size:cover'
+    else
+      image.resize('1x1')
+      if (color = image.pixel_at(1, 1))
+        node['style'] = "background-color:#{color.downcase}"
       end
     end
   end

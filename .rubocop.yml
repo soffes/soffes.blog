@@ -1,0 +1,44 @@
+# Rubocop extensions
+require:
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 2.7.1
+
+  # Enable new cops by default
+  NewCops: enable
+
+  # Exclude code we didn’t write.
+  Exclude:
+    - _site/**/*
+    - bin/**/*
+    - tmp/**/*
+    - vendor/**/*
+
+Style/AsciiComments:
+  # Disabled because this isn’t fun.
+  Enabled: false
+
+Style/IfUnlessModifier:
+  # Disabled because this makes things harder to read in my opinion.
+  Enabled: false
+
+Metrics/MethodLength:
+  # Turn this up for now. Should refactor later.
+  Max: 50
+
+Metrics/AbcSize:
+  # Turn this up for now. Should refactor later.
+  Max: 60
+
+Metrics/ClassLength:
+  # Turn up for now
+  Max: 150
+
+Metrics/PerceivedComplexity:
+  # Turn up for now
+  Max: 20
+
+Metrics/CyclomaticComplexity:
+  # Turn up for now
+  Max: 20

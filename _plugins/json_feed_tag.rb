@@ -2,6 +2,7 @@
 
 require 'json'
 
+# Liquid plug-in to generate a JSON Feed
 class JsonFeedTag < Liquid::Tag
   def render(context)
     site = context['site']
@@ -34,7 +35,7 @@ class JsonFeedTag < Liquid::Tag
         item[:tags] = tags
       end
 
-      if cover_image = post.data['cover_image']
+      if (cover_image = post.data['cover_image'])
         item['banner_image'] = site['url'] + cover_image
       end
 

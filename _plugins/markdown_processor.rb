@@ -3,6 +3,7 @@
 require 'rouge'
 require 'redcarpet'
 
+# Custom markdown processor
 class MarkdownRenderer < Redcarpet::Render::HTML
   def block_code(code, language)
     if language
@@ -17,6 +18,7 @@ end
 module Jekyll
   module Converters
     class Markdown
+      # Custom markdown processor plug-in
       class Custom
         OPTIONS = {
           no_intra_emphasis: true,

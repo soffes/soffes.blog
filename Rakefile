@@ -45,6 +45,25 @@ task :server do
   system 'bundle exec jekyll serve --config _config.yml --drafts --trace'
 end
 
+namespace :lint do
+  desc 'Lint Ruby'
+  task :ruby do
+    system 'bundle exec rubocop --parallel --config .rubocop.yml'
+  end
+
+  desc 'Lint YAML'
+  task :yaml do
+    if `which yamllint`.chomp.empty?
+      abort 'yamllint is not installed. Install it with `pip3 install yamllint`.'
+    end
+
+    system 'yamllint -c .yamllint.yml .'
+  end
+end
+
+desc 'Run all linters'
+task lint: %i[lint:ruby lint:yaml]
+
 private
 
 def import_directory(source, destination)

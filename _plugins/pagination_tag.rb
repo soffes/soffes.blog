@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
+# Liquid plug-in for custom pagination
 class PaginationTag < Liquid::Tag
   WINDOW = 1
 
   def render(context)
     window = WINDOW
-    return unless paginator = context['paginator']
+    return unless (paginator = context['paginator'])
 
     page = paginator['page']
     total_pages = paginator['total_pages']

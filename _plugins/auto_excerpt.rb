@@ -3,6 +3,7 @@
 require 'action_view'
 require 'nokogiri'
 
+# Jekyll generator to create excepts for posts
 class AutoExcerpts < Jekyll::Generator
   include ActionView::Helpers::TextHelper
 
@@ -18,7 +19,7 @@ class AutoExcerpts < Jekyll::Generator
       nodes = excerpt_for(document.content)
       document.data['excerpt'] = nodes.map(&:to_html).join
 
-      text = nodes.map(&:text).join(' ').gsub(/\n/, ' ').gsub(/\s+/, ' ')
+      text = nodes.map(&:text).join(' ').tr("\n", ' ').gsub(/\s+/, ' ')
       document.data['excerpt_text'] = truncate(text, length: 150, separator: /\s/)
     end
 

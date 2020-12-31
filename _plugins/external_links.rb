@@ -3,6 +3,7 @@
 require 'addressable/uri'
 require 'nokogiri'
 
+# Jekyll hook to add targets to external links
 class ExternalLinksProcessor
   def initialize(post)
     @post = post
@@ -20,8 +21,8 @@ class ExternalLinksProcessor
   def process(html)
     doc = Nokogiri::HTML.fragment(html)
     doc.css('a').each do |node|
-      next unless href = node['href']
-      next unless uri = Addressable::URI.parse(href)
+      next unless (href = node['href'])
+      next unless (uri = Addressable::URI.parse(href))
       next if !uri.host || uri.host == @blog_host
 
       node['target'] = '_blank'
