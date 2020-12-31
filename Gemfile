@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.0.0'
+ruby '2.7.1'
 
 gem 'jekyll'
 gem 'rake'
