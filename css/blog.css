@@ -438,7 +438,7 @@ section.post > footer article blockquote {
 }
 
 section.post > footer article pre, section.post > footer article code {
-  color: #333;
+  color: #ddd;
 }
 
 section.post > footer p.copyright {
