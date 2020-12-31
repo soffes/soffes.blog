@@ -1,10 +1,11 @@
-tmp
-*.rdb
-.env
-coverage
-_posts
 _drafts
+_posts
 _site
-assets
+.DS_Store
+.env
 .jekyll-cache/
 .jekyll-metadata
+*.rdb
+assets
+coverage
+tmp

@@ -1,16 +1,24 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 ruby '2.7.1'
 
-gem 'jekyll'
-gem 'rake'
-gem 'nokogiri'
-gem 'rouge'
-gem 'redcarpet'
 gem 'actionview'
-gem 'mini_magick'
 gem 'addressable'
+gem 'jekyll'
+gem 'mini_magick'
+gem 'nokogiri'
+gem 'rake'
+gem 'redcarpet'
+gem 'rouge'
 
 group :jekyll_plugins do
   gem 'jekyll-paginate'
+end
+
+group :development do
+  gem 'parser', '~> 2.7.1.5', require: false
+  gem 'rubocop', '~> 1.6.1', require: false
+  gem 'rubocop-performance', require: false
 end

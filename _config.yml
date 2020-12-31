@@ -7,7 +7,7 @@ baseurl: ""
 url: https://soffes.blog
 cdn_url: https://soffes-blog.imgix.net
 twitter_username: soffes
-github_username:  soffes
+github_username: soffes
 timezone: America/Los_Angeles
 encoding: utf-8
 strict_front_matter: true

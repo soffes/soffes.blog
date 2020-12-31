@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'json'
 
+# Liquid plug-in to generate a JSON Feed
 class JsonFeedTag < Liquid::Tag
   def render(context)
     site = context['site']
@@ -8,9 +11,9 @@ class JsonFeedTag < Liquid::Tag
       title: site['title'],
       description: 'This is my blog.',
       home_page_url: site['url'],
-      feed_url: site['url'] + '/feed.json',
-      icon: site['url'] + '/icon.png',
-      favicon: site['url'] + '/favicon.png',
+      feed_url: "#{site['url']}/feed.json",
+      icon: "#{site['url']}/icon.png",
+      favicon: "#{site['url']}/favicon.png",
       author: {
         name: 'Sam Soffes',
         url: 'https://soff.es/',
@@ -32,7 +35,7 @@ class JsonFeedTag < Liquid::Tag
         item[:tags] = tags
       end
 
-      if cover_image = post.data['cover_image']
+      if (cover_image = post.data['cover_image'])
         item['banner_image'] = site['url'] + cover_image
       end
 
