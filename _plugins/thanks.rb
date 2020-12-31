@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Thanks < Jekyll::Generator
   safe true
 
@@ -5,6 +7,7 @@ class Thanks < Jekyll::Generator
     @site = site
     site.posts.docs.each do |document|
       next unless thanks = document.data['thanks']
+
       document.data['thanks'] = html_for(thanks)
     end
 

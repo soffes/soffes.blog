@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 desc 'Import published posts'
 task :import do
-  unless File.directory?('tmp/blog')
+  if File.directory?('tmp/blog')
+    system 'cd tmp/blog && git pull origin main && cd ..'
+  else
     system 'mkdir -p tmp'
     system 'git clone https://github.com/soffes/blog tmp/blog'
-  else
-    system 'cd tmp/blog && git pull origin main && cd ..'
   end
 
   import_directory('tmp/blog/published', '_posts')
@@ -26,9 +28,7 @@ end
 
 desc 'Build'
 task :build do
-  unless File.directory?('_posts')
-    Rake::Task['import'].invoke
-  end
+  Rake::Task['import'].invoke unless File.directory?('_posts')
 
   system 'bundle exec jekyll build --config _config.yml --trace'
 end
@@ -48,9 +48,7 @@ end
 private
 
 def import_directory(source, destination)
-  unless File.directory?(source)
-    abort "Missing directory `#{source}`"
-  end
+  abort "Missing directory `#{source}`" unless File.directory?(source)
 
   system %(mkdir -p #{destination})
   system %(mkdir -p assets)
@@ -75,9 +73,7 @@ def import_directory(source, destination)
 end
 
 def import_local
-  unless File.directory?('../blog')
-    abort 'Expected blog directory at `../blog/`'
-  end
+  abort 'Expected blog directory at `../blog/`' unless File.directory?('../blog')
 
   system 'rm -rf tmp/blog'
   system 'mkdir -p tmp'

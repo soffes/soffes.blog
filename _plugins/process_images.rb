@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'addressable/uri'
 require 'base64'
 require 'mini_magick'
@@ -7,8 +9,8 @@ require 'nokogiri'
 module MiniMagick
   class Image
     def pixel_at(x, y)
-      run_command("convert", "#{path}[1x1+#{x.to_i}+#{y.to_i}]", 'txt:').split("\n").each do |line|
-        return $1 if /^0,0:.*(#[0-9a-fA-F]+)/.match(line)
+      run_command('convert', "#{path}[1x1+#{x.to_i}+#{y.to_i}]", 'txt:').split("\n").each do |line|
+        return Regexp.last_match(1) if /^0,0:.*(#[0-9a-fA-F]+)/.match(line)
       end
       nil
     end
@@ -101,13 +103,12 @@ class ImageProcessor
         srcset += ["#{url}?w=#{size[:width]}&dpr=#{scale}&auto=format,compress #{size[:width] * scale}w"]
       end
 
-      if size[:max_width] == 1024
-        sizes << '1024px'
-      else
-        sizes << "(max-width: #{size[:max_width]}px) #{size[:width]}px"
-      end
+      sizes << if size[:max_width] == 1024
+                 '1024px'
+               else
+                 "(max-width: #{size[:max_width]}px) #{size[:width]}px"
+               end
     end
-
 
     node['src'] = "#{url}?w=1024&dpr=2&auto=format,compress"
     node['srcset'] = srcset.join(',')
@@ -125,7 +126,8 @@ class ImageProcessor
       if ENV['RACK_ENV'] == 'production'
         if is_cover
           image.resize('4x4')
-          node['style'] = "background-image:url(data:image/png;base64,#{Base64.urlsafe_encode64(image.to_blob)});background-repeat:no-repeat;background-size:cover"
+          node['style'] =
+            "background-image:url(data:image/png;base64,#{Base64.urlsafe_encode64(image.to_blob)});background-repeat:no-repeat;background-size:cover"
         else
           image.resize('1x1')
           if color = image.pixel_at(1, 1)

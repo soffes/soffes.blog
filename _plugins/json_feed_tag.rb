@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 class JsonFeedTag < Liquid::Tag
@@ -8,9 +10,9 @@ class JsonFeedTag < Liquid::Tag
       title: site['title'],
       description: 'This is my blog.',
       home_page_url: site['url'],
-      feed_url: site['url'] + '/feed.json',
-      icon: site['url'] + '/icon.png',
-      favicon: site['url'] + '/favicon.png',
+      feed_url: "#{site['url']}/feed.json",
+      icon: "#{site['url']}/icon.png",
+      favicon: "#{site['url']}/favicon.png",
       author: {
         name: 'Sam Soffes',
         url: 'https://soff.es/',

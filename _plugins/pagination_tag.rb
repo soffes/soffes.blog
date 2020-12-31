@@ -1,19 +1,22 @@
+# frozen_string_literal: true
+
 class PaginationTag < Liquid::Tag
   WINDOW = 1
 
   def render(context)
     window = WINDOW
     return unless paginator = context['paginator']
+
     page = paginator['page']
     total_pages = paginator['total_pages']
 
     output = '<nav class="pagination">'
 
-    if page > 1
-      output << %(<a class="previous" href="#{path_for(page - 1)}" rel="previous">&larr; Previous</a>)
-    else
-      output << '<span class="disabled">&larr; Previous</span>'
-    end
+    output << if page > 1
+                %(<a class="previous" href="#{path_for(page - 1)}" rel="previous">&larr; Previous</a>)
+              else
+                '<span class="disabled">&larr; Previous</span>'
+              end
 
     if page > window
       if page == window + 1
@@ -23,29 +26,21 @@ class PaginationTag < Liquid::Tag
           output << link_for(i)
         end
 
-        if page > (window * 2) + 1
-          output << gap
-        end
+        output << gap if page > (window * 2) + 1
       end
     end
 
-    if page > 2
-      output << %(<a href="#{path_for(page - 1)}" rel="prev">#{page - 1}</a>)
-    end
+    output << %(<a href="#{path_for(page - 1)}" rel="prev">#{page - 1}</a>) if page > 2
 
     output << %(<span class="current">#{page}</span>)
 
-    if page < total_pages - 1
-      output << %(<a href="#{path_for(page + 1)}" rel="next">#{page + 1}</a>)
-    end
+    output << %(<a href="#{path_for(page + 1)}" rel="next">#{page + 1}</a>) if page < total_pages - 1
 
     if page <= total_pages - window
       if page == total_pages - window
         output << link_for(total_pages)
       else
-        if page < total_pages - window * 2
-          output << gap
-        end
+        output << gap if page < total_pages - window * 2
 
         ((total_pages - window + 1)..total_pages).each do |i|
           output << link_for(i)
@@ -53,11 +48,11 @@ class PaginationTag < Liquid::Tag
       end
     end
 
-    if page < total_pages
-      output << %(<a class="next" href="#{path_for(page + 1)}" rel="next">Next &rarr;</a>)
-    else
-      output << '<span class="disabled">Next &rarr;</span>'
-    end
+    output << if page < total_pages
+                %(<a class="next" href="#{path_for(page + 1)}" rel="next">Next &rarr;</a>)
+              else
+                '<span class="disabled">Next &rarr;</span>'
+              end
 
     output << '</nav>'
     output
@@ -71,6 +66,7 @@ class PaginationTag < Liquid::Tag
 
   def path_for(page)
     return '/' if page == 1
+
     "/#{page}"
   end
 
