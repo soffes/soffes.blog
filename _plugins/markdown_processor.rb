@@ -16,7 +16,7 @@ end
 
 module Jekyll
   module Converters
-    module Markdown
+    class Markdown
       class Custom
         OPTIONS = {
           no_intra_emphasis: true,
