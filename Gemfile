@@ -18,7 +18,7 @@ group :jekyll_plugins do
 end
 
 group :development do
-  gem 'parser', '~> 2.7.1.5', require: false
-  gem 'rubocop', '~> 1.7.0', require: false
+  gem 'parser', require: false
+  gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
 end

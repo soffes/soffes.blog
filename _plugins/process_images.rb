@@ -120,7 +120,7 @@ class ImageProcessor
 
     node['loading'] = 'lazy' unless node['loading']
 
-    next unless src.end_with?('jpg')
+    return unless src.end_with?('jpg')
 
     image = MiniMagick::Image.open(".#{src}")
 
@@ -128,7 +128,7 @@ class ImageProcessor
     node['data-width'] = size[0]
     node['data-height'] = size[1]
 
-    next unless ENV['RACK_ENV'] == 'production'
+    return unless ENV['RACK_ENV'] == 'production'
 
     if is_cover
       image.resize('4x4')
