@@ -1,19 +1,12 @@
 name: Ruby
 on:
   pull_request:
-    paths:
-      - '**/*.rb'
-      - '**/*.ru'
-      - Gemfile
-      - Gemfile.lock
-      - Rakefile
-      - .github/workflows/ruby.yml
   push:
     branches:
       - main
 jobs:
-  lint:
-    name: Lint
+  build:
+    name: Build
     runs-on: ubuntu-latest
     env:
       RACK_ENV: test
@@ -33,5 +26,5 @@ jobs:
         run: |
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-      - name: Run Rubocop
-        run: bundle exec rake lint:ruby
+      - name: Build
+        run: bundle exec rake build
