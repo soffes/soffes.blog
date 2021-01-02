@@ -3,10 +3,10 @@
 desc 'Import published posts'
 task :import do
   if File.directory?('tmp/blog')
-    system 'cd tmp/blog && git pull origin main && cd ..'
+    sh 'cd tmp/blog && git pull origin main && cd ..'
   else
-    system 'mkdir -p tmp'
-    system 'git clone https://github.com/soffes/blog tmp/blog'
+    sh 'mkdir -p tmp'
+    sh 'git clone https://github.com/soffes/blog tmp/blog'
   end
 
   import_directory('tmp/blog/published', '_posts')
@@ -30,7 +30,7 @@ desc 'Build'
 task :build do
   Rake::Task['import'].invoke unless File.directory?('_posts')
 
-  system 'bundle exec jekyll build --config _config.yml --trace'
+  sh 'bundle exec jekyll build --config _config.yml --trace'
 end
 
 task default: :build
@@ -42,13 +42,13 @@ end
 
 desc 'Local server'
 task :server do
-  system 'bundle exec jekyll serve --config _config.yml --drafts --trace'
+  sh 'bundle exec jekyll serve --config _config.yml --drafts --trace'
 end
 
 namespace :lint do
   desc 'Lint Ruby'
   task :ruby do
-    system 'bundle exec rubocop --parallel --config .rubocop.yml'
+    sh 'bundle exec rubocop --parallel --config .rubocop.yml'
   end
 
   desc 'Lint YAML'
@@ -57,7 +57,7 @@ namespace :lint do
       abort 'yamllint is not installed. Install it with `pip3 install yamllint`.'
     end
 
-    system 'yamllint -c .yamllint.yml .'
+    sh 'yamllint -c .yamllint.yml .'
   end
 end
 
