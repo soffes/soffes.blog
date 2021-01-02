@@ -145,7 +145,6 @@ class ImageProcessor
   end
 end
 
-
 Jekyll::Hooks.register :posts, :post_render do |post|
   ImageProcessor.new(post, %w[production test].include?(ENV['RACK_ENV'])).process!
 end
