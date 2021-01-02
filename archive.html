@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+<section class="archive">
+  <article>
+    <h2>Archive</h2>
+    <p>These are all of the posts I’ve written that I still have. Some old ones are lost forever, but I saved what I could find. According to <a href="https://web.archive.org/web/20060414170216/http://samsoffes.com/" rel="external nofollow">Archive.org</a>, there are older ones, but they are likely lost forever. The stuff towards the bottom is pretty cringey after all of this time anyway. Enjoy.</p>
+
+    {% assign groups = site.posts | group_by_exp:"post", "post.date | date: '%Y'"  %}
+    {% for group in groups %}
+    <h3>{{ group.name }}</h3>
+    <ul>
+      {% for post in group.items %}
+      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
+  </article>
+</section>

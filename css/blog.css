@@ -204,7 +204,7 @@ sup {
   vertical-align: super;
 }
 
-body > header, main > section.posts, main > nav, body > footer, section.post > article, section.post > footer div, section.error {
+body > header, main > section, main > nav, body > footer, section.post > article, section.post > footer div {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 16px;
