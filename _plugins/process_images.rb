@@ -53,12 +53,15 @@ class ImageProcessor
     ]
   ].freeze
 
-  def initialize(post)
+  def initialize(post, should_process)
     @post = post
     @site = post.site
+    @should_process = should_process
   end
 
   def process!
+    return unless @should_process
+
     doc = Nokogiri::HTML.fragment(@post.output)
     doc.css('img').each do |node|
       next unless (src = node['src'])
@@ -128,8 +131,6 @@ class ImageProcessor
     node['data-width'] = size[0]
     node['data-height'] = size[1]
 
-    return unless ENV['RACK_ENV'] == 'production'
-
     if is_cover
       image.resize('4x4')
       node['style'] =
@@ -144,6 +145,7 @@ class ImageProcessor
   end
 end
 
+
 Jekyll::Hooks.register :posts, :post_render do |post|
-  ImageProcessor.new(post).process!
+  ImageProcessor.new(post, %w[production test].include?(ENV['RACK_ENV'])).process!
 end
