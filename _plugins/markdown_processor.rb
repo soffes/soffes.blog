@@ -6,10 +6,10 @@ require 'redcarpet'
 # Custom markdown processor
 class MarkdownRenderer < Redcarpet::Render::HTML
   def block_code(code, language)
-    language = nil if language == 'txt'
+    language = nil if %w[text txt].include?(language)
+    language = 'objective_c' if %w[objective-c objc].include?(language)
 
     if language
-      language = 'objective_c' if %w[objective-c objc].include?(language)
       %(<div class="highlight"><pre>#{Rouge.highlight(code, language, 'html')}</pre></div>)
     else
       "<pre>#{code}</pre>"
