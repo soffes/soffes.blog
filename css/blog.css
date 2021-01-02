@@ -604,3 +604,19 @@ nav.pagination em {
     display: inline
   }
 }
+
+.photo-post {
+  display: inline-block;
+  font-size: 0.75em;
+  border: 0;
+  text-decoration: none;
+  padding-top: 0.125em;
+}
+
+.photo-post path {
+  fill: var(--link-foreground);
+}
+
+.photo-post:hover {
+  border: 0;
+}
