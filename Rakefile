@@ -3,10 +3,10 @@
 desc 'Import published posts'
 task :import do
   if File.directory?('tmp/blog')
-    system 'cd tmp/blog && git pull origin main && cd ..'
+    sh 'cd tmp/blog && git pull origin main && cd ..'
   else
-    system 'mkdir -p tmp'
-    system 'git clone https://github.com/soffes/blog tmp/blog'
+    sh 'mkdir -p tmp'
+    sh 'git clone https://github.com/soffes/blog tmp/blog'
   end
 
   import_directory('tmp/blog/published', '_posts')
@@ -30,25 +30,25 @@ desc 'Build'
 task :build do
   Rake::Task['import'].invoke unless File.directory?('_posts')
 
-  system 'bundle exec jekyll build --config _config.yml --trace'
+  sh 'bundle exec jekyll build --config _config.yml --trace'
 end
 
 task default: :build
 
 desc 'Clean'
 task :clean do
-  system 'rm -rf tmp _posts _drafts _site assets .jekyll-cache'
+  sh 'rm -rf tmp _posts _drafts _site assets .jekyll-cache'
 end
 
 desc 'Local server'
 task :server do
-  system 'bundle exec jekyll serve --config _config.yml --drafts --trace'
+  sh 'bundle exec jekyll serve --config _config.yml --drafts --trace'
 end
 
 namespace :lint do
   desc 'Lint Ruby'
   task :ruby do
-    system 'bundle exec rubocop --parallel --config .rubocop.yml'
+    sh 'bundle exec rubocop --parallel --config .rubocop.yml'
   end
 
   desc 'Lint YAML'
@@ -57,7 +57,7 @@ namespace :lint do
       abort 'yamllint is not installed. Install it with `pip3 install yamllint`.'
     end
 
-    system 'yamllint -c .yamllint.yml .'
+    sh 'yamllint -c .yamllint.yml .'
   end
 end
 
@@ -69,24 +69,24 @@ private
 def import_directory(source, destination)
   abort "Missing directory `#{source}`" unless File.directory?(source)
 
-  system %(mkdir -p #{destination})
-  system %(mkdir -p assets)
-  system %(cp -r #{source}/* #{destination})
+  sh %(mkdir -p #{destination})
+  sh %(mkdir -p assets)
+  sh %(cp -r #{source}/* #{destination})
 
   limit = ENV['LIMIT']
   Dir["#{destination}/*"].sort.reverse.each_with_index do |dir, i|
     if limit && i >= limit.to_i
-      system %(rm -rf #{dir})
+      sh %(rm -rf #{dir})
       next
     end
 
     md = Dir["#{dir}/*.markdown"].first
-    system %(mv #{md} #{dir}.md)
+    sh %(mv #{md} #{dir}.md)
 
     if Dir.empty?(dir)
-      system %(rm -rf #{dir})
+      sh %(rm -rf #{dir})
     else
-      system %(mv #{dir} assets)
+      sh %(mv #{dir} assets)
     end
   end
 end
@@ -94,7 +94,7 @@ end
 def import_local
   abort 'Expected blog directory at `../blog/`' unless File.directory?('../blog')
 
-  system 'rm -rf tmp/blog'
-  system 'mkdir -p tmp'
-  system 'cp -r ../blog tmp/blog'
+  sh 'rm -rf tmp/blog'
+  sh 'mkdir -p tmp'
+  sh 'cp -r ../blog tmp/blog'
 end
