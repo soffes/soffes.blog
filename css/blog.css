@@ -32,7 +32,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
   --h3-foreground: #666;
   --h4-foreground: #999;
   --footer-foreground: #aaa;
-  --footer-code-foreground: #333;
+  --footer-code-foreground: #ddd;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,7 +52,6 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
     --h3-foreground: #999;
     --h4-foreground: #666;
     --footer-foreground: #555;
-    --footer-code-foreground: #ddd;
   }
 }
 
