@@ -37,7 +37,7 @@ task default: :build
 
 desc 'Clean'
 task :clean do
-  sh 'rm -rf tmp _posts _drafts _site assets .jekyll-cache'
+  system 'rm -rf tmp _posts _drafts _site assets .jekyll-cache'
 end
 
 desc 'Local server'
@@ -69,24 +69,24 @@ private
 def import_directory(source, destination)
   abort "Missing directory `#{source}`" unless File.directory?(source)
 
-  sh %(mkdir -p #{destination})
-  sh %(mkdir -p assets)
-  sh %(cp -r #{source}/* #{destination})
+  system %(mkdir -p #{destination})
+  system %(mkdir -p assets)
+  system %(cp -r #{source}/* #{destination})
 
   limit = ENV['LIMIT']
   Dir["#{destination}/*"].sort.reverse.each_with_index do |dir, i|
     if limit && i >= limit.to_i
-      sh %(rm -rf #{dir})
+      system %(rm -rf #{dir})
       next
     end
 
     md = Dir["#{dir}/*.markdown"].first
-    sh %(mv #{md} #{dir}.md)
+    system %(mv #{md} #{dir}.md)
 
     if Dir.empty?(dir)
-      sh %(rm -rf #{dir})
+      system %(rm -rf #{dir})
     else
-      sh %(mv #{dir} assets)
+      system %(mv #{dir} assets)
     end
   end
 end
@@ -94,7 +94,7 @@ end
 def import_local
   abort 'Expected blog directory at `../blog/`' unless File.directory?('../blog')
 
-  sh 'rm -rf tmp/blog'
-  sh 'mkdir -p tmp'
-  sh 'cp -r ../blog tmp/blog'
+  system 'rm -rf tmp/blog'
+  system 'mkdir -p tmp'
+  system 'cp -r ../blog tmp/blog'
 end
