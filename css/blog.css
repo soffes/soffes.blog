@@ -345,8 +345,10 @@ article a.image-right {
 }
 
 article div.thanks {
+  border-top: 1px solid var(--horizontal-rule);
   color: var(--light-foreground);
-  padding-top: 2em;
+  padding-top: 3em;
+  margin-top: 3em;
 }
 
 article div.thanks a {
