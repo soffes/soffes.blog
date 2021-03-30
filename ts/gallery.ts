@@ -2,25 +2,25 @@ const lightboxTemplate = document.createElement("template");
 lightboxTemplate.innerHTML = `
 <style>
 :host {
-  position: fixed
-  top: 0
-  left: 0
-  width: 100%
-  height: 100%
-  background: rgba(0, 0, 0, 0.9)
-  padding: 32px
-  box-sizing: border-box
-  display: flex
-  justify-content: center
-  outline: 0
-  cursor: zoom-out
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  outline: 0;
+  cursor: zoom-out;
 }
 
 img {
-  max-height: 100%
-  max-width: 100%
-  object-fit: contain
-  cursor: default
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  cursor: default;
 }
 </style>`;
 
@@ -179,41 +179,41 @@ const rowTemplate = document.createElement("template");
 rowTemplate.innerHTML = `
 <style>
 :host {
-  display: grid
-  width: 100%
-  grid-gap: 8px
-  margin-bottom: 8px
-  cursor: zoom-in
+  display: grid;
+  width: 100%;
+  grid-gap: 8px;
+  margin-bottom: 8px;
+  cursor: zoom-in;
 }
 
 img {
-  width: 100%
+  width: 100%;
 }
 
 [style*="--aspect-ratio"] > :first-child {
-  width: 100%
+  width: 100%;
 }
 
 [style*="--aspect-ratio"] > img {
-  height: auto
+  height: auto;
 }
 
 @supports (--custom:property) {
   [style*="--aspect-ratio"] {
-    position: relative
+    position: relative;
   }
 
   [style*="--aspect-ratio"]::before {
-    content: ""
-    display: block
-    padding-bottom: calc(100% / (var(--aspect-ratio)))
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
   }
 
   [style*="--aspect-ratio"] > :first-child {
-    position: absolute
-    top: 0
-    left: 0
-    height: 100%
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
   }
 }
 </style>`;
