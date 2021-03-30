@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "none",
+    "sourceMap": false,
+    "outDir": "./js",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["./ts/**/*"]
+}

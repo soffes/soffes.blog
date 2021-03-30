@@ -15,7 +15,14 @@ permalink: /:title
 paginate: 5
 paginate_path: "/:num"
 exclude:
+  - node_modules
+  - package-lock.json
+  - package.json
+  - Rakefile
   - README.md
+  - tmp
+  - ts/*
+  - tsconfig.json
 include:
   - _redirects
 defaults:

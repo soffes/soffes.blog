@@ -30,19 +30,19 @@ desc 'Build'
 task :build do
   Rake::Task['import'].invoke unless File.directory?('_posts')
 
-  sh 'bundle exec jekyll build --config _config.yml --trace'
+  sh 'npx tsc && bundle exec jekyll build --config _config.yml --trace'
 end
 
 task default: :build
 
 desc 'Clean'
 task :clean do
-  system 'rm -rf tmp _posts _drafts _site assets .jekyll-cache'
+  system 'rm -rf tmp _posts _drafts _site assets .jekyll-cache js'
 end
 
 desc 'Local server'
 task :server do
-  sh 'bundle exec jekyll serve --config _config.yml --drafts --trace'
+  sh 'npx tsc && bundle exec jekyll serve --config _config.yml --drafts --trace'
 end
 
 namespace :lint do

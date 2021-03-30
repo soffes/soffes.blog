@@ -8,4 +8,6 @@ _site
 *.rdb
 assets
 coverage
+js
+node_modules
 tmp

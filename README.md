@@ -25,6 +25,12 @@ Install the Ruby dependencies (you’ll need [Bundler](https://bundler.io) insta
 $ bundle install
 ```
 
+You’ll also need Node. You can install with `brew install node` if you don’t have it. Then you can get the JavaScript dependencies:
+
+```bash
+$ npm i
+```
+
 Now you can import my posts and start the server:
 
 ```bash
