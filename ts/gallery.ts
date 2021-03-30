@@ -1,4 +1,4 @@
-const lightboxTemplate = document.createElement('template')
+const lightboxTemplate = document.createElement("template");
 lightboxTemplate.innerHTML = `
 <style>
 :host {
@@ -22,156 +22,160 @@ img {
   object-fit: contain
   cursor: default
 }
-</style>`
+</style>`;
 
 class PhotoLightbox extends HTMLElement {
   constructor() {
-    super()
+    super();
 
-    this.attachShadow({ mode: "open" })
-    this.shadowRoot!.appendChild(lightboxTemplate.content.cloneNode(true))
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot!.appendChild(lightboxTemplate.content.cloneNode(true));
   }
 
   connectedCallback() {
-    this.tabIndex = -1
+    this.tabIndex = -1;
   }
 
   show(image: HTMLElement) {
-    const exisiting = this.image()
+    const exisiting = this.image();
     if (exisiting) {
-      exisiting.parentNode?.removeChild(exisiting)
+      exisiting.parentNode?.removeChild(exisiting);
     }
 
-    const img = image.cloneNode(true) as HTMLElement
-    img.removeAttribute('style')
-    img.removeAttribute('srcset')
-    img.removeAttribute('sizes')
-    this.shadowRoot?.appendChild(img)
+    const img = image.cloneNode(true) as HTMLElement;
+    img.removeAttribute("style");
+    img.removeAttribute("srcset");
+    img.removeAttribute("sizes");
+    this.shadowRoot?.appendChild(img);
   }
 
   image() {
-    return this.shadowRoot?.querySelector('img')
+    return this.shadowRoot?.querySelector("img");
   }
 }
-window.customElements.define('photo-lightbox', PhotoLightbox)
+window.customElements.define("photo-lightbox", PhotoLightbox);
 
 class LightboxController {
-  static shared = new LightboxController()
-  static lightbox: PhotoLightbox | null
+  static shared = new LightboxController();
+  static lightbox: PhotoLightbox | null;
 
   show(image: HTMLElement) {
-    this.setup()
-    LightboxController.lightbox?.show(image)
+    this.setup();
+    LightboxController.lightbox?.show(image);
   }
 
   close() {
     if (!LightboxController.lightbox) {
-      return
+      return;
     }
 
-    LightboxController.lightbox.parentNode?.removeChild(LightboxController.lightbox)
-    LightboxController.lightbox = null
+    LightboxController.lightbox.parentNode?.removeChild(
+      LightboxController.lightbox
+    );
+    LightboxController.lightbox = null;
   }
 
   private setup() {
     if (LightboxController.lightbox) {
-      return
+      return;
     }
 
-    const lightbox = document.createElement('photo-lightbox') as PhotoLightbox
-    document.body.appendChild(lightbox)
-    LightboxController.lightbox = lightbox
+    const lightbox = document.createElement("photo-lightbox") as PhotoLightbox;
+    document.body.appendChild(lightbox);
+    LightboxController.lightbox = lightbox;
 
-    lightbox.addEventListener('keydown', (event) => {
+    lightbox.addEventListener("keydown", (event) => {
       // Close
       if (event.key === "Escape") {
-        this.close()
-        event.preventDefault()
-        return
+        this.close();
+        event.preventDefault();
+        return;
       }
 
       // Previous
       if (event.key === "ArrowLeft") {
-        this.showPrevious()
-        event.preventDefault()
-        return
+        this.showPrevious();
+        event.preventDefault();
+        return;
       }
 
       // Next
       if (event.key === "ArrowRight") {
-        this.showNext()
-        event.preventDefault()
-        return
+        this.showNext();
+        event.preventDefault();
+        return;
       }
-    })
+    });
 
-    lightbox.addEventListener('click', () => {
-      this.close()
-    })
+    lightbox.addEventListener("click", () => {
+      this.close();
+    });
 
-    lightbox.focus()
+    lightbox.focus();
   }
 
   private allImages() {
-    const images = Array.from(document.querySelectorAll("photo-row")) as PhotoRow[]
-    return images.map((row) => row.images()).flat()
+    const images = Array.from(
+      document.querySelectorAll("photo-row")
+    ) as PhotoRow[];
+    return images.map((row) => row.images()).flat();
   }
 
   private currentIndex() {
     if (!LightboxController.lightbox) {
-      return null
+      return null;
     }
 
-    const image = LightboxController.lightbox.image()
+    const image = LightboxController.lightbox.image();
     if (!image) {
-      return null
+      return null;
     }
 
-    const srcs = this.allImages().map((img) => img.getAttribute("src"))
-    return srcs.indexOf(image.getAttribute("src"))
+    const srcs = this.allImages().map((img) => img.getAttribute("src"));
+    return srcs.indexOf(image.getAttribute("src"));
   }
 
   private showPrevious() {
-    const index = this.currentIndex()
+    const index = this.currentIndex();
     if (index === null || index - 1 === -1) {
-      return
+      return;
     }
 
-    this.show(this.allImages()[index - 1])
+    this.show(this.allImages()[index - 1]);
   }
 
   private showNext() {
-    const index = this.currentIndex()
+    const index = this.currentIndex();
     if (index === null) {
-      return
+      return;
     }
 
-    const images = this.allImages()
+    const images = this.allImages();
     if (index + 1 === images.length) {
-      return
+      return;
     }
 
-    this.show(images[index + 1])
+    this.show(images[index + 1]);
   }
 }
 
 class PhotoGallery extends HTMLElement {
   connectedCallback() {
     this.allImages().forEach((image) => {
-      image.addEventListener('click', (event) => {
-        event.preventDefault()
-        LightboxController.shared.show(image)
-      })
-    })
+      image.addEventListener("click", (event) => {
+        event.preventDefault();
+        LightboxController.shared.show(image);
+      });
+    });
   }
 
   private allImages() {
-    return Array.from(this.querySelectorAll('img'))
+    return Array.from(this.querySelectorAll("img"));
   }
 }
-window.customElements.define('photo-gallery', PhotoGallery)
+window.customElements.define("photo-gallery", PhotoGallery);
 
-const rowTemplate = document.createElement('template')
+const rowTemplate = document.createElement("template");
 rowTemplate.innerHTML = `
 <style>
 :host {
@@ -212,33 +216,38 @@ img {
     height: 100%
   }
 }
-</style>`
+</style>`;
 
 class PhotoRow extends HTMLElement {
   constructor() {
-    super()
+    super();
 
-    this.attachShadow({ mode: "open" })
-    this.shadowRoot!.appendChild(rowTemplate.content.cloneNode(true))
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot!.appendChild(rowTemplate.content.cloneNode(true));
   }
 
   connectedCallback() {
-    let columns = ""
+    let columns = "";
     this.querySelectorAll("img").forEach((image) => {
-      image.parentNode!.removeChild(image)
+      image.parentNode!.removeChild(image);
 
-      const wrapper = document.createElement("div")
-      wrapper.style.setProperty("--aspect-ratio", image.getAttribute("data-width") + "/" + image.getAttribute("data-height"))
-      wrapper.appendChild(image)
-      this.shadowRoot!.appendChild(wrapper)
-      columns += "1fr "
-    })
+      const wrapper = document.createElement("div");
+      wrapper.style.setProperty(
+        "--aspect-ratio",
+        image.getAttribute("data-width") +
+          "/" +
+          image.getAttribute("data-height")
+      );
+      wrapper.appendChild(image);
+      this.shadowRoot!.appendChild(wrapper);
+      columns += "1fr ";
+    });
 
-    this.style.gridTemplateColumns = columns.trim()
+    this.style.gridTemplateColumns = columns.trim();
   }
 
   images() {
-    return Array.from(this.shadowRoot!.querySelectorAll('img'))
+    return Array.from(this.shadowRoot!.querySelectorAll("img"));
   }
 }
-window.customElements.define('photo-row', PhotoRow)
+window.customElements.define("photo-row", PhotoRow);
