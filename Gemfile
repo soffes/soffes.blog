@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.7.1'
+ruby '3.0.2'
 
 gem 'actionview'
 gem 'addressable'
@@ -22,4 +22,5 @@ group :development do
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rake', require: false
+  gem 'webrick'
 end
