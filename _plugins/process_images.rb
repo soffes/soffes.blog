@@ -133,6 +133,9 @@ class ImageProcessor
     node['data-width'] = size[0]
     node['data-height'] = size[1]
 
+    # Only do the backgrounds on production since it’s pretty slow
+    return unless ENV['RACK_ENV'] == 'production'
+
     if is_cover
       image.resize('4x4')
       node['style'] =
