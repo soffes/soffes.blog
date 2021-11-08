@@ -74,7 +74,7 @@ def import_directory(source, destination)
   system %(cp -r #{source}/* #{destination})
 
   limit = ENV['LIMIT']
-  Dir["#{destination}/*"].sort.reverse.each_with_index do |dir, i|
+  Dir["#{destination}/*"].reverse.each_with_index do |dir, i|
     if limit && i >= limit.to_i
       system %(rm -rf #{dir})
       next

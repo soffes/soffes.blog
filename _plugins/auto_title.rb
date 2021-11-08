@@ -4,7 +4,7 @@
 class AutoTitle < Jekyll::Generator
   safe true
 
-  REGEX = /(?:---\n[\s\w]*\n---\n)?(# (.*)\n\n)/.freeze
+  REGEX = /(?:---\n[\s\w]*\n---\n)?(# (.*)\n\n)/
 
   def generate(site)
     site.posts.docs.each do |document|

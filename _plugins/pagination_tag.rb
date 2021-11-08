@@ -41,7 +41,7 @@ class PaginationTag < Liquid::Tag
       if page == total_pages - window
         output += link_for(total_pages)
       else
-        output += gap if page < total_pages - window * 2
+        output += gap if page < total_pages - (window * 2)
 
         ((total_pages - window + 1)..total_pages).each do |i|
           output += link_for(i)

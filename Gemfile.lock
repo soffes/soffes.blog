@@ -25,12 +25,12 @@ GEM
       http_parser.rb (~> 0.6.0)
     erubi (1.10.0)
     eventmachine (1.2.7)
-    ffi (1.15.3)
+    ffi (1.15.4)
     forwardable-extended (2.6.0)
     http_parser.rb (0.6.0)
-    i18n (1.8.10)
+    i18n (1.8.11)
       concurrent-ruby (~> 1.0)
-    jekyll (4.2.0)
+    jekyll (4.2.1)
       addressable (~> 2.4)
       colorator (~> 1.0)
       em-websocket (~> 0.5)
@@ -65,20 +65,20 @@ GEM
     mini_magick (4.11.0)
     mini_portile2 (2.6.1)
     minitest (5.14.4)
-    nokogiri (1.12.3)
+    nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
-    parallel (1.20.1)
+    parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (4.0.6)
-    racc (1.5.2)
+    racc (1.6.0)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.1)
+    rails-html-sanitizer (1.4.2)
       loofah (~> 2.3)
     rainbow (3.0.0)
     rake (13.0.6)
@@ -88,19 +88,19 @@ GEM
     redcarpet (3.5.1)
     regexp_parser (2.1.1)
     rexml (3.2.5)
-    rouge (3.26.0)
-    rubocop (1.19.1)
+    rouge (3.26.1)
+    rubocop (1.22.3)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml
-      rubocop-ast (>= 1.9.1, < 2.0)
+      rubocop-ast (>= 1.12.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.10.0)
+    rubocop-ast (1.13.0)
       parser (>= 3.0.1.1)
-    rubocop-performance (1.11.5)
+    rubocop-performance (1.12.0)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rake (0.6.0)
@@ -113,9 +113,9 @@ GEM
       unicode-display_width (~> 1.1, >= 1.1.1)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
-    unicode-display_width (1.7.0)
+    unicode-display_width (1.8.0)
     webrick (1.7.0)
-    zeitwerk (2.4.2)
+    zeitwerk (2.5.1)
 
 PLATFORMS
   ruby
@@ -127,7 +127,6 @@ DEPENDENCIES
   jekyll-paginate
   mini_magick
   nokogiri
-  parser
   rake
   redcarpet
   rouge
@@ -140,4 +139,4 @@ RUBY VERSION
    ruby 3.0.2p107
 
 BUNDLED WITH
-   2.2.24
+   2.2.30
