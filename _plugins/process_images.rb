@@ -1,16 +1,13 @@
-# frozen_string_literal: true
-
-require 'addressable/uri'
-require 'base64'
-require 'mini_magick'
-require 'nokogiri'
+require "addressable/uri"
+require "base64"
+require "mini_magick"
+require "nokogiri"
 
 module MiniMagick
   # Extension on `MiniMagick::Image`
   class Image
-    # rubocop:disable Naming/MethodParameterName
     def pixel_at(x, y)
-      run_command('convert', "#{path}[1x1+#{x.to_i}+#{y.to_i}]", 'txt:').split("\n").each do |line|
+      run_command("convert", "#{path}[1x1+#{x.to_i}+#{y.to_i}]", "txt:").split("\n").each do |line|
         matches = /^0,0:.*(#[0-9a-fA-F]+)/.match(line)
         return matches[1] if matches
       end
@@ -28,28 +25,28 @@ class ImageProcessor
   # Deskop (1x, 2x, 3x):       1024w, 508w, 336w, 250w
   IMAGE_SIZES = [
     [
-      { width: 1024, scales: [1, 2], max_width: 1024 },
-      { width: 382, scales: [2, 3], max_width: 414 },
-      { width: 343, scales: [2, 3], max_width: 375 },
-      { width: 228, scales: [2], max_width: 320 }
+      {width: 1024, scales: [1, 2], max_width: 1024},
+      {width: 382, scales: [2, 3], max_width: 414},
+      {width: 343, scales: [2, 3], max_width: 375},
+      {width: 228, scales: [2], max_width: 320}
     ],
     [
-      { width: 508, scales: [1, 2], max_width: 1024 },
-      { width: 137, scales: [2, 3], max_width: 414 },
-      { width: 168, scales: [2, 3], max_width: 375 },
-      { width: 140, scales: [2], max_width: 320 }
+      {width: 508, scales: [1, 2], max_width: 1024},
+      {width: 137, scales: [2, 3], max_width: 414},
+      {width: 168, scales: [2, 3], max_width: 375},
+      {width: 140, scales: [2], max_width: 320}
     ],
     [
-      { width: 336, scales: [1, 2], max_width: 1024 },
-      { width: 122, scales: [2, 3], max_width: 414 },
-      { width: 109, scales: [2, 3], max_width: 375 },
-      { width: 91, scales: [2], max_width: 320 }
+      {width: 336, scales: [1, 2], max_width: 1024},
+      {width: 122, scales: [2, 3], max_width: 414},
+      {width: 109, scales: [2, 3], max_width: 375},
+      {width: 91, scales: [2], max_width: 320}
     ],
     [
-      { width: 250, scales: [1, 2], max_width: 1024 },
-      { width: 90, scales: [2, 3], max_width: 414 },
-      { width: 80, scales: [2, 3], max_width: 375 },
-      { width: 66, scales: [2], max_width: 320 }
+      {width: 250, scales: [1, 2], max_width: 1024},
+      {width: 90, scales: [2, 3], max_width: 414},
+      {width: 80, scales: [2, 3], max_width: 375},
+      {width: 66, scales: [2], max_width: 320}
     ]
   ].freeze
 
@@ -63,20 +60,20 @@ class ImageProcessor
     return unless @should_process
 
     doc = Nokogiri::HTML.fragment(@post.output)
-    doc.css('img').each do |node|
-      next unless (src = node['src'])
-      next if src.start_with?('http')
-      next unless src.end_with?('png', 'jpg')
+    doc.css("img").each do |node|
+      next unless (src = node["src"])
+      next if src.start_with?("http")
+      next unless src.end_with?("png", "jpg")
 
       process_image(node)
     end
 
-    if ENV['RACK_ENV'] == 'production'
+    if ENV["RACK_ENV"] == "production"
       doc.css('meta[property="og:image"], meta[name="twitter:image"]').each do |node|
-        url = Addressable::URI.parse(@site.config['cdn_url'])
-        url.path = Addressable::URI.parse(node['content']).path
-        url.query = 'w=512&dpr=2&auto=format,compress'
-        node['content'] = url.to_s
+        url = Addressable::URI.parse(@site.config["cdn_url"])
+        url.path = Addressable::URI.parse(node["content"]).path
+        url.query = "w=512&dpr=2&auto=format,compress"
+        node["content"] = url.to_s
       end
     end
 
@@ -86,17 +83,17 @@ class ImageProcessor
   private
 
   def process_image(node)
-    src = node['src']
-    url = ENV['RACK_ENV'] == 'production' ? (@site.config['cdn_url'] + src) : src
+    src = node["src"]
+    url = ENV["RACK_ENV"] == "production" ? (@site.config["cdn_url"] + src) : src
     srcset = []
     sizes = []
 
-    is_cover = node.parent['class'] == 'cover'
+    is_cover = node.parent["class"] == "cover"
     up = 1
-    if node.parent.name == 'photo-row'
-      count = node.parent.css('img').count
+    if node.parent.name == "photo-row"
+      count = node.parent.css("img").count
       if count > 4
-        puts "Error: #{@post.data['slug']} has invalid photo-row"
+        puts "Error: #{@post.data["slug"]} has invalid photo-row"
       else
         up = count
       end
@@ -113,43 +110,43 @@ class ImageProcessor
       end
 
       sizes << if size[:max_width] == 1024
-                 '1024px'
-               else
-                 "(max-width: #{size[:max_width]}px) #{size[:width]}px"
-               end
+        "1024px"
+      else
+        "(max-width: #{size[:max_width]}px) #{size[:width]}px"
+      end
     end
 
-    node['src'] = "#{url}?w=1024&dpr=2&auto=format,compress"
-    node['srcset'] = srcset.join(',')
-    node['sizes'] = sizes.join(',')
+    node["src"] = "#{url}?w=1024&dpr=2&auto=format,compress"
+    node["srcset"] = srcset.join(",")
+    node["sizes"] = sizes.join(",")
 
-    node['loading'] = 'lazy' unless node['loading']
+    node["loading"] = "lazy" unless node["loading"]
 
-    return unless src.end_with?('jpg')
+    return unless src.end_with?("jpg")
 
     image = MiniMagick::Image.open(".#{src}")
 
     size = image.dimensions
-    node['data-width'] = size[0]
-    node['data-height'] = size[1]
+    node["data-width"] = size[0]
+    node["data-height"] = size[1]
 
     # Only do the backgrounds on production since it’s pretty slow
-    return unless ENV['RACK_ENV'] == 'production'
+    return unless ENV["RACK_ENV"] == "production"
 
     if is_cover
-      image.resize('4x4')
-      node['style'] =
+      image.resize("4x4")
+      node["style"] =
         "background-image:url(data:image/png;base64,#{Base64.urlsafe_encode64(image.to_blob)});" \
-        'background-repeat:no-repeat;background-size:cover'
+        "background-repeat:no-repeat;background-size:cover"
     else
-      image.resize('1x1')
+      image.resize("1x1")
       if (color = image.pixel_at(1, 1))
-        node['style'] = "background-color:#{color.downcase}"
+        node["style"] = "background-color:#{color.downcase}"
       end
     end
   end
 end
 
 Jekyll::Hooks.register :posts, :post_render do |post|
-  ImageProcessor.new(post, %w[production test].include?(ENV['RACK_ENV'])).process!
+  ImageProcessor.new(post, %w[production test].include?(ENV["RACK_ENV"])).process!
 end

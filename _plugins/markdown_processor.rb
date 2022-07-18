@@ -1,16 +1,14 @@
-# frozen_string_literal: true
-
-require 'rouge'
-require 'redcarpet'
+require "rouge"
+require "redcarpet"
 
 # Custom markdown processor
 class MarkdownRenderer < Redcarpet::Render::HTML
   def block_code(code, language)
     language = nil if %w[text txt].include?(language)
-    language = 'objective_c' if %w[objective-c objc].include?(language)
+    language = "objective_c" if %w[objective-c objc].include?(language)
 
     if language
-      %(<div class="highlight"><pre>#{Rouge.highlight(code, language, 'html')}</pre></div>)
+      %(<div class="highlight"><pre>#{Rouge.highlight(code, language, "html")}</pre></div>)
     else
       "<pre>#{code}</pre>"
     end

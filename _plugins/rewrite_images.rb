@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-require 'mini_magick'
+require "mini_magick"
 
 module Jekyll
   # Extension on `Jekyll::Document`
@@ -10,7 +8,7 @@ module Jekyll
     end
 
     def assets_path
-      "assets/#{data['date'].strftime('%Y-%m-%d')}-#{data['slug']}/"
+      "assets/#{data["date"].strftime("%Y-%m-%d")}-#{data["slug"]}/"
     end
   end
 end
@@ -25,16 +23,16 @@ class RewriteImages < Jekyll::Generator
       document.content.gsub!(/\[!\[(.*)\]\((?!http)(.*)\)\]\(/, %([<img src="#{assets_url}\\2" alt="\\1">]\())
       document.content.gsub!(/!\[(.*)\]\((?!http)(.*)\)/, %(<img src="#{assets_url}\\2" alt="\\1">))
 
-      next unless document.data['cover_image']
+      next unless document.data["cover_image"]
 
-      path = document.assets_path + document.data['cover_image']
-      document.data['cover_image'] = assets_url + document.data['cover_image']
+      path = document.assets_path + document.data["cover_image"]
+      document.data["cover_image"] = assets_url + document.data["cover_image"]
 
       size = MiniMagick::Image.open(path).dimensions
-      document.data['cover_image_width'] = size[0]
-      document.data['cover_image_height'] = size[1]
+      document.data["cover_image_width"] = size[0]
+      document.data["cover_image_height"] = size[1]
     end
 
-    puts '        - Rewrite Images'
+    puts "        - Rewrite Images"
   end
 end

@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
-require 'action_view'
-require 'nokogiri'
+require "action_view"
+require "nokogiri"
 
 # Jekyll generator to create excepts for posts
 class AutoExcerpts < Jekyll::Generator
@@ -17,13 +15,13 @@ class AutoExcerpts < Jekyll::Generator
 
     site.posts.docs.each do |document|
       nodes = excerpt_for(document.content)
-      document.data['excerpt'] = nodes.map(&:to_html).join
+      document.data["excerpt"] = nodes.map(&:to_html).join
 
-      text = nodes.map(&:text).join(' ').tr("\n", ' ').gsub(/\s+/, ' ')
-      document.data['excerpt_text'] = truncate(text, length: 150, separator: /\s/)
+      text = nodes.map(&:text).join(" ").tr("\n", " ").gsub(/\s+/, " ")
+      document.data["excerpt_text"] = truncate(text, length: 150, separator: /\s/)
     end
 
-    puts '        - Auto Excerpts'
+    puts "        - Auto Excerpts"
   end
 
   private

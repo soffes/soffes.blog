@@ -1,23 +1,21 @@
-# frozen_string_literal: true
-
 # Liquid plug-in for custom pagination
 class PaginationTag < Liquid::Tag
   WINDOW = 1
 
   def render(context)
     window = WINDOW
-    return unless (paginator = context['paginator'])
+    return unless (paginator = context["paginator"])
 
-    page = paginator['page']
-    total_pages = paginator['total_pages']
+    page = paginator["page"]
+    total_pages = paginator["total_pages"]
 
     output = '<nav class="pagination">'
 
     output += if page > 1
-                %(<a class="previous" href="#{path_for(page - 1)}" rel="previous">&larr; Previous</a>)
-              else
-                '<span class="disabled">&larr; Previous</span>'
-              end
+      %(<a class="previous" href="#{path_for(page - 1)}" rel="previous">&larr; Previous</a>)
+    else
+      '<span class="disabled">&larr; Previous</span>'
+    end
 
     if page > window
       if page == window + 1
@@ -50,12 +48,12 @@ class PaginationTag < Liquid::Tag
     end
 
     output += if page < total_pages
-                %(<a class="next" href="#{path_for(page + 1)}" rel="next">Next &rarr;</a>)
-              else
-                '<span class="disabled">Next &rarr;</span>'
-              end
+      %(<a class="next" href="#{path_for(page + 1)}" rel="next">Next &rarr;</a>)
+    else
+      '<span class="disabled">Next &rarr;</span>'
+    end
 
-    output += '</nav>'
+    output += "</nav>"
     output
   end
 
@@ -66,7 +64,7 @@ class PaginationTag < Liquid::Tag
   end
 
   def path_for(page)
-    return '/' if page == 1
+    return "/" if page == 1
 
     "/#{page}"
   end
@@ -76,4 +74,4 @@ class PaginationTag < Liquid::Tag
   end
 end
 
-Liquid::Template.register_tag('pagination', PaginationTag)
+Liquid::Template.register_tag("pagination", PaginationTag)

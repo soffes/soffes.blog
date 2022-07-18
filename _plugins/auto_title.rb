@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Jekyll generator to automatically extract the title
 class AutoTitle < Jekyll::Generator
   safe true
@@ -10,10 +8,10 @@ class AutoTitle < Jekyll::Generator
     site.posts.docs.each do |document|
       next unless (title = document.content.match(REGEX)[2])
 
-      document.content.sub!(REGEX, '')
-      document.data['title'] = title.to_s
+      document.content.sub!(REGEX, "")
+      document.data["title"] = title.to_s
     end
 
-    puts '        - Rewrite Title'
+    puts "        - Rewrite Title"
   end
 end
