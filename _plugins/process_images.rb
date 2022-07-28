@@ -50,7 +50,7 @@ class ImageProcessor
     ]
   ].freeze
 
-  def initialize(post, should_process)
+  def initialize(post, should_process = true)
     @post = post
     @site = post.site
     @should_process = should_process
@@ -68,7 +68,7 @@ class ImageProcessor
       process_image(node)
     end
 
-    if ENV["RACK_ENV"] == "production"
+    if is_production?
       doc.css('meta[property="og:image"], meta[name="twitter:image"]').each do |node|
         url = Addressable::URI.parse(@site.config["cdn_url"])
         url.path = Addressable::URI.parse(node["content"]).path
@@ -82,9 +82,13 @@ class ImageProcessor
 
   private
 
+  def is_production?
+    ENV["RACK_ENV"] == "production"
+  end
+
   def process_image(node)
     src = node["src"]
-    url = ENV["RACK_ENV"] == "production" ? (@site.config["cdn_url"] + src) : src
+    url = is_production? ? (@site.config["cdn_url"] + src) : src
     srcset = []
     sizes = []
 
@@ -116,9 +120,12 @@ class ImageProcessor
       end
     end
 
-    node["src"] = "#{url}?w=1024&dpr=2&auto=format,compress"
-    node["srcset"] = srcset.join(",")
-    node["sizes"] = sizes.join(",")
+
+    if is_production?
+      node["src"] = "#{url}?w=1024&dpr=2&auto=format,compress"
+      node["srcset"] = srcset.join(",")
+      node["sizes"] = sizes.join(",")
+    end
 
     node["loading"] = "lazy" unless node["loading"]
 
@@ -131,7 +138,7 @@ class ImageProcessor
     node["data-height"] = size[1]
 
     # Only do the backgrounds on production since it’s pretty slow
-    return unless ENV["RACK_ENV"] == "production"
+    return unless is_production?
 
     if is_cover
       image.resize("4x4")
@@ -148,5 +155,5 @@ class ImageProcessor
 end
 
 Jekyll::Hooks.register :posts, :post_render do |post|
-  ImageProcessor.new(post, %w[production test].include?(ENV["RACK_ENV"])).process!
+  ImageProcessor.new(post).process!
 end
